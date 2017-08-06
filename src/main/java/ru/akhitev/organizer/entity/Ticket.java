@@ -1,4 +1,4 @@
-package ru.akhitev.organizer.dto;
+package ru.akhitev.organizer.entity;
 
 import com.google.common.base.Joiner;
 import lombok.AccessLevel;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import ru.akhitev.organizer.enums.Status;
 
 import java.util.*;
 

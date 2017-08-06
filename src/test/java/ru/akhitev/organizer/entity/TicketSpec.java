@@ -1,9 +1,10 @@
-package ru.akhitev.organizer.dto;
+package ru.akhitev.organizer.entity;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ru.akhitev.organizer.enums.Status;
 
 import java.util.Collections;
 import java.util.Date;

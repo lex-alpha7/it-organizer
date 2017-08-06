@@ -13,10 +13,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.akhitev.organizer.converter.ProjectConverter;
-import ru.akhitev.organizer.db.entity.ProjectEntity;
-import ru.akhitev.organizer.db.repository.ProjectRepository;
-import ru.akhitev.organizer.manager.ProjectManager;
+import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.repository.ProjectRepository;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -26,9 +24,9 @@ import java.util.Properties;
 @Slf4j
 @FieldDefaults(makeFinal=true, level = AccessLevel.PRIVATE)
 @Configuration
-@EnableJpaRepositories("ru.akhitev.organizer.db.repository")
+@EnableJpaRepositories("ru.akhitev.organizer.repository")
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses={DBSpringTestConfig.class, ProjectRepository.class, ProjectManager.class, ProjectConverter.class})
+@ComponentScan(basePackageClasses={DBSpringTestConfig.class, ProjectRepository.class, Project.class})
 public class DBSpringTestConfig {
     static String DB_NAME = "classpath:organizer_db";
     static String DB_DDL = "classpath:db/init/db_ddl.sql";
@@ -50,7 +48,7 @@ public class DBSpringTestConfig {
         vendorAdapter.setGenerateDdl(true);
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan(ProjectEntity.class.getPackage().getName());
+        factory.setPackagesToScan(Project.class.getPackage().getName());
         factory.setDataSource(dataSource());
         factory.setJpaProperties(hibernateProperties());
         factory.afterPropertiesSet();

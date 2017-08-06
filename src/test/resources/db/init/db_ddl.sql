@@ -7,6 +7,20 @@ CREATE TABLE Reference (
     id INTEGER NOT NULL PRIMARY KEY
 );
 
+CREATE TABLE Reference_Link (
+    id INTEGER NOT NULL PRIMARY KEY,
+    reference_id INTEGER NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    link VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Note (
+    id INTEGER NOT NULL PRIMARY KEY,
+    reference_id INTEGER NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    note VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE Ticket (
     id INTEGER NOT NULL PRIMARY KEY,
     ticket_kkey VARCHAR(100) NOT NULL,

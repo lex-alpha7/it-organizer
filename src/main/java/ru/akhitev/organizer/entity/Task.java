@@ -1,10 +1,11 @@
-package ru.akhitev.organizer.dto;
+package ru.akhitev.organizer.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import ru.akhitev.organizer.enums.Status;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task {

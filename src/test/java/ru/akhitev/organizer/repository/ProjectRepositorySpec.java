@@ -1,4 +1,4 @@
-package ru.akhitev.organizer.db.repository;
+package ru.akhitev.organizer.repository;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,7 +9,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.akhitev.organizer.config.DBSpringTestConfig;
-import ru.akhitev.organizer.db.entity.ProjectEntity;
+import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.entity.Reference;
 
 import javax.inject.Inject;
 
@@ -25,6 +26,9 @@ public class ProjectRepositorySpec {
     @Inject
     private ProjectRepository projectRepository;
 
+    @Inject
+    ReferenceRepository referenceRepository;
+
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -37,18 +41,21 @@ public class ProjectRepositorySpec {
     @Test
     public void whenGetExistedByIdThenReturnIt() {
         final Integer id = 0;
-        ProjectEntity projectEntity = projectRepository.findOne(id);
+        Project projectEntity = projectRepository.findOne(id);
         assertThat(projectEntity)
             .as("When we get by existing id, then we should get not null project.").isNotNull();
         assertThat(projectEntity.getName())
             .as("When we get by existing id, then we should get project with concrete name.")
                 .isEqualTo("pro1");
+        assertThat(projectEntity.getReference().getId())
+                .as("When we get by existing id, then we should get project with concrete name.")
+                .isEqualTo(id);
     }
 
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 2;
-        ProjectEntity projectEntity = projectRepository.findOne(id);
+        Project projectEntity = projectRepository.findOne(id);
         assertThat(projectEntity)
             .as("When we get by existing id, then we should get not null project.").isNull();
     }
@@ -57,9 +64,12 @@ public class ProjectRepositorySpec {
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
         projectRepository.delete(id);
-        ProjectEntity projectEntity = projectRepository.findOne(id);
+        Project projectEntity = projectRepository.findOne(id);
         assertThat(projectEntity)
                 .as("When we remove by existing id, then we should not find it again.").isNull();
+        Reference reference = referenceRepository.findOne(id);
+        assertThat(reference)
+                .as("When we remove project by existing id, then we should not find reference again.").isNull();
     }
 
     @Test
