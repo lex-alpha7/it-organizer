@@ -13,20 +13,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskSpec {
     Task task;
-    Ticket parentTicket;
-    String name = "Check logs";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUpTaskSpec() {
-        parentTicket = new Ticket("SUP-12345");
-        task = new Task(parentTicket, name);
+        task = new Task();
     }
 
     @Test
     public void whenNameWasSetThenReturnIt() {
+        String name = "Check logs";
+        task.setName(name);
         assertThat(task.getName())
                 .as("check getting a name of the task")
                 .isEqualTo(name);
@@ -35,23 +34,25 @@ public class TaskSpec {
 
     @Test
     public void whenNullNameInConstructorThenIllegalArgumentException() {
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage("Name and Parent Key should not be empty");
-        task = new Task(parentTicket, null);
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("name");
+        task.setName(null);
     }
 
     @Test
-    public void whenParentKeyWasSetThenReturnIt() {
-        assertThat(task.getParentTicket())
-                .as("check getting a key of parent of the task")
-                .isEqualTo(parentTicket);
+    public void whenTicketKeyWasSetThenReturnIt() {
+        Ticket ticket = new Ticket();
+        task.setTicket(ticket);
+        assertThat(task.getTicket())
+                .as("check getting a ticket of the task")
+                .isEqualTo(ticket);
     }
 
     @Test
-    public void whenNullParentKeyInConstructorThenIllegalArgumentException() {
-        exception.expect(IllegalArgumentException.class);
-        exception.expectMessage("Name and Parent Key should not be empty");
-        task = new Task(null, name);
+    public void whenTicketIsNullThenReturnNPE() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("ticket");
+        task.setTicket(null);
     }
 
     @Test
@@ -83,5 +84,22 @@ public class TaskSpec {
         assertThat(task.getStatus())
                 .as("check getting a not empty status.").isNotNull()
                 .as("check getting status.").isEqualTo(status);
+    }
+
+    @Test
+    public void whenIdWasSetThenReturnIt() {
+        Integer id = 0;
+        task.setId(id);
+        assertThat(task.getId())
+                .as("When an id was set, return it.")
+                .isEqualTo(id);
+    }
+
+    @Test
+    public void whenIdIsNullThenReturnIt() {
+        task.setId(null);
+        assertThat(task.getId())
+                .as("When an id was set, return it.")
+                .isEqualTo(null);
     }
 }

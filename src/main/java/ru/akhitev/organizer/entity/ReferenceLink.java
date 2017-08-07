@@ -8,25 +8,18 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "Reference_Link")
-@SequenceGenerator(name = "seq", initialValue = 20)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Data @NoArgsConstructor
+@Entity @Table(name = "Reference_Link") @SequenceGenerator(name = "seq", initialValue = 20)
+@Data @NoArgsConstructor @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceLink {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "reference_id", nullable = false)
-    @NonNull
+    @ManyToOne @JoinColumn(name = "reference_id", nullable = false) @NonNull
     Reference reference;
 
     @Column(name = "name")
     String name;
 
-    @Column(name = "link")
-    @NonNull
+    @Column(name = "link") @NonNull
     String link;
 }

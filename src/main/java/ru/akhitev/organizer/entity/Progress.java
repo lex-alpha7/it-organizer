@@ -1,19 +1,22 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
-import org.apache.commons.lang3.StringUtils;
-import ru.akhitev.organizer.enums.Status;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "Task")
+@Table(name = "Progress")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Task {
+public class Progress {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     Integer id;
@@ -23,20 +26,11 @@ public class Task {
     @NonNull
     Ticket ticket;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "date", nullable = false)
     @NonNull
-    String name;
-
-    @Column(name = "workspace")
-    String workspace;
+    Date date;
 
     @Column(name = "status", nullable = false)
     @NonNull
-    @Enumerated
-    Status status;
-
-    {
-        status = Status.OPEN;
-        workspace = StringUtils.EMPTY;
-    }
+    String status;
 }

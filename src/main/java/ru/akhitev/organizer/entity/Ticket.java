@@ -1,89 +1,62 @@
 package ru.akhitev.organizer.entity;
 
 import com.google.common.base.Joiner;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import ru.akhitev.organizer.enums.Status;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity @Table(name = "Ticket")
+@SequenceGenerator(name = "seq", initialValue = 20)
+@Data
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ticket {
-    private static final String DEFAULT_REPORT = "Started working on it.";
 
-    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    Integer id;
+
+    @ManyToOne @JoinColumn(name = "project_id", nullable = false)
+    @NonNull
+    Project project;
+
+    @Column(name = "key", nullable = false)
+    @NonNull
     String key;
 
-    @Getter @Setter
+    @Column(name = "name")
     String name;
 
-    @Getter
-    List<String> links;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
+    @Fetch(value = FetchMode.SUBSELECT)
+    List<TicketLink> links;
 
-    @Getter
-    List<String> attachments;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
+    @Fetch(value = FetchMode.SUBSELECT)
+    List<Progress> progress;
 
-    @Getter
-    Map<Date, String> progress;
-
-    @Getter @Setter
+    @Column(name = "workspace")
     String workspace;
 
-    @Getter
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
+    @Fetch(value = FetchMode.SUBSELECT)
+    @Enumerated
     List<Task> tasks;
 
-    @Getter @Setter
+    @Column(name = "status")
     Status status;
 
-    public Ticket(String key) {
-        if (StringUtils.isEmpty(key)) {
-            throw new IllegalArgumentException("Key should not be empty", null);
-        }
-        this.key = key;
+    {
         links = new ArrayList<>();
-        attachments = new ArrayList<>();
         tasks = new ArrayList<>();
-        progress = new TreeMap<>(); // for sorting
+        progress = new ArrayList<>();
         status = Status.OPEN;
         workspace = StringUtils.EMPTY;
-    }
-
-    public void addLink(String link) {
-        links.add(link);
-    }
-
-    public void addAttachment(String attachment) {
-        attachments.add(attachment);
-    }
-
-    public String getProgressReport() {
-        if (progress.size() == 0)
-            return DEFAULT_REPORT;
-        return Joiner.on("\n\n").withKeyValueSeparator(":\n").join(progress);
-    }
-
-    public void addProgress(Date progressDate, String progressText) {
-        progress.put(progressDate, progressText);
-    }
-
-    public String getFullName() {
-        if (StringUtils.isBlank(name))
-            return key;
-        StringBuilder fullNameBuilder = new StringBuilder(key);
-        fullNameBuilder.append(": ");
-        if (name.length() > 20) {
-            fullNameBuilder.append(name.substring(0, 20));
-            fullNameBuilder.append("...");
-        } else {
-            fullNameBuilder.append(name);
-        }
-        return fullNameBuilder.toString();
-    }
-
-    public void addTask(Task task) {
-        tasks.add(task);
     }
 }

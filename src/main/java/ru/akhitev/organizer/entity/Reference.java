@@ -9,26 +9,19 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "Reference")
-@SequenceGenerator(name = "seq", initialValue = 20)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Data @ToString(exclude = {"notes", "links", "project"})
+@Entity @Table(name = "Reference") @SequenceGenerator(name = "seq", initialValue = 20)
+@Data @ToString(exclude = {"notes", "links", "project"}) @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Reference {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     Integer id;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne @PrimaryKeyJoinColumn
     Project project;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "reference")
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "reference") @Fetch(value = FetchMode.SUBSELECT)
     List<ReferenceLink> links;
 
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "reference")
-    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "reference") @Fetch(value = FetchMode.SUBSELECT)
     List<Note> notes;
 
     {
