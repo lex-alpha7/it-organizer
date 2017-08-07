@@ -1,5 +1,7 @@
 package ru.akhitev.organizer.entity;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,10 +14,11 @@ import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.*;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketSpec {
-    private Ticket ticket;
-    private String key = "SUP-12345";
-    private String name = "An error in response while sending a test request.";
+    Ticket ticket;
+    String key = "SUP-12345";
+    String name = "An error in response while sending a test request.";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

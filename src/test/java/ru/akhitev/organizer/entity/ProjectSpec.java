@@ -1,5 +1,7 @@
 package ru.akhitev.organizer.entity;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,9 +9,10 @@ import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectSpec {
-    private Project project;
-    private String projectName = "Test Project";
+    Project project;
+    String projectName = "Test Project";
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -49,5 +52,22 @@ public class ProjectSpec {
         assertThat(project.getId())
                 .as("WHen an id was set, return it.")
                 .isEqualTo(id);
+    }
+
+    @Test
+    public void whenReferenceWasSetThenReturnIt() {
+        Reference reference = new Reference();
+        project.setReference(reference);
+        assertThat(project.getReference())
+                .as("WHen a reference was set, return it.")
+                .isEqualTo(reference);
+    }
+
+    @Test
+    public void whenReferenceIsNullThenReturnNPE() {
+        project.setReference(null);
+        assertThat(project.getReference())
+                .as("WHen a reference was set, return it.")
+                .isEqualTo(null);
     }
 }

@@ -1,5 +1,7 @@
 package ru.akhitev.organizer.entity;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,10 +10,11 @@ import ru.akhitev.organizer.enums.Status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskSpec {
-    private Task task;
-    private Ticket parentTicket;
-    private String name = "Check logs";
+    Task task;
+    Ticket parentTicket;
+    String name = "Check logs";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

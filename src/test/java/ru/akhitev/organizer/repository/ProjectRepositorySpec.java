@@ -1,5 +1,7 @@
 package ru.akhitev.organizer.repository;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -21,10 +23,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {DBSpringTestConfig.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectRepositorySpec {
 
     @Inject
-    private ProjectRepository projectRepository;
+    ProjectRepository projectRepository;
 
     @Inject
     ReferenceRepository referenceRepository;

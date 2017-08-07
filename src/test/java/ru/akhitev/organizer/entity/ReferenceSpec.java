@@ -1,5 +1,7 @@
 package ru.akhitev.organizer.entity;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,8 +9,9 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceSpec {
-    private Reference reference;
+    Reference reference;
 
     @Before
     public void setTest() {
