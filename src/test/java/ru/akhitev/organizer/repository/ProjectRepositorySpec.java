@@ -38,7 +38,7 @@ public class ProjectRepositorySpec {
     @Test
     public void whenFindAllThenFindAll() {
         assertThat(projectRepository.findAll())
-            .as("Wrong projects count was found.").hasSize(2);
+                .as("Right projects count was found.").hasSize(2);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ProjectRepositorySpec {
             .as("When we get by existing id, then we should get project with concrete name.")
                 .isEqualTo("pro1");
         assertThat(projectEntity.getReference().getId())
-                .as("When we get by existing id, then we should get project with concrete name.")
+                .as("When we get by existing id, then we should get reference wich is connected to the project.")
                 .isEqualTo(id);
     }
 
