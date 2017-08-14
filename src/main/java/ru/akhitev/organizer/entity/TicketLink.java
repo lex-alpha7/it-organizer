@@ -1,9 +1,6 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.akhitev.organizer.enums.LinkType;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "Ticket_Link")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @Data
+@EqualsAndHashCode(exclude = "ticket")
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketLink {

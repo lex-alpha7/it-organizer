@@ -6,21 +6,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.akhitev.organizer.config.DBSpringTestConfig;
-import ru.akhitev.organizer.entity.Note;
+import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.ReferenceLink;
 
 import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DBSpringTestConfig.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@RunWith(SpringRunner.class)
+@DataJpaTest
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceLinkRepositorySpec {
     @Inject
@@ -38,7 +37,7 @@ public class ReferenceLinkRepositorySpec {
     @Test
     public void whenGetExistedByIdThenReturnIt() {
         final Integer id = 0;
-        ReferenceLink link = repository.findOne(id);
+        ReferenceLink link = repository.findById(id).get();
         assertThat(link)
                 .as("When we get by existing id, then we should get not null link.").isNotNull();
         assertThat(link.getName())
@@ -47,32 +46,27 @@ public class ReferenceLinkRepositorySpec {
         assertThat(link.getLink())
                 .as("When we get by existing id, then we should get link with concrete link text.")
                 .isEqualTo("http://www.confluence.com");
-        assertThat(link.getReference().getId())
-                .as("When we get by existing id, then we should get reference for which the link is connected.")
-                .isEqualTo(0);
     }
 
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 4;
-        ReferenceLink link = repository.findOne(id);
-        assertThat(link)
-                .as("When we get by existing id, then we should get not null link.").isNull();
+        assertThat(repository.findById(id).isPresent())
+                .as("When we get by existing id, then we should get not null link.").isFalse();
     }
 
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        repository.delete(id);
-        ReferenceLink link = repository.findOne(id);
-        assertThat(link)
-                .as("When we remove by existing id, then we should not find it again.").isNull();
+        repository.deleteById(id);
+        assertThat(repository.findById(id).isPresent())
+                .as("When we remove by existing id, then we should not find it again.").isFalse();
     }
 
     @Test
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 4;
         exception.expect(EmptyResultDataAccessException.class);
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

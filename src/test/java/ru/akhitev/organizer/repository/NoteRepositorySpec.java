@@ -6,22 +6,25 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.akhitev.organizer.config.DBSpringTestConfig;
+import org.springframework.test.context.junit4.SpringRunner;
+import ru.akhitev.organizer.Application;
 import ru.akhitev.organizer.entity.Note;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.Reference;
 
 import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {DBSpringTestConfig.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@RunWith(SpringRunner.class)
+@DataJpaTest
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NoteRepositorySpec {
 
@@ -40,7 +43,7 @@ public class NoteRepositorySpec {
     @Test
     public void whenGetExistedByIdThenReturnIt() {
         final Integer id = 0;
-        Note note = repository.findOne(id);
+        Note note = repository.findById(id).get();
         assertThat(note)
                 .as("When we get by existing id, then we should get not null note.").isNotNull();
         assertThat(note.getTitle())
@@ -49,32 +52,27 @@ public class NoteRepositorySpec {
         assertThat(note.getNote())
                 .as("When we get by existing id, then we should get note with concrete note text.")
                 .isEqualTo("You need to install an plugin.");
-        assertThat(note.getReference().getId())
-                .as("When we get by existing id, then we should get reference for which the note is connected.")
-                .isEqualTo(0);
     }
 
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 4;
-        Note note = repository.findOne(id);
-        assertThat(note)
-                .as("When we get by existing id, then we should get not null note.").isNull();
+        assertThat(repository.findById(id).isPresent())
+                .as("When we get by existing id, then we should get not null note.").isFalse();
     }
 
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        repository.delete(id);
-        Note note = repository.findOne(id);
-        assertThat(note)
-                .as("When we remove by existing id, then we should not find it again.").isNull();
+        repository.deleteById(id);
+        assertThat(repository.findById(id).isPresent())
+                .as("When we remove by existing id, then we should not find it again.").isFalse();
     }
 
     @Test
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 4;
         exception.expect(EmptyResultDataAccessException.class);
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

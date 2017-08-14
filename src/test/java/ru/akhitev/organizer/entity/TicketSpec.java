@@ -53,37 +53,34 @@ public class TicketSpec {
     public void whenNoLinksWereAddedThenReturnEmptyList() {
         assertThat(ticket.getLinks())
                 .as("check getting not null links if there were no link added").isNotNull()
-                .as("check getting an empty list of links if there were no link added").isEqualTo(Collections.emptyList());
+                .as("check getting an empty list of links if there were no link added").isEqualTo(Collections.emptySet());
     }
 
     @Test
     public void whenLinksWereAddedThenReturnListOfThem() {
-        List<TicketLink> links = new ArrayList<>();
-        links.add(new TicketLink());
+        Set<TicketLink> links = new LinkedHashSet<>();
         links.add(new TicketLink());
         ticket.setLinks(links);
         assertThat(ticket.getLinks())
                 .as("check getting not null links after links were added").isNotNull()
-                .as("check getting correct size after links were added").hasSize(2);
+                .as("check getting correct size after links were added").hasSize(1);
     }
 
     @Test
     public void whenNoProgressWereAddedThenReturnEmptyMap() {
         assertThat(ticket.getProgress())
                 .as("check getting not null map if there were no progress added").isNotNull()
-                .as("check getting an empty map of progress if no of it was added").isEqualTo(Collections.emptyList());
+                .as("check getting an empty map of progress if no of it was added").isEqualTo(Collections.emptySet());
     }
 
     @Test
     public void whenProgressWereAddedThenReturnMapOfStatuses() {
-        List<Progress> progress = new ArrayList<>();
-        progress.add(new Progress());
-        progress.add(new Progress());
+        Set<Progress> progress = new LinkedHashSet<>();
         progress.add(new Progress());
         ticket.setProgress(progress);
         assertThat(ticket.getProgress())
                 .as("check getting not null map after progress was added").isNotNull()
-                .as("check getting correct size after progress was added").hasSize(3);
+                .as("check getting correct size after progress was added").hasSize(1);
     }
 
     @Test
@@ -105,18 +102,17 @@ public class TicketSpec {
     public void whenNoTasksWereAddedThenReturnEmptyList() {
         assertThat(ticket.getTasks())
                 .as("check getting not null links if there were no link added").isNotNull()
-                .as("check getting an empty list of links if there were no link added").isEqualTo(Collections.emptyList());
+                .as("check getting an empty list of links if there were no link added").isEqualTo(Collections.emptySet());
     }
 
     @Test
     public void whenTasksWereAddedThenReturnListOfThem() {
-        List<Task> tasks = new ArrayList<>();
-        tasks.add(new Task());
+        Set<Task> tasks = new LinkedHashSet<>();
         tasks.add(new Task());
         ticket.setTasks(tasks);
         assertThat(ticket.getTasks())
                 .as("check getting not null tasks after they were added").isNotNull()
-                .as("check getting correct size after tasks were added").hasSize(2);
+                .as("check getting correct size after tasks were added").hasSize(1);
     }
 
     @Test

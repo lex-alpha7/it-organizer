@@ -1,27 +1,26 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Note")
+@Table(name = "note")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Data @NoArgsConstructor
+@Data
+@EqualsAndHashCode(exclude = "project")
+@NoArgsConstructor
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "reference_id", nullable = false)
+    @JoinColumn(name = "project_id", nullable = false)
     @NonNull
-    Reference reference;
+    Project project;
 
     @Column(name = "title")
     String title;

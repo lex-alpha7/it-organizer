@@ -67,24 +67,24 @@ public class NoteSpec {
     public void whenIdIsNullThenReturnIt() {
         note.setId(null);
         assertThat(note.getId())
-                .as("WHen an id was set, return it.")
+                .as("When an id was set, return it.")
                 .isEqualTo(null);
     }
 
     @Test
     public void whenReferenceWasSetThenReturnIt() {
-        Reference reference = new Reference();
-        note.setReference(reference);
-        assertThat(note.getReference())
-                .as("WHen a reference was set, return it.")
-                .isEqualTo(reference);
+        Project project = new Project();
+        note.setProject(project);
+        assertThat(note.getProject())
+                .as("When a project was set, return it.")
+                .isEqualTo(project);
     }
 
     @Test
     public void whenReferenceIsNullThenReturnNPE() {
         exception.expect(NullPointerException.class);
-        exception.expectMessage("reference");
-        note.setReference(null);
+        exception.expectMessage("project");
+        note.setProject(null);
     }
 
 }

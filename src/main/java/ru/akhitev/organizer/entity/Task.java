@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "Task")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @Data
+@EqualsAndHashCode(exclude = "ticket")
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Task {

@@ -14,6 +14,7 @@ import java.util.*;
 @Entity @Table(name = "Ticket")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @Data
+@EqualsAndHashCode(exclude = "project")
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ticket {
@@ -26,7 +27,7 @@ public class Ticket {
     @NonNull
     Project project;
 
-    @Column(name = "key", nullable = false)
+    @Column(name = "ticket_key", nullable = false)
     @NonNull
     String key;
 
@@ -35,27 +36,27 @@ public class Ticket {
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    List<TicketLink> links;
+    Set<TicketLink> links;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    List<Progress> progress;
+    Set<Progress> progress;
 
     @Column(name = "workspace")
     String workspace;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    @Enumerated
-    List<Task> tasks;
+    Set<Task> tasks;
 
     @Column(name = "status")
+    @Enumerated
     Status status;
 
     {
-        links = new ArrayList<>();
-        tasks = new ArrayList<>();
-        progress = new ArrayList<>();
+        links = new LinkedHashSet<>();
+        tasks = new LinkedHashSet<>();
+        progress = new LinkedHashSet<>();
         status = Status.OPEN;
         workspace = StringUtils.EMPTY;
     }

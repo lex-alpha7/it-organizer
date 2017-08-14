@@ -1,9 +1,6 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import java.util.Date;
 @Table(name = "Progress")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @Data
+@EqualsAndHashCode(exclude = "ticket")
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Progress {
@@ -26,7 +24,7 @@ public class Progress {
     @NonNull
     Ticket ticket;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "status_date", nullable = false)
     @NonNull
     Date date;
 

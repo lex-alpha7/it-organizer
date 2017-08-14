@@ -7,8 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,31 +56,28 @@ public class ProjectSpec {
                 .isEqualTo(id);
     }
 
-    @Test
-    public void whenReferenceWasSetThenReturnIt() {
-        Reference reference = new Reference();
-        project.setReference(reference);
-        assertThat(project.getReference())
-                .as("When a reference was set, return it.")
-                .isEqualTo(reference);
-    }
-
-    @Test
-    public void whenReferenceIsNullThenReturnNPE() {
-        project.setReference(null);
-        assertThat(project.getReference())
-                .as("When a reference was set, return it.")
-                .isEqualTo(null);
-    }
 
     @Test
     public void whenTicketsWereAddedThenReturnThem() {
-        List<Ticket> tickets = new ArrayList<>();
-        tickets.add(new Ticket());
+        Set<Ticket> tickets = new LinkedHashSet<>();
         tickets.add(new Ticket());
         project.setTickets(tickets);
         assertThat(project.getTickets())
                 .as("check getting not null tickets after they were added").isNotNull()
-                .as("check getting correct size after tickets were added").hasSize(2);
+                .as("check getting correct size after tickets were added").hasSize(1);
+    }
+
+    @Test
+    public void whenNoLinksWereSetThenReturnEmptyList() {
+        assertThat(project.getLinks())
+                .as("when no links were set then return not null empty map")
+                .isEqualTo(Collections.emptySet());
+    }
+
+    @Test
+    public void whenNoNotesWereSetThenReturnEmptyList() {
+        assertThat(project.getNotes())
+                .as("when no notes were set then return not null empty map")
+                .isEqualTo(Collections.emptySet());
     }
 }

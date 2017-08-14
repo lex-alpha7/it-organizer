@@ -73,17 +73,17 @@ public class ReferenceLinkSpec {
 
     @Test
     public void whenReferenceWasSetThenReturnIt() {
-        Reference reference = new Reference();
-        link.setReference(reference);
-        assertThat(link.getReference())
-                .as("When a reference was set, return it.")
-                .isEqualTo(reference);
+        Project project = new Project();
+        link.setProject(project);
+        assertThat(link.getProject())
+                .as("When a project was set, return it.")
+                .isEqualTo(project);
     }
 
     @Test
     public void whenReferenceIsNullThenReturnNPE() {
         exception.expect(NullPointerException.class);
-        exception.expectMessage("reference");
-        link.setReference(null);
+        exception.expectMessage("project");
+        link.setProject(null);
     }
 }
