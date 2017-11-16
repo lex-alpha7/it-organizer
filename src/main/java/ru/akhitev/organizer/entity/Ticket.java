@@ -1,6 +1,5 @@
 package ru.akhitev.organizer.entity;
 
-import com.google.common.base.Joiner;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;

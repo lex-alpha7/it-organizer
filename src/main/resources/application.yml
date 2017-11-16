@@ -1,0 +1,18 @@
+###
+#   Database Settings
+###
+spring:
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:sqlite:db/organizer.s3db
+    username:
+    password:
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: ru.akhitev.organizer.config.SQLiteDialect
+    dialect: ru.akhitev.organizer.config.SQLiteDialect
+javafx:
+    title: MyCoolApp
+    stage:
+      resizable: true

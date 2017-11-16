@@ -9,6 +9,7 @@ buildscript {
         mavenCentral()
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -17,9 +18,16 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    baseName = 'organizer'
+    version =  '0.0.1'
+}
 
 repositories {
     mavenCentral()
@@ -28,9 +36,15 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile group: 'com.google.guava', name: 'guava-collections', version: '+'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '1.5.7.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: '1.5.7.RELEASE'
+    compile group: 'de.roskenet', name: 'springboot-javafx-support', version: '+'
+    compile group: 'com.google.guava', name: 'guava', version: '+'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '+'
     compile group: 'org.springframework', name: 'spring-context', version: '+'
     compile group: 'org.springframework', name: 'spring-tx', version: '+'
@@ -45,7 +59,9 @@ dependencies {
     compile group: 'org.projectlombok', name: 'lombok', version: '+'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
 
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '+'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: '1.5.7.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '1.5.7.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.7.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '+'
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '+'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '+'
@@ -53,4 +69,5 @@ dependencies {
     testCompile group: 'org.springframework', name: 'spring-test', version: '+'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '+'
     testCompile group: 'org.dbunit', name: 'dbunit', version: '+'
+    testCompile group: 'de.roskenet', name: 'springboot-javafx-test', version: '+'
 }
