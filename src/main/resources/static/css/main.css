@@ -1,0 +1,40 @@
+.sidebar-title {
+    color: gold;
+}
+
+select option {
+    color: white;
+}
+
+a {
+     color: white;
+}
+
+.tab-name {
+    color: grey;
+}
+
+h3 {
+    color: blue;
+}
+
+h2 {
+    color: blue;
+}
+
+table {
+    border: 1px solid black;
+}
+
+table tr td {
+    border: 1px solid black;
+}
+
+table thead tr th {
+    color: blue;
+}
+
+textarea {
+    width: 1200px;
+    height: 2000px;
+}
