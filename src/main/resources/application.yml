@@ -1,6 +1,8 @@
 ###
 #   Database Settings
 ###
+server:
+   port: 9091
 spring:
   jmx:
     enabled: false
@@ -12,7 +14,3 @@ spring:
   jpa:
     database-platform: ru.akhitev.organizer.config.SQLiteDialect
     dialect: ru.akhitev.organizer.config.SQLiteDialect
-javafx:
-    title: MyCoolApp
-    stage:
-      resizable: true
