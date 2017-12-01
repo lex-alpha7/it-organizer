@@ -19,8 +19,8 @@
             <h2 class="sidebar-title">P<span class="nav-label">rojects</span></h2>
             <span class="nav-label">
                 <select>
-                    <option>Air Transat</option>
-                    <option>PAL</option>
+                    <option th:value="NULL" th:text="---Select Type---"></option>
+                    <option th:each="project : ${#servletContext.getAttribute('projects')}" th:value="${{project.id}}" th:text="${project.name}">Wireframe</option>
                 </select>
             </span>
         </article>

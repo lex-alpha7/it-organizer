@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -39,7 +40,7 @@ public class ReferenceLinkRepositorySpec {
     @Test
     public void whenGetExistedByIdThenReturnIt() {
         final Integer id = 0;
-        ReferenceLink link = repository.findById(id).get();
+        ReferenceLink link = repository.getOne(id);
         assertThat(link)
                 .as("When we get by existing id, then we should get not null link.").isNotNull();
         assertThat(link.getName())
@@ -53,22 +54,22 @@ public class ReferenceLinkRepositorySpec {
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 4;
-        assertThat(repository.findById(id).isPresent())
-                .as("When we get by existing id, then we should get not null link.").isFalse();
+        assertThat(repository.getOne(id))
+                .as("When we get by existing id, then we should get not null link.").isNotNull();
     }
 
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        repository.deleteById(id);
-        assertThat(repository.findById(id).isPresent())
-                .as("When we remove by existing id, then we should not find it again.").isFalse();
+        repository.delete(id);
+        exception.expect(JpaObjectRetrievalFailureException.class);
+        repository.getOne(id);
     }
 
     @Test
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 4;
         exception.expect(EmptyResultDataAccessException.class);
-        repository.deleteById(id);
+        repository.delete(id);
     }
 }

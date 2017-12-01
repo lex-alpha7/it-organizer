@@ -1,2 +1,4 @@
 rootProject.name = 'it-organizer'
+include 'it-organizer-db'
+include 'it-organizer-web'
 

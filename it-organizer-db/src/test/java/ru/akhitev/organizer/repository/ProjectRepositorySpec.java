@@ -8,6 +8,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.Project;
 
@@ -37,7 +38,7 @@ public class ProjectRepositorySpec {
     @Test
     public void whenGetExistedByIdThenReturnIt() {
         final Integer id = 0;
-        Project projectEntity = projectRepository.findById(id).get();
+        Project projectEntity = projectRepository.getOne(id);
         assertThat(projectEntity)
             .as("When we get by existing id, then we should get not null project.").isNotNull();
         assertThat(projectEntity.getName())
@@ -54,22 +55,22 @@ public class ProjectRepositorySpec {
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 2;
-        assertThat(projectRepository.findById(id).isPresent())
-            .as("When we get by existing id, then we should get not null project.").isFalse();
+        assertThat(projectRepository.getOne(id))
+            .as("When we get by existing id, then we should get not null project.").isNotNull();
     }
 
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        projectRepository.deleteById(id);
-        assertThat(projectRepository.findById(id).isPresent())
-                .as("When we remove by existing id, then we should not find it again.").isFalse();
+        projectRepository.delete(id);
+        exception.expect(JpaObjectRetrievalFailureException.class);
+        projectRepository.getOne(id);
      }
 
     @Test
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 2;
         exception.expect(EmptyResultDataAccessException.class);
-        projectRepository.deleteById(id);
+        projectRepository.delete(id);
     }
 }
