@@ -15,7 +15,7 @@ public class ProjectController {
     ProjectRepository projectRepository;
 
     @RequestMapping("/project")
-    public String welcome(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
+    public String project(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
         model.addAttribute("name", name);
         model.addAttribute("projects", projectRepository.findAll());
         return "project";
