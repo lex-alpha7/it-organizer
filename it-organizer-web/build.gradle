@@ -16,5 +16,5 @@ dependencies {
     compile project (':it-organizer-db')
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
-    compile 'org.mariadb.jdbc:mariadb-java-client:+'
+    compile group: 'com.h2database', name: 'h2', version: '+'
 }

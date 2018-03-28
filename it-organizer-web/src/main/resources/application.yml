@@ -7,10 +7,17 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:mariadb://localhost:3306/springbootdb
-    username: some
-    password: some
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:h2:file:./data/it-organizer-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true

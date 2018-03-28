@@ -8,7 +8,7 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '+'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '+'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
+    compile group: 'com.h2database', name: 'h2', version: '+'
 
     testCompile group: 'org.dbunit', name: 'dbunit', version: '+'
-    testCompile group: 'com.h2database', name: 'h2', version: '+'
 }
