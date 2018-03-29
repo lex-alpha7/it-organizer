@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <nav class="navbar-left"  th:fragment="left_panel">
+        <a href="#" class="btn-expand-collapse" onclick="expandCollaps()"></a>
+        <article class="navbar-left-menu">
+            <h2 class="sidebar-title">P<span class="nav-label">rojects</span></h2>
+            <span class="nav-label">
+                    <select>
+                        <option th:value="NULL" text="---Select Type---"></option>
+                        <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" />
+                    </select><br/>
+                    <button type="button" name="addProject" onclick="addProjectNewTab();">Add project</button>
+                </span>
+        </article>
+        <article class="navbar-left-menu">
+            <h2 class="sidebar-title">T<span class="nav-label">ickets</span></h2>
+            <span class="nav-label">
+                    <a>SUP-1234:  Feeder Seat...</a><br/>
+                    <a>SUP-1235: 2 baggage...</a><br/>
+                    <a>SUP-1236: No seats...</a><br/>
+                </span>
+        </article>
+    </nav>
+
+    <nav class="navbar-right" th:fragment="right_panel">
+        <a href="#" class="btn-right-expand-collapse" onclick="expandCollapsRight()"></a>
+        <article class="navbar-right-menu">
+            <h2 class="sidebar-title">E<span class="nav-label">xternal links</span></h2>
+            <span class="nav-label">
+                <a>Scrum Board Link</a><br/>
+                <a>Jenkins Jobs Link</a><br/>
+                <a>About Environment</a><br/>
+            </span>
+        </article>
+        <article class="navbar-right-menu">
+            <h2 class="sidebar-title">N<span class="nav-label">otes</span></h2>
+            <span class="nav-label">
+                <a>About Resource Bundles</a><br/>
+                <a>About Email Template</a><br/>
+            </span>
+        </article>
+    </nav>
+</body>
+</html>

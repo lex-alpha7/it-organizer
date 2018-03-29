@@ -5,7 +5,9 @@ function addProjectNewTab() {
     $('<li><a href="#tab'+nextTab+'" data-toggle="tab">New Project</a></li>').appendTo('#tabs');
 
     // create the tab content
-    $('<div class="tab-pane" id="tab'+nextTab+'">New Project content</div>').appendTo('.tab-content');
+    $('<div class="tab-pane" id="tab'+nextTab+'"></div>').appendTo('.tab-content');
+
+    $("#tab"+nextTab+"").load("/project/new");
 
     // make the new tab active
     $('#tabs a:last').tab('show');
