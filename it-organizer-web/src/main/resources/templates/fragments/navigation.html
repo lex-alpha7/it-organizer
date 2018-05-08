@@ -6,20 +6,22 @@
         <article class="navbar-left-menu">
             <h2 class="sidebar-title">P<span class="nav-label">rojects</span></h2>
             <span class="nav-label">
-                    <select>
-                        <option th:value="NULL" text="---Select Type---"></option>
-                        <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" />
-                    </select><br/>
-                    <button type="button" name="addProject" onclick="addProjectNewTab();">Add project</button>
-                </span>
+                <select>
+                    <option th:value="NULL" text="---Select Type---"></option>
+                    <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" />
+                </select><br/>
+                <button type="button" name="addProject" onclick="addNewTab('/project/new', 'New Project');">Add project</button>
+            </span>
         </article>
         <article class="navbar-left-menu">
             <h2 class="sidebar-title">T<span class="nav-label">ickets</span></h2>
             <span class="nav-label">
-                    <a>SUP-1234:  Feeder Seat...</a><br/>
-                    <a>SUP-1235: 2 baggage...</a><br/>
-                    <a>SUP-1236: No seats...</a><br/>
-                </span>
+                <select>
+                    <option th:value="NULL" text="---Select Type---"></option>
+                    <option th:each="project : ${tickets}" th:value="${ticket.id}" th:text="${project.key}" />
+                </select><br/>
+                <button type="button" name="addTicket" onclick="addNewTab('/ticket/new', 'New Ticket');">Add ticket</button>
+            </span>
         </article>
     </nav>
 

@@ -2,6 +2,7 @@ package ru.akhitev.organizer.repository;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -11,6 +12,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.repository.ProjectRepository;
 
 import javax.inject.Inject;
 
@@ -31,7 +33,7 @@ public class ProjectRepositorySpec {
 
     @Test
     public void whenFindAllThenFindAll() {
-        assertThat(projectRepository.findAll())
+        Assertions.assertThat(projectRepository.findAll())
                 .as("Right projects count was found.").hasSize(2);
     }
 
@@ -55,7 +57,7 @@ public class ProjectRepositorySpec {
     @Test
     public void whenGetNotExistedByIdThenReturnNull() {
         final Integer id = 2;
-        assertThat(projectRepository.getOne(id))
+        Assertions.assertThat(projectRepository.getOne(id))
             .as("When we get by existing id, then we should get not null project.").isNotNull();
     }
 

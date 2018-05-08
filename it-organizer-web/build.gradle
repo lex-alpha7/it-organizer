@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile project (':it-organizer-db')
+    compile project (':it-organizer-business-logic')
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
     compile group: 'com.h2database', name: 'h2', version: '+'

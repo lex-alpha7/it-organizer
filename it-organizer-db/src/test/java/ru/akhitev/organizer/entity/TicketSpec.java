@@ -6,11 +6,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ru.akhitev.organizer.entity.*;
 import ru.akhitev.organizer.enums.Status;
 
 import java.util.*;
-
-import static org.assertj.core.api.Assertions.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketSpec {

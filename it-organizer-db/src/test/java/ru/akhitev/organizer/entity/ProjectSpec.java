@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.entity.Ticket;
 
 import java.util.*;
 

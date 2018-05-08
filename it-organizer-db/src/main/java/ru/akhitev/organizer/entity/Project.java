@@ -6,41 +6,87 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "Project")
 @SequenceGenerator(name = "seq", initialValue = 20)
-@Data
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    Integer id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     @NonNull
-    String name;
+    private String name;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "project")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<Ticket> tickets;
+    private Set<Ticket> tickets;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "project")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<ReferenceLink> links;
+    private Set<ReferenceLink> links;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "project")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<Note> notes;
+    private Set<Note> notes;
 
     {
         tickets = new LinkedHashSet<>();
         links = new LinkedHashSet<>();
         notes = new LinkedHashSet<>();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<ReferenceLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(Set<ReferenceLink> links) {
+        this.links = links;
+    }
+
+    public Set<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Set<Note> notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tickets=" + tickets +
+                ", links=" + links +
+                ", notes=" + notes +
+                '}';
     }
 }

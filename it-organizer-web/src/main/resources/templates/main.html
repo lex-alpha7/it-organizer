@@ -10,7 +10,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
     <script src="/js/main.js" ></script>
-    <script src="/js/project.js" ></script>
+    <script src="/js/tabs.js" ></script>
 </head>
 <body>
 
@@ -24,113 +24,6 @@
         </ul>
         <br/>
         <div class="tab-content">
-            <section id="tab0" class="tab-pane active">
-                <h2>SUP-1234: Feeder Seat Selection - MMB displays domestic seats on Outbound when seats are purchased</h2>
-                <article>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Info:</th>
-                                <th>Steps to reproduce:</th>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>Links: http://support.datalex.com/jira/browse/SUP-73637<br/>
-                                Customer: Air Transat<br/>
-                                Status: In progress<br/>
-                            </td>
-                            <td>STEPS TO REPRODUCE+*<br/>
-                                1. Search for 2 passengers on a feeder flight. (YYZ-CDG dec 14 / CDG YYZ dec 20. 2 pax.)<br/>
-                                2. Select seats on the international portion only ( YUL_cdg and CDG-yul only. Do not select seats for domestic portion.<br/>
-                                3. Complete the booking<br/>
-                                4. Retrieve in MMB : MMB displays selected seats for the domestic portion of the outbound<br/>
-                                <b>EXPECTED RESULTS</b><br/><br/>
-
-                            * MMB should not display seats that were not booked.<br/>
-
-                            </td>
-                        </tr>
-                    </table>
-                </article>
-                <article>
-                    <h3>Progress</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Progress</th>
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>01.11.2017</td>
-                            <td>
-                                * in the ui[1,2,3]_tdprest-exception.log found a lot of serialisation exceptions (PointOfSale; local class incompatible: stream classdesc serialVersionUID = ..., local class serialVersionUID = ...)
-
-                            </td>
-                        </tr>
-                    </table>
-                </article>
-                <article>
-                    <h3>Tasks</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Info</th>
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td>Analise logs on Jboss</td>
-                            <td>Serialize Exceptions</td>
-                        </tr>
-                        <tr>
-                            <td>Analise logs on Tomcat</td>
-                            <td>Everything is Ok</td>
-                        </tr>
-                    </table>
-                    <ul>
-                        <li>Analise logs on Jboss</li>
-                        <li>Analise logs on Tomcat</li>
-                    </ul>
-                </article>
-                <article>
-                    <h3>Attaches</h3>
-                    <ul>
-                        <li>matrix.log</li>
-                        <li>cui.log</li>
-                        <li>details.doc</li>
-                        <li>response.xml</li>
-                    </ul>
-                </article>
-                <article>
-                    <h3>Workspace</h3>
-                    <textarea>
-                            package ru.akhitev.organizer.controller;
-
-                            import org.springframework.stereotype.Controller;
-                            import org.springframework.ui.Model;
-                            import org.springframework.web.bind.annotation.RequestMapping;
-                            import org.springframework.web.bind.annotation.RequestParam;
-
-                            import java.util.Map;
-
-                            @Controller
-                            public class ProjectController {
-
-                                @RequestMapping("/project")
-                                public String welcome(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
-                                    model.addAttribute("name", name);
-                                    return "project";
-                                }
-                            }
-
-                    </textarea>
-                </article>
-             </section>
-            <section id="tab1" class="tab-pane">
-            </section>
-            <section id="tab2" class="tab-pane">
-            </section>
         </div>
     </main>
 

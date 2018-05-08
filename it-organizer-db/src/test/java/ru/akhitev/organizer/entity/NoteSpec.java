@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import ru.akhitev.organizer.entity.Note;
+import ru.akhitev.organizer.entity.Project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -43,6 +43,7 @@ subprojects {
         compile group: 'com.google.guava', name: 'guava', version: '+'
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '+'
         compile group: 'org.projectlombok', name: 'lombok', version: '+'
+        compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
 
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
         compile group: 'ch.qos.logback', name: 'logback-classic', version: '+'
