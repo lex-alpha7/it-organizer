@@ -6,11 +6,14 @@
         <article class="navbar-left-menu">
             <h2 class="sidebar-title">P<span class="nav-label">rojects</span></h2>
             <span class="nav-label">
-                <select>
-                    <option th:value="NULL" text="---Select Type---"></option>
-                    <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.name}" />
-                </select><br/>
-                <button type="button" name="addProject" onclick="addNewTab('/project/new', 'New Project');">Add project</button>
+                <table>
+                    <tr th:each="project  : ${projects}">
+                        <td th:text="${project.name}"></td>
+                        <td><a th:href="@{'~/project/edit/' + ${project.id}}">Редактировать</a></td>
+                        <td><a th:href="@{'~/project/delete/' + ${project.id}}">Удалить</a></td>
+                    </tr>
+                </table>
+                <button type="button" name="addProject" onclick="location.href='/project/new'">+</button>
             </span>
         </article>
         <article class="navbar-left-menu">
@@ -20,7 +23,7 @@
                     <option th:value="NULL" text="---Select Type---"></option>
                     <option th:each="project : ${tickets}" th:value="${ticket.id}" th:text="${project.key}" />
                 </select><br/>
-                <button type="button" name="addTicket" onclick="addNewTab('/ticket/new', 'New Ticket');">Add ticket</button>
+                <button type="button" name="addTicket" onclick="location.href='/ticket/new'">Add ticket</button>
             </span>
         </article>
     </nav>

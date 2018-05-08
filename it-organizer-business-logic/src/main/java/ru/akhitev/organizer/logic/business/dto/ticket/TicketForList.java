@@ -1,6 +1,8 @@
 package ru.akhitev.organizer.logic.business.dto.ticket;
 
-public class TicketForList extends AbstractTicket {
+import ru.akhitev.organizer.logic.business.dto.AdjustableNameSize;
+
+public class TicketForList extends AbstractTicket implements AdjustableNameSize {
     private final Integer id;
     private final String displayedName;
 
@@ -10,7 +12,7 @@ public class TicketForList extends AbstractTicket {
     }
 
     private String constructDisplayedName(String key, String priority, String name, Integer nameSize) {
-        return String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name).substring(0, nameSize);
+        return adjustSize(String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name), nameSize);
     }
 
     public Integer getId() {

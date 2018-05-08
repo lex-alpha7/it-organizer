@@ -10,7 +10,6 @@ repositories {
 
 dependencies {
     compile project (':it-organizer-db')
-    compile group: 'javax.validation', name: 'validation-api', version: '1.0.0.GA'
     compile group: 'com.google.guava', name: 'guava', version: '+'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'

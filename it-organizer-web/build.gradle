@@ -18,3 +18,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
     compile group: 'com.h2database', name: 'h2', version: '+'
 }
+
+jar {
+    baseName = 'it-organizer'
+    version =  '0.1.0'
+}

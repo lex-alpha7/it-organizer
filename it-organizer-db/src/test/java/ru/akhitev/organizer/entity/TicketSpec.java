@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import ru.akhitev.organizer.entity.*;
 import ru.akhitev.organizer.enums.Status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.*;
 

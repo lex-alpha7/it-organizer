@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <meta charset="utf-8" />
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title>IT Organizer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/main.css" rel="stylesheet" />
@@ -10,22 +10,10 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
     <script src="/js/main.js" ></script>
-    <script src="/js/tabs.js" ></script>
 </head>
 <body>
 
     <div th:replace="fragments/navigation :: left_panel"></div>
-
-    <main class="main-content">
-        <ul id="tabs" class="nav nav-tabs">
-            <li class="active"><a href="tab0#">SUP-1234:  Feeder Seat...</a></li>
-            <li><a href="#tab1" class="tab-name">How to...</a></li>
-            <li><a href="#tab2" class="tab-name">SUP-1236: No seats...</a></li>
-        </ul>
-        <br/>
-        <div class="tab-content">
-        </div>
-    </main>
 
     <div th:replace="fragments/navigation :: right_panel"></div>
 </body>

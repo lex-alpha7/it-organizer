@@ -12,45 +12,42 @@ import java.util.*;
 
 @Entity @Table(name = "Ticket")
 @SequenceGenerator(name = "seq", initialValue = 20)
-@Data
 @EqualsAndHashCode(exclude = "project")
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    Integer id;
+    private Integer id;
 
     @ManyToOne @JoinColumn(name = "project_id", nullable = false)
     @NonNull
-    Project project;
+    private Project project;
 
     @Column(name = "ticket_key", nullable = false)
     @NonNull
-    String key;
+    private String key;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<TicketLink> links;
+    private Set<TicketLink> links;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<Progress> progress;
+    private Set<Progress> progress;
 
     @Column(name = "workspace")
-    String workspace;
+    private String workspace;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
-    Set<Task> tasks;
+    private Set<Task> tasks;
 
     @Column(name = "status")
     @Enumerated
-    Status status;
+    private Status status;
 
     {
         links = new LinkedHashSet<>();
@@ -58,5 +55,92 @@ public class Ticket {
         progress = new LinkedHashSet<>();
         status = Status.OPEN;
         workspace = StringUtils.EMPTY;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<TicketLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(Set<TicketLink> links) {
+        this.links = links;
+    }
+
+    public Set<Progress> getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Set<Progress> progress) {
+        this.progress = progress;
+    }
+
+    public String getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(String workspace) {
+        this.workspace = workspace;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", project=" + project +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", links=" + links +
+                ", progress=" + progress +
+                ", workspace='" + workspace + '\'' +
+                ", tasks=" + tasks +
+                ", status=" + status +
+                '}';
     }
 }
