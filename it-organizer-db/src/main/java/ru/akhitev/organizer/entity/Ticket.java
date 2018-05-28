@@ -30,6 +30,9 @@ public class Ticket {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "priority")
+    private String priority;
+
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<TicketLink> links;
@@ -38,7 +41,7 @@ public class Ticket {
     @Fetch(value = FetchMode.SUBSELECT)
     private Set<Progress> progress;
 
-    @Column(name = "workspace")
+    @Column(name = "workspace", columnDefinition="TEXT")
     private String workspace;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "ticket")
@@ -87,6 +90,14 @@ public class Ticket {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public Set<TicketLink> getLinks() {

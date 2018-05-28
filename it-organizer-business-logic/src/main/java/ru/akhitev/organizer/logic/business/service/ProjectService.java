@@ -19,6 +19,8 @@ public class ProjectService {
     @Autowired
     private ProjectConverter converter;
 
+    private Project activeProject;
+
     public Set<ProjectForList> giveProjectsForList(Integer nameSize) {
         return converter.convertFromProjectsToProjectsForList(repository.findAll(), nameSize);
     }
@@ -37,19 +39,15 @@ public class ProjectService {
         return repository.save(project).getId();
     }
 
-    private Integer saveNewProject(ProjectForEditor projectForEditor) {
-        Project project = new Project();
-        project.setName(projectForEditor.getName());
-        return repository.save(project).getId();
-    }
-
-    private Integer updateExistedProject(ProjectForEditor projectForEditor) {
-        Project project = repository.getOne(projectForEditor.getId());
-        project.setName(projectForEditor.getName());
-        return repository.save(project).getId();
-    }
-
     public void removeProject(Integer projectId) {
         repository.delete(projectId);
+    }
+
+    public void activateProject(Integer projectId) {
+        activeProject = repository.getOne(projectId);
+    }
+
+    public Project getActiveProject() {
+        return activeProject;
     }
 }

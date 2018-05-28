@@ -5,26 +5,42 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.akhitev.organizer.entity.Ticket;
+import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
+import ru.akhitev.organizer.logic.business.service.ProjectService;
+import ru.akhitev.organizer.logic.business.service.TicketService;
 import ru.akhitev.organizer.repository.TicketRepository;
 
 @Controller
 @RequestMapping(value = "/ticket")
 public class TicketController {
     @Autowired
-    TicketRepository repository;
+    TicketService service;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newTicket(Model model) {
-        model.addAttribute("ticket", new Ticket());
-        return "fragments/ticket :: new";
+        model.addAttribute("ticket", new TicketForEditor());
+        return "edit_ticket";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveTicket(@ModelAttribute Ticket ticket, BindingResult bindingResult, Model model) {
-        repository.save(ticket);
+    public String saveTicket(@ModelAttribute TicketForEditor ticket, BindingResult bindingResult, Model model) {
+        service.saveTicket(ticket);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editProject(@PathVariable("id") Integer ticketId, Model model) {
+        model.addAttribute("ticket", service.giveTicketForEdit(ticketId, 40));
+        return "edit_ticket";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String deleteProject(@PathVariable("id") Integer ticketId, Model model) {
+        service.removeTicket(ticketId);
         return "redirect:/";
     }
 }

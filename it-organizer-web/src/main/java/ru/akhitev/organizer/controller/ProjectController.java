@@ -16,7 +16,7 @@ public class ProjectController {
     @Autowired
     private ProjectService service;
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProject(Model model) {
         model.addAttribute("project", new ProjectForEditor());
         return "edit_project";
@@ -37,6 +37,12 @@ public class ProjectController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveProject(@ModelAttribute ProjectForEditor project, BindingResult bindingResult, Model model) {
         service.saveProject(project);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/activate/{id}", method = RequestMethod.GET)
+    public String activateProject(@PathVariable("id") Integer projectId, Model model) {
+        service.activateProject(projectId);
         return "redirect:/";
     }
 }

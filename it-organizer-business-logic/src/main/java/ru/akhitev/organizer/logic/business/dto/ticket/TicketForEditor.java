@@ -7,6 +7,9 @@ public class TicketForEditor extends AbstractTicket {
     private String priority;
     private String name;
     private String workspace;
+    private String displayedName;
+
+    public TicketForEditor() {}
 
     public TicketForEditor(Integer id, Integer projectId, String key, String priority, String name, String workspace) {
         this.id = id;
@@ -15,10 +18,18 @@ public class TicketForEditor extends AbstractTicket {
         this.priority = priority;
         this.name = name;
         this.workspace = workspace;
+        this.displayedName = String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name);
     }
 
-    public String getDisplayedName() {
-        return String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name);
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDisplayedName() {return displayedName;
     }
 
     public Integer getProjectId() {

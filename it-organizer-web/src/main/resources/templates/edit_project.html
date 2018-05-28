@@ -16,7 +16,7 @@
 
     <div class="main-content">
         <form action="#" th:action="@{~/project/save}" th:object="${project}" method="post">
-            <input type="text" th:field="*{id}"/>
+            <input type="hidden" th:field="*{id}"/>
             Название проекта: <input type="text" th:field="*{name}" /><br/>
             <input type="submit" value="Сохранить" />
         </form>
