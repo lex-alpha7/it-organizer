@@ -24,7 +24,7 @@
 <div class="main-content">
     <form action="#" th:action="@{~/ticket/save}" th:object="${ticket}" method="post">
         <input type="hidden" th:field="*{id}"/>
-        <span th:field="*{displayedName}" /><br/>
+        <span th:text="${ticket.displayedName}" /><br/>
         <article>
             <table class="main-content-main-table ">
                 <thead>
