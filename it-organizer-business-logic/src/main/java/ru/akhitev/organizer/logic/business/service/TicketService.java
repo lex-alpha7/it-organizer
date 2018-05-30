@@ -23,6 +23,8 @@ public class TicketService {
     @Autowired
     private TicketConverter converter;
 
+    private Ticket activeTicket;
+
     public Set<TicketForList> giveTicketsForListByProject(Integer nameSize) {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
@@ -31,8 +33,8 @@ public class TicketService {
         return converter.convertFromTicketsToTicketsForList(tickets, nameSize);
     }
 
-    public TicketForEditor giveTicketForEdit(Integer ticketId, Integer nameSize) {
-        return converter.convertFromTicketToTicketForEditor(repository.getOne(ticketId), nameSize);
+    public TicketForEditor giveTicketForEdit(Integer ticketId) {
+        return converter.convertFromTicketToTicketForEditor(repository.getOne(ticketId));
     }
 
     public Integer saveTicket(TicketForEditor ticketForEditor) {
@@ -47,5 +49,17 @@ public class TicketService {
 
     public void removeTicket(Integer ticketId) {
         repository.delete(ticketId);
+    }
+
+    public Ticket getActiveTicket() {
+        return activeTicket;
+    }
+
+    public void activateTicket(Integer activeTicketId) {
+        this.activeTicket = repository.getOne(activeTicketId);
+    }
+
+    public boolean ifActiveTicket() {
+        return activeTicket != null;
     }
 }

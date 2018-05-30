@@ -26,19 +26,41 @@ h2 {
     color: blue;
 }
 
-table {
+.main-content-main-table {
     border: 1px solid black;
 }
 
-table tr td {
+.main-content-main-table tr td {
     border: 1px solid black;
 }
 
-table thead tr th {
+.main-content-main-table thead tr th {
     color: blue;
 }
 
-textarea {
-    width: 1200px;
-    height: 2000px;
+.main-content-main-table td {
+    padding: 5px;
+    padding-right: 30px;
+}
+
+.main-content-sub-table tr td {
+    border: 0px;
+}
+
+.main-content-sub-table thead tr th {
+    color: red;
+}
+
+.main-content-sub-table td {
+    padding: 5px;
+    padding-right: 30px;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
 }

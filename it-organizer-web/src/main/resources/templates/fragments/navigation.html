@@ -9,25 +9,27 @@
                 <table>
                     <tr th:each="project  : ${projects}">
                         <td><a th:href="@{'~/project/activate/' + ${project.id}}"><span class="nav_list_element" th:text="${project.name}"></span></a></td>
-                        <td><a th:href="@{'~/project/edit/' + ${project.id}}"><button>*</button></a></td>
-                        <td><a th:href="@{'~/project/delete/' + ${project.id}}"><button>-</button></a></td>
+                        <td><a th:href="@{'~/project/edit/' + ${project.id}}"><img th:src="@{/images/edit.png}" width="30" height="20" style="padding-left: 10px;"/></a></td>
+                        <td><a th:href="@{'~/project/delete/' + ${project.id}}"><img th:src="@{/images/remove.png}" width="30" height="20" style="padding-left: 10px;"/></a></td>
                     </tr>
                 </table>
-                <button type="button" name="addProject" onclick="location.href='/project/new'">+</button>
+                <button type="button" name="addProject" onclick="location.href='/project/new'"><img th:src="@{/images/add.png}" width="20" height="20"/></button>
             </span>
         </article>
+
         <article class="navbar-left-menu">
-            <h2 class="sidebar-title">T<span class="nav-label">ickets</span></h2>
-            <span class="nav-label">
-                <table>
-                    <tr th:each="ticket  : ${tickets}">
-                        <td class="nav_list_element" th:text="${ticket.displayedName}"></td>
-                        <td><a th:href="@{'~/ticket/edit/' + ${ticket.id}}"><button>*</button></a></td>
-                        <td><a th:href="@{'~/ticket/delete/' + ${ticket.id}}"><button>-</button></a></td>
-                    </tr>
-                </table>
-                <button type="button" name="addTicket" onclick="location.href='/ticket/new'">Add ticket</button>
-            </span>
+            <div th:if="${ifActiveProject}">
+                <h2 class="sidebar-title">T<span class="nav-label">ickets</span></h2>
+                <span class="nav-label">
+                    <table>
+                        <tr th:each="ticket  : ${tickets}">
+                            <td class="nav_list_element"><a th:href="@{'~/ticket/edit/' + ${ticket.id}}"><span class="nav_list_element" th:text="${ticket.displayedName}"></span></a></td>
+                            <td><a th:href="@{'~/ticket/delete/' + ${ticket.id}}"><img th:src="@{/images/remove.png}" width="30" height="20" style="padding-left: 10px;"/></a></td>
+                        </tr>
+                    </table>
+                    <button type="button" name="addTicket" onclick="location.href='/ticket/new'">Add ticket</button>
+                </span>
+            </div>
         </article>
     </nav>
 

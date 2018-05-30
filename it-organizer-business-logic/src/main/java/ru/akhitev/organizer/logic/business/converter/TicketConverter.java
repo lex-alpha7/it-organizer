@@ -1,5 +1,6 @@
 package ru.akhitev.organizer.logic.business.converter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Project;
 import ru.akhitev.organizer.entity.Ticket;
@@ -13,6 +14,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class TicketConverter {
+    @Autowired
+    TicketLinkConverter linkConverter;
 
     public Set<TicketForList> convertFromTicketsToTicketsForList(Collection<Ticket> tickets, Integer nameSize) {
         if (tickets == null) {
@@ -28,9 +31,10 @@ public class TicketConverter {
                 .collect(Collectors.toSet());
     }
 
-    public TicketForEditor convertFromTicketToTicketForEditor(Ticket ticket, Integer nameSize) {
+    public TicketForEditor convertFromTicketToTicketForEditor(Ticket ticket) {
         return new TicketForEditor(ticket.getId(), ticket.getProject().getId(), ticket.getKey(), ticket.getPriority(),
-                ticket.getName(), ticket.getWorkspace());
+                ticket.getName(), ticket.getWorkspace(), ticket.getStatus(), ticket.getStepsToReproduce(),
+                linkConverter.convertFromLinksToLinksForList(ticket.getLinks()));
     }
 
     public Ticket mergeProjectForListToProject(Ticket ticket, TicketForEditor ticketForEditor, Project activeProject) {
@@ -41,6 +45,8 @@ public class TicketConverter {
         ticket.setProject(activeProject);
         ticket.setKey(ticketForEditor.getKey());
         ticket.setWorkspace(ticketForEditor.getWorkspace());
+        ticket.setStatus(ticketForEditor.getStatus());
+        ticket.setStepsToReproduce(ticketForEditor.getStepsToReproduce());
         return ticket;
     }
 }

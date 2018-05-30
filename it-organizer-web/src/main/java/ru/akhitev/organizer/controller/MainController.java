@@ -10,18 +10,9 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 
 @Controller
 public class MainController {
-    public static final int NAME_SIZE = 35;
-    @Autowired
-    ProjectService projectService;
-
-    @Autowired
-    TicketService ticketService;
 
     @RequestMapping("/")
     public String project(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
-        model.addAttribute("name", name);
-        model.addAttribute("projects", projectService.giveProjectsForList(NAME_SIZE));
-        model.addAttribute("tickets", ticketService.giveTicketsForListByProject(NAME_SIZE));
         return "main";
     }
 }

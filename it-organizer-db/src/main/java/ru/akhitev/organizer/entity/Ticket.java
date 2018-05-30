@@ -52,6 +52,9 @@ public class Ticket {
     @Enumerated
     private Status status;
 
+    @Column(name = "steps_to_reproduce", columnDefinition="TEXT")
+    private String stepsToReproduce;
+
     {
         links = new LinkedHashSet<>();
         tasks = new LinkedHashSet<>();
@@ -138,6 +141,14 @@ public class Ticket {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getStepsToReproduce() {
+        return stepsToReproduce;
+    }
+
+    public void setStepsToReproduce(String stepsToReproduce) {
+        this.stepsToReproduce = stepsToReproduce;
     }
 
     @Override

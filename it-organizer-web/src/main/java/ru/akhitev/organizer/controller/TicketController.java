@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.akhitev.organizer.entity.Ticket;
+import ru.akhitev.organizer.entity.TicketLink;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
 import ru.akhitev.organizer.logic.business.service.TicketService;
@@ -34,7 +35,8 @@ public class TicketController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editProject(@PathVariable("id") Integer ticketId, Model model) {
-        model.addAttribute("ticket", service.giveTicketForEdit(ticketId, 40));
+        model.addAttribute("ticket", service.giveTicketForEdit(ticketId));
+        service.activateTicket(ticketId);
         return "edit_ticket";
     }
 

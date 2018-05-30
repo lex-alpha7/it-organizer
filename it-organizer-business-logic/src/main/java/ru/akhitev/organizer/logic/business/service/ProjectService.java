@@ -50,4 +50,8 @@ public class ProjectService {
     public Project getActiveProject() {
         return activeProject;
     }
+
+    public boolean ifActiveProject() {
+        return activeProject != null;
+    }
 }

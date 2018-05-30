@@ -23,23 +23,40 @@
 
 <div class="main-content">
     <form action="#" th:action="@{~/ticket/save}" th:object="${ticket}" method="post">
+        <input type="hidden" th:field="*{id}"/>
         <span th:field="*{displayedName}" /><br/>
         <article>
-            <table>
+            <table class="main-content-main-table ">
                 <thead>
                 <tr>
                     <th>Info:</th>
                     <th>Steps to reproduce:</th>
                 </tr>
                 </thead>
-                <tr>
-                    <td>Links: http://support.datalex.com/jira/browse/SUP-73637<br/>
-                        Key: <input type="text" th:field="*{key}" /><br/>
-                        Name: <input type="text" th:field="*{name}" /><br/>
-                        Status:<br/>
-                    </td>
-                    <td></td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="main-content-sub-table" border="0" cellpadding="5">
+                                <tr><td>Key:</td><td><input type="text" th:field="*{key}" /></td></tr>
+                                <tr><td>Name:</td><td><input type="text" th:field="*{name}" style="width: 500px;"/></td></tr>
+                                <tr><td>Priority:</td><td><input type="text" th:field="*{priority}" /></td></tr>
+                                <tr><td>Status:</td><td>
+                                    <select th:field="*{status}" th:remove="all-but-first">
+                                        <option th:each="possibleStatus : ${T(ru.akhitev.organizer.enums.Status).values()}"
+                                                th:value="${possibleStatus}" th:text="${possibleStatus.toString()}"></option>
+                                    </select>
+                                </td></tr>
+                                <tr><td>Links:</td><td>
+                                    <div th:each="link : *{links}">
+                                        <a target="_blank" th:href="${link.link}" style="color: blue;" ><span th:text="${link.name}"/></a><a th:href="@{'~/ticket/link/delete/' + ${link.id}}"><img th:src="@{/images/remove.png}" width="30" height="20" style="padding-left: 10px;" /></a>
+                                    </div><br/>
+                                    <button type="button" name="addLink" onclick="location.href='/ticket/link/new'"><img th:src="@{/images/add.png}" width="20" height="20"/></button>
+                                </td></tr>
+                            </table>
+                        </td>
+                        <td><textarea th:field="*{stepsToReproduce}" cols="80" rows="10" style="overflow-y: scroll;"></textarea></td>
+                    </tr>
+                </tbody>
             </table>
         </article>
         <article>
@@ -71,7 +88,7 @@
         </article>
         <article>
             <h3>Workspace</h3>
-            <textarea th:field="*{workspace}"></textarea>
+            <textarea th:field="*{workspace}" rows="10" cols="200"></textarea>
         </article>
         <input type="submit" value="Submit" /> <input type="reset" value="Reset" />
     </form>
