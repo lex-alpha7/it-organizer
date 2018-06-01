@@ -4,18 +4,19 @@
   background-color: #333;
   bottom: 0px;
   right: 0px;
-  position: absolute;
-  top: 5px;
-  width: 230px;
+  position: fixed;
+  top: 0px;
+  width: 12%;
   z-index: 8;
   overflow: hidden;
+  margin-right: 0px;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
 
 .navbar-right.collapsed {
-  width: 20px;
+  width: 2%;
 }
 
 .navbar-right.collapsed .nav-label {
@@ -77,9 +78,9 @@
   background-color: #333;
   bottom: 0px;
   left: 0px;
-  position: absolute;
-  top: 5px;
-  width: 300px;
+  position: fixed;
+  top: 0px;
+  width: 12%;
   z-index: 8;
   overflow: hidden;
   -webkit-transition: all 0.1s ease-in-out;
@@ -89,7 +90,7 @@
 }
 
 .navbar-left.collapsed {
-  width: 20px;
+  width: 2%;
 }
 
 .navbar-left.collapsed .nav-label {
@@ -148,11 +149,14 @@
 }
 
 .main-content {
-  margin-top: 5px;
-  margin-left: 300px;
-  padding: 20px;
+  margin-left: 12%;
+  margin-right: 12%;
 }
 
-.collapsed + .main-content {
-  margin-left: 60px;
+.main-content.left-collapsed {
+  margin-left: 2%;
+}
+
+.main-content.right-collapsed {
+  margin-right: 2%;
 }

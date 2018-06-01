@@ -25,7 +25,7 @@ public class TicketConverter {
                 .map( ticket ->
                         new TicketForList(ticket.getId(),
                                 ticket.getKey(),
-                                "story",
+                                ticket.getPriority(),
                                 ticket.getName(),
                                 nameSize))
                 .collect(Collectors.toSet());
@@ -46,6 +46,7 @@ public class TicketConverter {
         ticket.setKey(ticketForEditor.getKey());
         ticket.setWorkspace(ticketForEditor.getWorkspace());
         ticket.setStatus(ticketForEditor.getStatus());
+        ticket.setPriority(ticketForEditor.getPriority());
         ticket.setStepsToReproduce(ticketForEditor.getStepsToReproduce());
         return ticket;
     }

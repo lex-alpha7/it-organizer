@@ -30,18 +30,18 @@ public class TicketController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveTicket(@ModelAttribute TicketForEditor ticket, BindingResult bindingResult, Model model) {
         service.saveTicket(ticket);
-        return "redirect:/";
+        return "redirect:/ticket/edit/" + ticket.getId();
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editProject(@PathVariable("id") Integer ticketId, Model model) {
+    public String editTicket(@PathVariable("id") Integer ticketId, Model model) {
         model.addAttribute("ticket", service.giveTicketForEdit(ticketId));
         service.activateTicket(ticketId);
         return "edit_ticket";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteProject(@PathVariable("id") Integer ticketId, Model model) {
+    public String deletTicket(@PathVariable("id") Integer ticketId, Model model) {
         service.removeTicket(ticketId);
         return "redirect:/";
     }

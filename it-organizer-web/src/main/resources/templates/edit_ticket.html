@@ -1,16 +1,20 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <meta charset="utf-8" />
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
     <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/accordion.css" rel="stylesheet" />
     <link href="/css/expand-collapse.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" ></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
+    <!--<link href="/css/navigation.css" rel="stylesheet" />-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
     <script src="/js/main.js" ></script>
+    <!--<script src="/js/navigation.js" ></script>-->
 </head>
 <body>
 <div th:replace="fragments/navigation :: left_panel"></div>
@@ -22,74 +26,116 @@
 </script>
 
 <div class="main-content">
-    <form action="#" th:action="@{~/ticket/save}" th:object="${ticket}" method="post">
+    <form name="edit_ticket_form" action="#" th:action="@{~/ticket/save}" th:object="${ticket}" method="post">
+        <div id="menu-bar" class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-collapse navbar-menubuilder">
+                    <ul class="nav navbar-nav">
+                        <li><a href="javascript:;" onclick="document.forms.edit_ticket_form.submit();" style="color: white;"><span class="glyphicon glyphicon-floppy-disk"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <input type="hidden" th:field="*{id}"/>
-        <span th:text="${ticket.displayedName}" /><br/>
-        <article>
-            <table class="main-content-main-table ">
-                <thead>
-                <tr>
-                    <th>Info:</th>
-                    <th>Steps to reproduce:</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <table class="main-content-sub-table" border="0" cellpadding="5">
-                                <tr><td>Key:</td><td><input type="text" th:field="*{key}" /></td></tr>
-                                <tr><td>Name:</td><td><input type="text" th:field="*{name}" style="width: 500px;"/></td></tr>
-                                <tr><td>Priority:</td><td><input type="text" th:field="*{priority}" /></td></tr>
-                                <tr><td>Status:</td><td>
-                                    <select th:field="*{status}" th:remove="all-but-first">
-                                        <option th:each="possibleStatus : ${T(ru.akhitev.organizer.enums.Status).values()}"
-                                                th:value="${possibleStatus}" th:text="${possibleStatus.toString()}"></option>
-                                    </select>
-                                </td></tr>
-                                <tr><td>Links:</td><td>
-                                    <div th:each="link : *{links}">
-                                        <a target="_blank" th:href="${link.link}" style="color: blue;" ><span th:text="${link.name}"/></a><a th:href="@{'~/ticket/link/delete/' + ${link.id}}"><img th:src="@{/images/remove.png}" width="30" height="20" style="padding-left: 10px;" /></a>
-                                    </div><br/>
-                                    <button type="button" name="addLink" onclick="location.href='/ticket/link/new'"><img th:src="@{/images/add.png}" width="20" height="20"/></button>
-                                </td></tr>
-                            </table>
-                        </td>
-                        <td><textarea th:field="*{stepsToReproduce}" cols="80" rows="10" style="overflow-y: scroll;"></textarea></td>
-                    </tr>
-                </tbody>
-            </table>
-        </article>
-        <article>
-            <h3>Progress</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Progress</th>
-                </tr>
-                </thead>
-                <tr>
-                </tr>
-            </table>
-        </article>
-        <article>
-            <h3>Tasks</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Info</th>
-                </tr>
-                </thead>
-            </table>
-        </article>
-        <article>
-            <h3>Attaches</h3>
-        </article>
-        <article>
-            <h3>Workspace</h3>
-            <textarea th:field="*{workspace}" rows="10" cols="200"></textarea>
-        </article>
+        <h1 th:text="${ticket.displayedName}" style="margin-left: 1%; margin-right: 1%; width: 90%;"/><br/>
+            <div class="container" style="margin-left: 1%; margin-right: 1%; width: 90%;">
+                <div class="panel-group">
+                    <!-- Info -->
+                    <div  class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1">Info</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="main-content-sub-table" border="0" cellpadding="5">
+                                    <tr><td>Key:</td><td><input type="text" th:field="*{key}" /></td></tr>
+                                    <tr><td>Name:</td><td><input type="text" th:field="*{name}" style="width: 500px;"/></td></tr>
+                                    <tr><td>Priority:</td><td><input type="text" th:field="*{priority}" /></td></tr>
+                                    <tr><td>Status:</td><td>
+                                        <select th:field="*{status}" th:remove="all-but-first">
+                                            <option th:each="possibleStatus : ${T(ru.akhitev.organizer.enums.Status).values()}"
+                                                    th:value="${possibleStatus}" th:text="${possibleStatus.toString()}"></option>
+                                        </select>
+                                    </td></tr>
+                                    <tr><td>Links:</td><td>
+                                        <div th:each="link : *{links}">
+                                            <a target="_blank" th:href="${link.link}" style="color: blue;" ><span th:text="${link.name}"/></a><a style="color: black;" th:href="@{'~/ticket/link/delete/' + ${link.id}}"><span class="glyphicon glyphicon-trash" style="padding-left: 10px;"></span></a>
+                                        </div><br/>
+                                        <button type="button" name="addLink" onclick="location.href='/ticket/link/new'"><span class="glyphicon glyphicon-plus"></span></button>
+                                    </td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Steps to reproduce -->
+                    <div class="panel  panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse-stepsToReproduce">Steps to reproduce</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-stepsToReproduce" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <textarea th:field="*{stepsToReproduce}" cols="80" style="height: 100px; width: 90%"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attaches -->
+                    <div  class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse-attaches">Attaches</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-attaches" class="panel-collapse collapse">
+                            <p>attaches</p>
+                        </div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div  class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse-progress">Progress</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-progress" class="panel-collapse collapse">
+                            <p>progress</p>
+                        </div>
+                    </div>
+
+                    <!-- Tasks -->
+                    <div  class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse-tasks">Tasks</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-tasks" class="panel-collapse collapse">
+                            <p>tasks</p>
+                        </div>
+                    </div>
+
+                    <!-- Workspace -->
+                    <div  class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse-workspace">Workspace</a>
+                            </h4>
+                        </div>
+                        <div id="collapse-workspace" class="panel-collapse collapse in">
+                            <textarea th:field="*{workspace}" style="height: 100px; width: 90%;"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
         <input type="submit" value="Submit" /> <input type="reset" value="Reset" />
     </form>
 </div>
