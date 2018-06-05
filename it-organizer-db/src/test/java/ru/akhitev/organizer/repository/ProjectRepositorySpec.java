@@ -12,12 +12,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.repository.ProjectRepository;
 
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -64,7 +61,7 @@ public class ProjectRepositorySpec {
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        projectRepository.delete(id);
+        projectRepository.deleteById(id);
         exception.expect(JpaObjectRetrievalFailureException.class);
         projectRepository.getOne(id);
      }
@@ -73,6 +70,6 @@ public class ProjectRepositorySpec {
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 2;
         exception.expect(EmptyResultDataAccessException.class);
-        projectRepository.delete(id);
+        projectRepository.deleteById(id);
     }
 }

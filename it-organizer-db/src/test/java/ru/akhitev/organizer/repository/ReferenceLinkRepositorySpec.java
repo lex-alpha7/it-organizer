@@ -12,7 +12,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.ReferenceLink;
-import ru.akhitev.organizer.repository.ReferenceLinkRepository;
 
 import javax.inject.Inject;
 
@@ -58,7 +57,7 @@ public class ReferenceLinkRepositorySpec {
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        repository.delete(id);
+        repository.deleteById(id);
         exception.expect(JpaObjectRetrievalFailureException.class);
         repository.getOne(id);
     }
@@ -67,6 +66,6 @@ public class ReferenceLinkRepositorySpec {
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 4;
         exception.expect(EmptyResultDataAccessException.class);
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

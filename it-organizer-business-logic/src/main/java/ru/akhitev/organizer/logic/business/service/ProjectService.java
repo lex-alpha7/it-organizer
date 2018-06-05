@@ -39,8 +39,8 @@ public class ProjectService {
         return repository.save(project).getId();
     }
 
-    public void removeProject(Integer projectId) {
-        repository.delete(projectId);
+    public void removeProject(Integer projectID) {
+        repository.deleteById(projectID);
     }
 
     public void activateProject(Integer projectId) {

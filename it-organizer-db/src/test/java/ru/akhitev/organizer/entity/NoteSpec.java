@@ -1,22 +1,17 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Note;
-import ru.akhitev.organizer.entity.Project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NoteSpec {
-    Note note;
-    final Integer id = 0;
-    final String title = "The best note";
-    final String noteText = "You need to read the Clean Code book.";
+    private Note note;
+    private final Integer id = 0;
+    private final String title = "The best note";
+    private final String noteText = "You need to read the Clean Code book.";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

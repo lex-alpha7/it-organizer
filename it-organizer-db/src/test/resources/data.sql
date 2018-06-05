@@ -4,10 +4,10 @@ INSERT INTO Reference_Link(id, project_id, name, link) VALUES (1, 0, 'jira', 'ht
 INSERT INTO Note(id, project_id, title, note) VALUES (0, 0, 'Environment set up', 'You need to install an plugin.');
 INSERT INTO Note(id, project_id, title, note) VALUES (1, 0, 'Deployment', 'Deploy in the Oracle VM.');
 INSERT INTO Note(id, project_id, title, note) VALUES (2, 0, 'Stand Up', 'You need to prepare a report every morning.');
-INSERT INTO Ticket(id, project_id, ticket_key, name, workspace, status) VALUES (0, 0, 'PROD-000101', 'A problem with payment', '', 1);
+INSERT INTO Ticket(id, project_id, ticket_key, name, priority, workspace, steps_to_reproduce, status) VALUES (0, 0, 'PROD-000101', 'A problem with payment', 'p3', '', 'step A, step B', 1);
 INSERT INTO Ticket_Link(id, ticket_id, type, name, link) VALUES (0, 0, 2, 'Link to the Jira', 'www.jira.com/101');
 INSERT INTO Ticket_Link(id, ticket_id, type, name, link) VALUES (1, 0, 0, 'Page about payment in wiki', 'www.confluence.com/payment');
 INSERT INTO Ticket_Link(id, ticket_id, type, name, link) VALUES (2, 0, 1, 'Logs', '/organizer/tickets/PROD-000101/usefull_log.log');
 INSERT INTO Progress(id, ticket_id, status_date, status) VALUES (0, 0, '2017-08-08', 'Started working with');
-INSERT INTO Ticket(id, project_id, ticket_key, name, workspace, status) VALUES (1, 0, 'TEST-000101', 'A unit test was broken', 'was fixed.', 3);
+INSERT INTO Ticket(id, project_id, ticket_key, name, priority, workspace, steps_to_reproduce, status) VALUES (1, 0, 'TEST-000101', 'A unit test was broken', 'p3', 'was fixed.', 'step A, step B', 3);
 INSERT INTO Project(id, name) VALUES (1,'pro2');

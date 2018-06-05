@@ -1,31 +1,57 @@
 package ru.akhitev.organizer.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Reference_Link")
 @SequenceGenerator(name = "seq", initialValue = 20)
-@Data
 @EqualsAndHashCode(exclude = "project")
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceLink {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    Integer id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
-    @NonNull
-    Project project;
+    private Project project;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "link")
-    @NonNull
-    String link;
+    private String link;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(@NonNull Project project) {
+        this.project = project;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(@NonNull String link) {
+        this.link = link;
+    }
 }

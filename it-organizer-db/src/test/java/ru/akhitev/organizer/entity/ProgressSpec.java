@@ -1,22 +1,16 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Progress;
-import ru.akhitev.organizer.entity.Ticket;
-import ru.akhitev.organizer.enums.Status;
 
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProgressSpec {
-    Progress progress;
+    private Progress progress;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

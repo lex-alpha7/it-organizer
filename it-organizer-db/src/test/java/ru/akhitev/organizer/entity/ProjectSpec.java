@@ -1,22 +1,18 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.Ticket;
 
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProjectSpec {
-    Project project;
-    String projectName = "Test Project";
+    private Project project;
+    private String projectName = "Test Project";
+
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -77,9 +73,31 @@ public class ProjectSpec {
     }
 
     @Test
+    public void whenLinksWereSetThenReturnThem() {
+        Set<ReferenceLink> links = new HashSet<>();
+        ReferenceLink link = new ReferenceLink();
+        links.add(link);
+        project.setLinks(links);
+        assertThat(project.getLinks())
+                .as("check getting not null links after they were added").isNotNull()
+                .as("check getting correct size after links were added").hasSize(1);
+    }
+
+    @Test
     public void whenNoNotesWereSetThenReturnEmptyList() {
         assertThat(project.getNotes())
                 .as("when no notes were set then return not null empty map")
                 .isEqualTo(Collections.emptySet());
+    }
+
+    @Test
+    public void whenNotesWereSetThenReturnThem() {
+        Set<Note> notes = new HashSet<>();
+        Note note = new Note();
+        notes.add(note);
+        project.setNotes(notes);
+        assertThat(project.getNotes())
+                .as("check getting not null notes after they were added").isNotNull()
+                .as("check getting correct size after notes were added").hasSize(1);
     }
 }

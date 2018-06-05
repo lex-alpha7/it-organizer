@@ -10,12 +10,12 @@ subprojects {
             mavenCentral()
         }
         dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
         }
     }
 
     ext {
-        springBootVersion = '2.0.0.M6'
+        springBootVersion = '2.0.2.RELEASE'
     }
 
     sourceCompatibility = 1.8
@@ -33,9 +33,9 @@ subprojects {
     }
 
     dependencies {
-        compile 'org.springframework.boot:spring-boot-devtools:1.5.9.RELEASE'
+        compile 'org.springframework.boot:spring-boot-devtools:2.0.2.RELEASE'
         compile group: 'org.springframework', name: 'spring-context', version: '+'
-        compile 'org.springframework.boot:spring-boot-starter-logging:1.5.9.RELEASE'
+        compile 'org.springframework.boot:spring-boot-starter-logging:2.0.2.RELEASE'
         compile group: 'org.springframework', name: 'spring-tx', version: '+'
         compile group: 'org.springframework', name: 'spring-orm', version: '+'
         compile group: 'javax.inject', name: 'javax.inject', version: '+'
@@ -45,12 +45,12 @@ subprojects {
         compile group: 'org.projectlombok', name: 'lombok', version: '+'
 
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-        compile group: 'ch.qos.logback', name: 'logback-classic', version: '+'
-        compile group: 'ch.qos.logback', name: 'logback-core', version: '+'
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+        compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
 
-        testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: '1.5.7.RELEASE'
-        testCompile group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '1.5.7.RELEASE'
-        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.7.RELEASE'
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: '2.0.2.RELEASE'
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '2.0.2.RELEASE'
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.2.RELEASE'
         testCompile group: 'org.springframework', name: 'spring-test', version: '+'
         testCompile group: 'org.mockito', name: 'mockito-core', version: '+'
         testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '+'

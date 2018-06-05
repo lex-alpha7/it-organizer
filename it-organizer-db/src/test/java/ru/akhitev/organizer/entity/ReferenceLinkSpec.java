@@ -1,22 +1,17 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.ReferenceLink;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceLinkSpec {
-    ReferenceLink link;
-    final Integer id = 0;
-    final String name = "The best link";
-    final String linkText = "http://www.best.link.com";
+    private ReferenceLink link;
+    private final Integer id = 0;
+    private final String name = "The best link";
+    private final String linkText = "http://www.best.link.com";
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

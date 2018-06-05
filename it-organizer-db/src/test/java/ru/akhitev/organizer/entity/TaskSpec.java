@@ -1,20 +1,15 @@
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Task;
-import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.enums.Status;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TaskSpec {
-    Task task;
+    private Task task;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
