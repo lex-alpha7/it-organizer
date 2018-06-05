@@ -16,47 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.project;
+package ru.akhitev.organizer.logic.business.vo.project;
 
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 
+import java.util.Map;
 import java.util.Set;
 
-public class ProjectForEditor {
-    private Integer id;
-    private String name;
-    private Set<TicketForList> tickets;
+public class StatusReport {
+    private final Map<TicketForList, Set<ProgressForShow>> progress;
 
-    public ProjectForEditor() {
+    public StatusReport(Map<TicketForList, Set<ProgressForShow>> progress) {
+        this.progress = progress;
     }
 
-    public ProjectForEditor(Integer id, String name, Set<TicketForList> tickets) {
-        this.id = id;
-        this.name = name;
-        this.tickets = tickets;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<TicketForList> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(Set<TicketForList> tickets) {
-        this.tickets = tickets;
+    public Map<TicketForList, Set<ProgressForShow>> getProgress() {
+        return progress;
     }
 }

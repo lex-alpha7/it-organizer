@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket.link;
+package ru.akhitev.organizer.logic.business.vo.ticket.link;
 
-import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.enums.LinkType;
 
 public class TicketLinkForList {
-    private Integer id;
-    private LinkType type;
-    private String name;
-    private String link;
-    private String displayName;
+    private final Integer id;
+    private final LinkType type;
+    private final String name;
+    private final String link;
+    private final String displayName;
 
     public TicketLinkForList(Integer id, LinkType type, String name, String link) {
         this.id = id;
@@ -40,39 +39,20 @@ public class TicketLinkForList {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public LinkType getType() {
         return type;
-    }
-
-    public void setType(LinkType type) {
-        this.type = type;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getLink() {
         return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 }

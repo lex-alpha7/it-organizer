@@ -22,8 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.logic.business.converter.TicketConverter;
-import ru.akhitev.organizer.logic.business.dto.project.ProjectForEditor;
-import ru.akhitev.organizer.logic.business.dto.ticket.TicketForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.TicketForList;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
 import ru.akhitev.organizer.repository.TicketRepository;
 
@@ -48,11 +47,11 @@ public class TicketService {
             return Collections.emptySet();
         }
         Set<Ticket> tickets = repository.findByProject(projectService.getActiveProject());
-        return converter.convertFromTicketsToTicketsForList(tickets, nameSize);
+        return converter.prepareTicketsForList(tickets, nameSize);
     }
 
     public TicketForEditor giveTicketForEdit(Integer ticketId) {
-        return converter.convertFromTicketToTicketForEditor(repository.getOne(ticketId));
+        return converter.prepareTicketForEditor(repository.getOne(ticketId));
     }
 
     public Integer saveTicket(TicketForEditor ticketForEditor) {

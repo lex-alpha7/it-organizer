@@ -18,13 +18,12 @@
  */
 package ru.akhitev.organizer.logic.business.dto.ticket;
 
-import ru.akhitev.organizer.entity.TicketLink;
 import ru.akhitev.organizer.enums.Status;
-import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForList;
 
 import java.util.Set;
 
-public class TicketForEditor extends AbstractTicket {
+public class TicketForEditor implements TemplatedDisplayName {
     private Integer id;
     private Integer projectId;
     private String key;
