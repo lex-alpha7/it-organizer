@@ -21,7 +21,7 @@ public class TicketRepositorySpec {
     private ProjectRepository projectRepository;
 
 //    @Test
-    public void whenFindAllThenFindAll() {
+    public void whenFindByProjectThenFindTickets() {
         Project project = projectRepository.getOne(0);
         Set<Ticket> tickets = ticketRepository.findByProject(project);
         Assertions.assertThat(tickets)
