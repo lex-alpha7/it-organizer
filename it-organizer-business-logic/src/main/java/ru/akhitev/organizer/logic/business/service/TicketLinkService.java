@@ -46,7 +46,7 @@ public class TicketLinkService {
         return linkRepository.save(link).getId();
     }
 
-    public void removeLink(Integer linkId) {
-        linkRepository.delete(linkId);
+    public void removeLink(Integer linkID) {
+        linkRepository.deleteById(linkID);
     }
 }

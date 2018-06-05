@@ -18,21 +18,17 @@
  */
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.*;
 import ru.akhitev.organizer.enums.Status;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.*;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketSpec {
-    Ticket ticket;
+    private Ticket ticket;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -180,5 +176,23 @@ public class TicketSpec {
         exception.expect(NullPointerException.class);
         exception.expectMessage("project");
         ticket.setProject(null);
+    }
+
+    @Test
+    public void whenPriorityWasSetThenReturnIt() {
+        final String priority = "p3";
+        ticket.setPriority(priority);
+        assertThat(ticket.getPriority())
+                .as("When a priority was set, return it.")
+                .isEqualTo(priority);
+    }
+
+    @Test
+    public void whenStepsToReproduceWasSetThenReturnIt() {
+        final String stepsToReproduce = "do it. do that";
+        ticket.setStepsToReproduce(stepsToReproduce);
+        assertThat(ticket.getStepsToReproduce())
+                .as("When a priority was set, return it.")
+                .isEqualTo(stepsToReproduce);
     }
 }

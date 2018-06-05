@@ -65,8 +65,8 @@ public class TicketService {
         return repository.save(ticket).getId();
     }
 
-    public void removeTicket(Integer ticketId) {
-        repository.delete(ticketId);
+    public void removeTicket(Integer ticketID) {
+        repository.deleteById(ticketID);
     }
 
     public Ticket getActiveTicket() {

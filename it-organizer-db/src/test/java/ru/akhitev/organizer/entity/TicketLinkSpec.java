@@ -18,21 +18,16 @@
  */
 package ru.akhitev.organizer.entity;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import ru.akhitev.organizer.entity.Ticket;
-import ru.akhitev.organizer.entity.TicketLink;
 import ru.akhitev.organizer.enums.LinkType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketLinkSpec {
-    TicketLink link;
+    private TicketLink link;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -124,5 +119,26 @@ public class TicketLinkSpec {
         exception.expect(NullPointerException.class);
         exception.expectMessage("type");
         link.setType(null);
+    }
+
+    @Test
+    public void whenNullTypeIsInConstructorThenIllegalArgumentException() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("type");
+        TicketLink link = new TicketLink(0, new Ticket(), null, "name", "link");
+    }
+
+    @Test
+    public void whenNullLinkIsInConstructorThenIllegalArgumentException() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("link");
+        TicketLink link = new TicketLink(0, new Ticket(), LinkType.USEFUL_LINK, "name", null);
+    }
+
+    @Test
+    public void whenNullTicketIsInConstructorThenIllegalArgumentException() {
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("ticket");
+        TicketLink link = new TicketLink(0, null, LinkType.USEFUL_LINK, "name", "link");
     }
 }

@@ -19,7 +19,6 @@
 package ru.akhitev.organizer.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -36,7 +35,6 @@ public class Project {
     private Integer id;
 
     @Column(name = "name", nullable = false)
-    @NonNull
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "project")
@@ -69,7 +67,7 @@ public class Project {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 

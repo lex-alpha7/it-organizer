@@ -18,8 +18,6 @@
  */
 package ru.akhitev.organizer.repository;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,7 +29,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.akhitev.organizer.entity.Note;
-import ru.akhitev.organizer.repository.NoteRepository;
 
 import javax.inject.Inject;
 
@@ -39,12 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @SpringBootTest
 public class NoteRepositorySpec {
 
     @Inject
-    NoteRepository repository;
+    private NoteRepository repository;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -79,7 +75,7 @@ public class NoteRepositorySpec {
     @Test
     public void whenRemoveExistedByIdThenItDeleted() {
         final Integer id = 1;
-        repository.delete(id);
+        repository.deleteById(id);
         exception.expect(JpaObjectRetrievalFailureException.class);
         repository.getOne(id);
     }
@@ -88,6 +84,6 @@ public class NoteRepositorySpec {
     public void whenRemoveNotExistedByIdThenException() {
         final Integer id = 4;
         exception.expect(EmptyResultDataAccessException.class);
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

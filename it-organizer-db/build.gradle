@@ -3,11 +3,10 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-jdbc:1.5.9.RELEASE'
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.11.9.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc:2.0.2.RELEASE'
+    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.0.7.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '+'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '+'
-    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
     compile group: 'com.h2database', name: 'h2', version: '+'
 
     testCompile group: 'org.dbunit', name: 'dbunit', version: '+'

@@ -19,7 +19,6 @@
 package ru.akhitev.organizer.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import ru.akhitev.organizer.enums.LinkType;
 
 import javax.persistence.*;
@@ -34,11 +33,9 @@ public class TicketLink {
     private Integer id;
 
     @ManyToOne @JoinColumn(name = "ticket_id", nullable = false)
-    @NonNull
     private Ticket ticket;
 
     @Column(name = "type", nullable = false)
-    @NonNull
     @Enumerated
     private LinkType type;
 
@@ -46,13 +43,12 @@ public class TicketLink {
     private String name;
 
     @Column(name = "link", nullable = false)
-    @NonNull
     private String link;
 
     public TicketLink() {
     }
 
-    public TicketLink(Integer id, Ticket ticket, LinkType type, String name, String link) {
+    public TicketLink(Integer id, @NonNull Ticket ticket, @NonNull LinkType type, String name, @NonNull String link) {
         this.id = id;
         this.ticket = ticket;
         this.type = type;
@@ -72,7 +68,7 @@ public class TicketLink {
         return ticket;
     }
 
-    public void setTicket(Ticket ticket) {
+    public void setTicket(@NonNull Ticket ticket) {
         this.ticket = ticket;
     }
 
@@ -80,7 +76,7 @@ public class TicketLink {
         return type;
     }
 
-    public void setType(LinkType type) {
+    public void setType(@NonNull LinkType type) {
         this.type = type;
     }
 
@@ -96,7 +92,7 @@ public class TicketLink {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(@NonNull String link) {
         this.link = link;
     }
 }

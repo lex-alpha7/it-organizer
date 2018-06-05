@@ -19,7 +19,6 @@
 package ru.akhitev.organizer.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,26 +26,52 @@ import java.util.Date;
 @Entity
 @Table(name = "Progress")
 @SequenceGenerator(name = "seq", initialValue = 20)
-@Data
 @EqualsAndHashCode(exclude = "ticket")
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    Integer id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
-    @NonNull
-    Ticket ticket;
+    private Ticket ticket;
 
     @Column(name = "status_date", nullable = false)
-    @NonNull
-    Date date;
+    private Date date;
 
     @Column(name = "status", nullable = false)
-    @NonNull
-    String status;
+    private String status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(@NonNull Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(@NonNull Date date) {
+        this.date = date;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(@NonNull String status) {
+        this.status = status;
+    }
 }

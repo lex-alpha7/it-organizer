@@ -24,7 +24,9 @@ CREATE TABLE Ticket (
     project_id INTEGER NOT NULL,
     ticket_key VARCHAR(100) NOT NULL,
     name VARCHAR(100),
+    priority VARCHAR(100),
     workspace VARCHAR(100),
+    steps_to_reproduce VARCHAR(100),
     status VARCHAR(100) NOT NULL,
     FOREIGN KEY(project_id) REFERENCES Project(id)
 );

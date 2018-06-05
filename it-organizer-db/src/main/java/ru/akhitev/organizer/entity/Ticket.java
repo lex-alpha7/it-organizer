@@ -19,7 +19,6 @@
 package ru.akhitev.organizer.entity;
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -38,11 +37,9 @@ public class Ticket {
     private Integer id;
 
     @ManyToOne @JoinColumn(name = "project_id", nullable = false)
-    @NonNull
     private Project project;
 
     @Column(name = "ticket_key", nullable = false)
-    @NonNull
     private String key;
 
     @Column(name = "name")
@@ -93,7 +90,7 @@ public class Ticket {
         return project;
     }
 
-    public void setProject(Project project) {
+    public void setProject(@NonNull Project project) {
         this.project = project;
     }
 
@@ -101,7 +98,7 @@ public class Ticket {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(@NonNull String key) {
         this.key = key;
     }
 
@@ -176,11 +173,13 @@ public class Ticket {
                 ", project=" + project +
                 ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
+                ", priority='" + priority + '\'' +
                 ", links=" + links +
                 ", progress=" + progress +
                 ", workspace='" + workspace + '\'' +
                 ", tasks=" + tasks +
                 ", status=" + status +
+                ", stepsToReproduce='" + stepsToReproduce + '\'' +
                 '}';
     }
 }
