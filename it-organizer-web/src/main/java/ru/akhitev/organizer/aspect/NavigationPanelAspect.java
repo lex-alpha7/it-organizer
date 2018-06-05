@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
+import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
 import ru.akhitev.organizer.logic.business.service.TicketService;
 
 import java.util.Arrays;
@@ -35,10 +36,13 @@ public class NavigationPanelAspect {
     public static final int NAME_SIZE = 35;
 
     @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
-    TicketService ticketService;
+    private TicketService ticketService;
+
+    @Autowired
+    private ReferenceLinkService referenceLinkService;
 
     @Before("execution(* ru.akhitev.organizer.controller.*.*(..))  && args(..,model)")
     public void beforeImpl(Model model) {
@@ -47,6 +51,7 @@ public class NavigationPanelAspect {
         }
         model.addAttribute("projects", projectService.giveProjectsForList(NAME_SIZE));
         model.addAttribute("tickets", ticketService.giveTicketsForListByProject(NAME_SIZE));
+        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForListByProject(NAME_SIZE));
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());
     }

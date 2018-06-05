@@ -19,20 +19,12 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <meta charset="utf-8" />
+<head th:include="fragments/layout :: headerFragment">
+    <title id="pageTitle" th:text="${ticket.displayedName}" />
+</head>
 <head>
     <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
-    <link href="/css/main.css" rel="stylesheet" />
-    <link href="/css/accordion.css" rel="stylesheet" />
-    <link href="/css/expand-collapse.css" rel="stylesheet" />
-    <!--<link href="/css/navigation.css" rel="stylesheet" />-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
-    <script src="/js/main.js" ></script>
-    <!--<script src="/js/navigation.js" ></script>-->
+
 </head>
 <body>
 <div th:replace="fragments/navigation :: left_panel"></div>

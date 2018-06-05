@@ -16,14 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.repository;
+package ru.akhitev.organizer.logic.business.dto.project.link;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.ReferenceLink;
+import ru.akhitev.organizer.logic.business.dto.AdjustableNameSize;
 
-import java.util.Set;
+public class ReferenceLinkForList implements AdjustableNameSize {
+    private Integer id;
+    private String name;
+    private String link;
 
-public interface ReferenceLinkRepository extends JpaRepository<ReferenceLink, Integer> {
-    Set<ReferenceLink> findByProject(Project project);
+    public ReferenceLinkForList(Integer id, String name, String link, Integer nameSize) {
+        this.id = id;
+        this.link = link;
+        this.name = adjustSize(name, nameSize);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLink() {
+        return link;
+    }
 }

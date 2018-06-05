@@ -16,14 +16,43 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.repository;
+package ru.akhitev.organizer.logic.business.dto.project.link;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.ReferenceLink;
+public class ReferenceLinkForEditor {
+    private Integer id;
+    private String name;
+    private String link;
 
-import java.util.Set;
+    public ReferenceLinkForEditor() {
+    }
 
-public interface ReferenceLinkRepository extends JpaRepository<ReferenceLink, Integer> {
-    Set<ReferenceLink> findByProject(Project project);
+    public ReferenceLinkForEditor(Integer id, String name, String link) {
+        this.id = id;
+        this.name = name;
+        this.link = link;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }
