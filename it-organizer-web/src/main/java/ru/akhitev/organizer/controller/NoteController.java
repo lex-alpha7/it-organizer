@@ -26,36 +26,36 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEditor;
-import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
+import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEditor;
+import ru.akhitev.organizer.logic.business.service.NoteService;
 
 @Controller
-@RequestMapping(value = "/project/reference_link/")
-public class ReferenceLinkController {
+@RequestMapping(value = "/project/note/")
+public class NoteController {
     @Autowired
-    private ReferenceLinkService linkService;
+    private NoteService noteService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newLink(Model model) {
-        model.addAttribute("referenceLink", new ReferenceLinkForEditor());
-        return "edit_reference_link";
+    public String newNote(Model model) {
+        model.addAttribute("note", new NoteForEditor());
+        return "edit_note";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editLink(@PathVariable("id") Integer linkID, Model model) {
-        model.addAttribute("referenceLink", linkService.giveTicketForEdit(linkID));
-        return "edit_reference_link";
+    public String editNote(@PathVariable("id") Integer noteID, Model model) {
+        model.addAttribute("note", noteService.giveNoteForEdit(noteID));
+        return "edit_note";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveLink(@ModelAttribute ReferenceLinkForEditor link, BindingResult bindingResult, Model model) {
-        linkService.saveLink(link);
+    public String saveNote(@ModelAttribute NoteForEditor not, BindingResult bindingResult, Model model) {
+        noteService.saveNote(not);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
-        linkService.removeLink(linkId);
+    public String deleteNote(@PathVariable("id") Integer noteID, Model model) {
+        noteService.removeLink(noteID);
         return "redirect:/";
     }
 }

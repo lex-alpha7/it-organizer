@@ -21,9 +21,9 @@ package ru.akhitev.organizer.logic.business.dto.project.link;
 import ru.akhitev.organizer.logic.business.dto.AdjustableNameSize;
 
 public class ReferenceLinkForList implements AdjustableNameSize {
-    private Integer id;
-    private String name;
-    private String link;
+    private final Integer id;
+    private final String name;
+    private final String link;
 
     public ReferenceLinkForList(Integer id, String name, String link, Integer nameSize) {
         this.id = id;

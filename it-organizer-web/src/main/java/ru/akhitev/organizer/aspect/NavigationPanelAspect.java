@@ -24,6 +24,7 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.Model;
+import ru.akhitev.organizer.logic.business.service.NoteService;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
 import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
 import ru.akhitev.organizer.logic.business.service.TicketService;
@@ -44,6 +45,9 @@ public class NavigationPanelAspect {
     @Autowired
     private ReferenceLinkService referenceLinkService;
 
+    @Autowired
+    private NoteService noteService;
+
     @Before("execution(* ru.akhitev.organizer.controller.*.*(..))  && args(..,model)")
     public void beforeImpl(Model model) {
         if (model == null) {
@@ -52,6 +56,7 @@ public class NavigationPanelAspect {
         model.addAttribute("projects", projectService.giveProjectsForList(NAME_SIZE));
         model.addAttribute("tickets", ticketService.giveTicketsForListByProject(NAME_SIZE));
         model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForListByProject(NAME_SIZE));
+        model.addAttribute("notes", noteService.giveNotesForListByProject(NAME_SIZE));
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());
     }

@@ -20,6 +20,10 @@ package ru.akhitev.organizer.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.akhitev.organizer.entity.Note;
+import ru.akhitev.organizer.entity.Project;
+
+import java.util.Set;
 
 public interface NoteRepository extends JpaRepository<Note, Integer> {
+    Set<Note> findByProject(Project project);
 }
