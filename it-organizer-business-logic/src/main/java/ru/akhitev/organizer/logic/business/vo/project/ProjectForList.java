@@ -16,16 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.project;
+package ru.akhitev.organizer.logic.business.vo.project;
 
-import ru.akhitev.organizer.logic.business.dto.AdjustableNameSize;
+import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
 
 public class ProjectForList implements AdjustableNameSize {
-    private Integer id;
-    private String name;
-
-    public ProjectForList() {
-    }
+    private final Integer id;
+    private final String name;
 
     public ProjectForList(Integer id, String name, Integer nameSize) {
         this.id = id;
@@ -36,15 +33,7 @@ public class ProjectForList implements AdjustableNameSize {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

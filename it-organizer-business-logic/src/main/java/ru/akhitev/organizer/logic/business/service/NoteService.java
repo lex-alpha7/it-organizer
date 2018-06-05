@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.Note;
 import ru.akhitev.organizer.logic.business.converter.NoteConverter;
 import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEditor;
-import ru.akhitev.organizer.logic.business.dto.project.note.NoteForList;
+import ru.akhitev.organizer.logic.business.vo.project.note.NoteForList;
 import ru.akhitev.organizer.repository.NoteRepository;
 
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class NoteService {
             return Collections.emptySet();
         }
         Set<Note> notes = repository.findByProject(projectService.getActiveProject());
-        return converter.convertFromNotesToNotesForList(notes, nameSize);
+        return converter.prepareNotesForList(notes, nameSize);
     }
 
     public Integer saveNote(NoteForEditor noteForEditor) {
@@ -59,7 +59,7 @@ public class NoteService {
     }
 
     public NoteForEditor giveNoteForEdit(Integer linkID) {
-        return converter.convertFromReferenceLinkToReferenceLinkForEditor(repository.getOne(linkID));
+        return converter.prepareReferenceLinkForEditor(repository.getOne(linkID));
     }
 
     public void removeLink(Integer linkID) {

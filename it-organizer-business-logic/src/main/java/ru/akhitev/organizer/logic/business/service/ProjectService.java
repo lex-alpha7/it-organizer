@@ -23,10 +23,9 @@ import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.Project;
 import ru.akhitev.organizer.logic.business.converter.ProjectConverter;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEditor;
-import ru.akhitev.organizer.logic.business.dto.project.ProjectForList;
+import ru.akhitev.organizer.logic.business.vo.project.ProjectForList;
 import ru.akhitev.organizer.repository.ProjectRepository;
 
-import javax.xml.ws.ServiceMode;
 import java.util.Set;
 
 @Service
@@ -40,11 +39,11 @@ public class ProjectService {
     private Project activeProject;
 
     public Set<ProjectForList> giveProjectsForList(Integer nameSize) {
-        return converter.convertFromProjectsToProjectsForList(repository.findAll(), nameSize);
+        return converter.prepareProjectsForList(repository.findAll(), nameSize);
     }
 
     public ProjectForEditor giveProjectForEdit(Integer projectId, Integer nameSize) {
-        return converter.convertFromProjectToProjectForEditor(repository.getOne(projectId), nameSize);
+        return converter.prepareProjectForEditor(repository.getOne(projectId), nameSize);
     }
 
     public Integer saveProject(ProjectForEditor projectForEditor) {

@@ -23,19 +23,30 @@ import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Project;
 import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
-import ru.akhitev.organizer.logic.business.dto.ticket.TicketForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.TicketForList;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
+ */
 @Component
 public class TicketConverter {
+    /** Uses to prepare ticket links during preparation for editor. */
     @Autowired
-    TicketLinkConverter linkConverter;
+    private TicketLinkConverter linkConverter;
 
-    public Set<TicketForList> convertFromTicketsToTicketsForList(Collection<Ticket> tickets, Integer nameSize) {
+    /**
+     * This method converts notes into VOs to show in a sidebar.
+     *
+     * @param tickets could be null. it is safe.
+     * @param nameSize a note's name will be adjusted by this size.
+     * @return emptyList if progresses are equal to null or a set of VOs
+     */
+    public Set<TicketForList> prepareTicketsForList(Collection<Ticket> tickets, Integer nameSize) {
         if (tickets == null) {
             return Collections.emptySet();
         }
@@ -49,12 +60,28 @@ public class TicketConverter {
                 .collect(Collectors.toSet());
     }
 
-    public TicketForEditor convertFromTicketToTicketForEditor(Ticket ticket) {
+    /**
+     * The method prepares object for editor.
+     * Data from entity is set into DTO.
+     *
+     * @param ticket entity, which is a source for DTO.
+     * @return a DTO, filled with data from an entity.
+     */
+    public TicketForEditor prepareTicketForEditor(Ticket ticket) {
         return new TicketForEditor(ticket.getId(), ticket.getProject().getId(), ticket.getKey(), ticket.getPriority(),
                 ticket.getName(), ticket.getWorkspace(), ticket.getStatus(), ticket.getStepsToReproduce(),
-                linkConverter.convertFromLinksToLinksForList(ticket.getLinks()));
+                linkConverter.prepareLinksForList(ticket.getLinks()));
     }
 
+    /**
+     * This method prepares an entity for saving.
+     * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
+     *
+     * @param ticket could be null. it is safe.
+     * @param ticketForEditor mustn't be null. It's data will be set to entity.
+     * @param activeProject will be used to link an entity to it in database.
+     * @return full prepared entity will be returned. It'll be ready to store in a data base.
+     */
     public Ticket mergeProjectForListToProject(Ticket ticket, TicketForEditor ticketForEditor, Project activeProject) {
         if (ticket == null) {
             ticket = new Ticket();

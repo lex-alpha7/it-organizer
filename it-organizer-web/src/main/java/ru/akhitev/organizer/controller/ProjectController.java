@@ -24,7 +24,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEditor;
-import ru.akhitev.organizer.logic.business.dto.project.ProjectForList;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
 
 @Controller

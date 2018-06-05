@@ -16,8 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket;
+package ru.akhitev.organizer.logic.business.vo;
 
-abstract class AbstractTicket {
-    protected static final String DISPLAYED_NAME_TEMPLATE = "%s [%s]: %s";
+public interface AdjustableNameSize {
+     default String adjustSize(String input, Integer size) {
+        String output;
+        if (input.length() <= size) {
+            output = input;
+        } else {
+            output = input.substring(0, size);
+        }
+        return output;
+    }
 }

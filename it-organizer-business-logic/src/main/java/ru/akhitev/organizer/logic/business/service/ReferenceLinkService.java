@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.ReferenceLink;
 import ru.akhitev.organizer.logic.business.converter.ReferenceLinkConverter;
 import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEditor;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForList;
+import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForList;
 import ru.akhitev.organizer.repository.ReferenceLinkRepository;
 
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class ReferenceLinkService {
             return Collections.emptySet();
         }
         Set<ReferenceLink> links = repository.findByProject(projectService.getActiveProject());
-        return converter.convertFromLinksToLinksForList(links, nameSize);
+        return converter.prepareLinksForList(links, nameSize);
     }
 
     public Integer saveLink(ReferenceLinkForEditor linkForEditor) {
@@ -59,7 +59,7 @@ public class ReferenceLinkService {
     }
 
     public ReferenceLinkForEditor giveTicketForEdit(Integer linkID) {
-        return converter.convertFromReferenceLinkToReferenceLinkForEditor(repository.getOne(linkID));
+        return converter.prepareReferenceLinkForEditor(repository.getOne(linkID));
     }
 
     public void removeLink(Integer linkID) {

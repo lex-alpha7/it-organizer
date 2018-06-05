@@ -19,22 +19,29 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Project;
 import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.entity.TicketLink;
-import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
 import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEditor;
-import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForList;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
+ */
 @Component
 public class TicketLinkConverter {
 
-    public Set<TicketLinkForList> convertFromLinksToLinksForList(Collection<TicketLink> links) {
+    /**
+     * This method converts notes into VOs to show in a sidebar.
+     *
+     * @param links could be null. it is safe.
+     * @return emptyList if progresses are equal to null or a set of VOs
+     */
+    public Set<TicketLinkForList> prepareLinksForList(Collection<TicketLink> links) {
         if (links == null) {
             return Collections.emptySet();
         }
@@ -47,6 +54,15 @@ public class TicketLinkConverter {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * This method prepares an entity for saving.
+     * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
+     *
+     * @param link could be null. it is safe.
+     * @param linkForEditor mustn't be null. It's data will be set to entity.
+     * @param ticket will be used to link an entity to it in database.
+     * @return full prepared entity will be returned. It'll be ready to store in a data base.
+     */
     public TicketLink mergeLinkForListToLink(TicketLink link, TicketLinkForEditor linkForEditor, Ticket ticket) {
         if (link == null) {
             link = new TicketLink();
