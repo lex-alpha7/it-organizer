@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.controller;
+package ru.akhitev.organizer.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,36 +26,34 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
-import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
+import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
+import ru.akhitev.organizer.logic.business.service.TicketLinkService;
+import ru.akhitev.organizer.logic.business.service.TicketService;
 
 @Controller
-@RequestMapping(value = "/project/reference_link/")
-public class ReferenceLinkController extends AbstractController {
+@RequestMapping(value = "/ticket/link")
+public class TicketLinkController extends AbstractController {
     @Autowired
-    private ReferenceLinkService linkService;
+    private TicketLinkService ticketLinkService;
+
+    @Autowired
+    private TicketService ticketService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newLink(Model model) {
-        model.addAttribute("referenceLink", new ReferenceLinkForEdit());
-        return EDIT_REFERENCE_LINK_PATH;
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editLink(@PathVariable("id") Integer linkID, Model model) {
-        model.addAttribute("referenceLink", linkService.giveTicketForEdit(linkID));
-        return EDIT_REFERENCE_LINK_PATH;
+        model.addAttribute("ticketLink", new TicketLinkForEdit());
+        return EDIT_TICKET_LINK_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveLink(@ModelAttribute ReferenceLinkForEdit link, BindingResult bindingResult, Model model) {
-        linkService.saveLink(link);
-        return MAIN_REDIRECT_PATH;
+    public String saveLink(@ModelAttribute TicketLinkForEdit link, BindingResult bindingResult, Model model) {
+        ticketLinkService.saveLink(link);
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
-        linkService.removeLink(linkId);
-        return MAIN_REDIRECT_PATH;
+        ticketLinkService.removeLink(linkId);
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
 }

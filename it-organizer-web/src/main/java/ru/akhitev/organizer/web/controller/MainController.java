@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer;
+package ru.akhitev.organizer.web.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@SpringBootApplication
-@EnableJpaRepositories
-public class Main {
-    public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+@Controller
+public class MainController extends AbstractController{
+
+    @RequestMapping("/")
+    public String project(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
+        return MAIN_PATH;
     }
-
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.controller;
+package ru.akhitev.organizer.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,36 +26,37 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
-import ru.akhitev.organizer.logic.business.service.NoteService;
+import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEdit;
+import ru.akhitev.organizer.logic.business.service.TicketService;
 
 @Controller
-@RequestMapping(value = "/project/note/")
-public class NoteController extends AbstractController {
+@RequestMapping(value = "/ticket")
+public class TicketController extends AbstractController {
     @Autowired
-    private NoteService noteService;
+    private TicketService service;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newNote(Model model) {
-        model.addAttribute("note", new NoteForEdit());
-        return EDIT_NOTE_PATH;
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editNote(@PathVariable("id") Integer noteID, Model model) {
-        model.addAttribute("note", noteService.giveNoteForEdit(noteID));
-        return EDIT_NOTE_PATH;
+    public String newTicket(Model model) {
+        model.addAttribute("ticket", new TicketForEdit());
+        return EDIT_TICKET_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNote(@ModelAttribute NoteForEdit not, BindingResult bindingResult, Model model) {
-        noteService.saveNote(not);
-        return MAIN_REDIRECT_PATH;
+    public String saveTicket(@ModelAttribute TicketForEdit ticket, BindingResult bindingResult, Model model) {
+        service.saveTicket(ticket);
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticket.getId());
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editTicket(@PathVariable("id") Integer ticketId, Model model) {
+        model.addAttribute("ticket", service.giveTicketForEdit(ticketId));
+        service.activateTicket(ticketId);
+        return EDIT_TICKET_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteNote(@PathVariable("id") Integer noteID, Model model) {
-        noteService.removeLink(noteID);
+    public String deletTicket(@PathVariable("id") Integer ticketId, Model model) {
+        service.removeTicket(ticketId);
         return MAIN_REDIRECT_PATH;
     }
 }

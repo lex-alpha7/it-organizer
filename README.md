@@ -12,10 +12,11 @@ This project is for main routine of a developer.
 Any images, text documents and diagrams are situated in the folder /docs
 
 ### Infrastructure
-Any vagrant, ansible, sh/cmd scripts will be situated in the folder /infrastructure
+Any vagrant, docker, sh/cmd scripts will be situated in the folder /infrastructure
 
 ### Data Base
 All entity, repository classes and classes, connected to the data base layer are situated in the it-organizer-db module.
+More details on ![this wiki page](https://github.com/aleksei-khitev/it-organizer/wiki/it-organizer-db)
 
 #### Data Base scheme
 ![Data Base scheme](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/db_diagram.jpeg)

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.aspect;
+package ru.akhitev.organizer.web.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -45,7 +45,7 @@ public class NavigationPanelAspect {
     @Autowired
     private NoteService noteService;
 
-    @Before("execution(* ru.akhitev.organizer.controller.*.*(..))  && args(..,model)")
+    @Before("execution(* ru.akhitev.organizer.ru.akhitev.organizer.web.controller.*.*(..))  && args(..,model)")
     public void beforeImpl(Model model) {
         if (model == null) {
             return;
