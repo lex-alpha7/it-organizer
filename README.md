@@ -9,7 +9,7 @@ This project is for main routine of a developer.
 For now, it looks like this:
 ![Demo screen shot](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/demo_screenshot.JPG)
 
-## Context
+## Short Description
 
 ### User interface
 For implementing UI [Thymeleaf](https://www.thymeleaf.org/), Spring MVC via Spring Boot and JS libraries like [nicEdit](http://nicedit.com/) are used.
