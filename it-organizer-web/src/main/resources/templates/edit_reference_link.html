@@ -26,7 +26,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 <div th:replace="fragments/navigation :: left_panel"></div>
 
 <div class="main-content">
-    <form action="#" th:action="@{~/reference_link/save}" th:object="${referenceLink}" method="post">
+    <form action="#" th:action="@{~/project/reference_link/save}" th:object="${referenceLink}" method="post">
         <input type="hidden" th:field="*{id}"/>
         Название ссылки: <input type="text" th:field="*{name}" /><br/>
         Адрес ссылки: <input type="text" th:field="*{link}" /><br/>

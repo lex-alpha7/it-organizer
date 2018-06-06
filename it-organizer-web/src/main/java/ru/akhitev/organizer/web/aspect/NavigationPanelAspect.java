@@ -45,7 +45,7 @@ public class NavigationPanelAspect {
     @Autowired
     private NoteService noteService;
 
-    @Before("execution(* ru.akhitev.organizer.ru.akhitev.organizer.web.controller.*.*(..))  && args(..,model)")
+    @Before("execution(* ru.akhitev.organizer.web.controller.*.*(..))  && args(..,model)")
     public void beforeImpl(Model model) {
         if (model == null) {
             return;
