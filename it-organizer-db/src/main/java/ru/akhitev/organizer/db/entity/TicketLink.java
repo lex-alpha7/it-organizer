@@ -16,22 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket.link;
+package ru.akhitev.organizer.db.entity;
 
-import ru.akhitev.organizer.db.entity.Ticket;
+import lombok.*;
 import ru.akhitev.organizer.db.enums.LinkType;
 
-public class TicketLinkForEdit {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Ticket_Link")
+@SequenceGenerator(name = "seq", initialValue = 20)
+@EqualsAndHashCode(exclude = "ticket")
+public class TicketLink {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
+
+    @ManyToOne @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
+
+    @Column(name = "type", nullable = false)
+    @Enumerated
     private LinkType type;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "link", nullable = false)
     private String link;
 
-    public TicketLinkForEdit() {
+    public TicketLink() {
     }
 
-    public TicketLinkForEdit(Integer id, Ticket ticket, LinkType type, String name, String link) {
+    public TicketLink(Integer id, @NonNull Ticket ticket, @NonNull LinkType type, String name, @NonNull String link) {
         this.id = id;
         this.ticket = ticket;
         this.type = type;
@@ -51,7 +68,7 @@ public class TicketLinkForEdit {
         return ticket;
     }
 
-    public void setTicket(Ticket ticket) {
+    public void setTicket(@NonNull Ticket ticket) {
         this.ticket = ticket;
     }
 
@@ -59,7 +76,7 @@ public class TicketLinkForEdit {
         return type;
     }
 
-    public void setType(LinkType type) {
+    public void setType(@NonNull LinkType type) {
         this.type = type;
     }
 
@@ -75,7 +92,7 @@ public class TicketLinkForEdit {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(@NonNull String link) {
         this.link = link;
     }
 }

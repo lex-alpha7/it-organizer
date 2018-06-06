@@ -18,7 +18,7 @@
  */
 package ru.akhitev.organizer.logic.business.dto.ticket;
 
-import ru.akhitev.organizer.enums.Status;
+import ru.akhitev.organizer.db.enums.Status;
 import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
 
 import java.util.Set;

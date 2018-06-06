@@ -20,11 +20,11 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.akhitev.organizer.entity.ReferenceLink;
+import ru.akhitev.organizer.db.entity.ReferenceLink;
 import ru.akhitev.organizer.logic.business.converter.ReferenceLinkConverter;
 import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForShow;
-import ru.akhitev.organizer.repository.ReferenceLinkRepository;
+import ru.akhitev.organizer.db.repository.ReferenceLinkRepository;
 
 import java.util.Collections;
 import java.util.Set;

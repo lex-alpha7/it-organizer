@@ -20,11 +20,11 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.akhitev.organizer.entity.Note;
+import ru.akhitev.organizer.db.entity.Note;
 import ru.akhitev.organizer.logic.business.converter.NoteConverter;
 import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.note.NoteForShow;
-import ru.akhitev.organizer.repository.NoteRepository;
+import ru.akhitev.organizer.db.repository.NoteRepository;
 
 import java.util.Collections;
 import java.util.Set;

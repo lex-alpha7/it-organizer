@@ -16,28 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket.link;
+package ru.akhitev.organizer.db.entity;
 
-import ru.akhitev.organizer.db.entity.Ticket;
-import ru.akhitev.organizer.db.enums.LinkType;
+import lombok.*;
 
-public class TicketLinkForEdit {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Reference_Link")
+@SequenceGenerator(name = "seq", initialValue = 20)
+@EqualsAndHashCode(exclude = "project")
+public class ReferenceLink {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
-    private Ticket ticket;
-    private LinkType type;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "link")
     private String link;
-
-    public TicketLinkForEdit() {
-    }
-
-    public TicketLinkForEdit(Integer id, Ticket ticket, LinkType type, String name, String link) {
-        this.id = id;
-        this.ticket = ticket;
-        this.type = type;
-        this.name = name;
-        this.link = link;
-    }
 
     public Integer getId() {
         return id;
@@ -47,20 +49,12 @@ public class TicketLinkForEdit {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Project getProject() {
+        return project;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
-
-    public LinkType getType() {
-        return type;
-    }
-
-    public void setType(LinkType type) {
-        this.type = type;
+    public void setProject(@NonNull Project project) {
+        this.project = project;
     }
 
     public String getName() {
@@ -75,7 +69,7 @@ public class TicketLinkForEdit {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(@NonNull String link) {
         this.link = link;
     }
 }

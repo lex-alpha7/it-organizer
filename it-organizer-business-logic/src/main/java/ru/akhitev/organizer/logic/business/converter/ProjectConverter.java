@@ -20,7 +20,7 @@ package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
 

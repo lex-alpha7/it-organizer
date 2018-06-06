@@ -19,7 +19,7 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Progress;
+import ru.akhitev.organizer.db.entity.Progress;
 import ru.akhitev.organizer.logic.business.dto.ticket.progress.ProgressForEdit;
 import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 

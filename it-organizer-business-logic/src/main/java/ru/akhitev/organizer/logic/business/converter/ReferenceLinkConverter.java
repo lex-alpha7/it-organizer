@@ -19,8 +19,8 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.entity.ReferenceLink;
+import ru.akhitev.organizer.db.entity.Project;
+import ru.akhitev.organizer.db.entity.ReferenceLink;
 import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForShow;
 

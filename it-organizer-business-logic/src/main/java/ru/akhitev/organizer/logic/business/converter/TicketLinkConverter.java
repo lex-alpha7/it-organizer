@@ -19,8 +19,8 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Ticket;
-import ru.akhitev.organizer.entity.TicketLink;
+import ru.akhitev.organizer.db.entity.Ticket;
+import ru.akhitev.organizer.db.entity.TicketLink;
 import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
 import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
 

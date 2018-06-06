@@ -16,28 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket.link;
+package ru.akhitev.organizer.db.entity;
 
-import ru.akhitev.organizer.db.entity.Ticket;
-import ru.akhitev.organizer.db.enums.LinkType;
+import lombok.*;
 
-public class TicketLinkForEdit {
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Table(name = "Progress")
+@SequenceGenerator(name = "seq", initialValue = 20)
+@EqualsAndHashCode(exclude = "ticket")
+public class Progress {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
-    private LinkType type;
-    private String name;
-    private String link;
 
-    public TicketLinkForEdit() {
-    }
+    @Column(name = "status_date", nullable = false)
+    private Date date;
 
-    public TicketLinkForEdit(Integer id, Ticket ticket, LinkType type, String name, String link) {
-        this.id = id;
-        this.ticket = ticket;
-        this.type = type;
-        this.name = name;
-        this.link = link;
-    }
+    @Column(name = "status", nullable = false)
+    private String status;
 
     public Integer getId() {
         return id;
@@ -51,31 +55,23 @@ public class TicketLinkForEdit {
         return ticket;
     }
 
-    public void setTicket(Ticket ticket) {
+    public void setTicket(@NonNull Ticket ticket) {
         this.ticket = ticket;
     }
 
-    public LinkType getType() {
-        return type;
+    public Date getDate() {
+        return date;
     }
 
-    public void setType(LinkType type) {
-        this.type = type;
+    public void setDate(@NonNull Date date) {
+        this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public String getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
+    public void setStatus(@NonNull String status) {
+        this.status = status;
     }
 }

@@ -20,10 +20,10 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.akhitev.organizer.entity.TicketLink;
+import ru.akhitev.organizer.db.entity.TicketLink;
 import ru.akhitev.organizer.logic.business.converter.TicketLinkConverter;
 import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
-import ru.akhitev.organizer.repository.TicketLinkRepository;
+import ru.akhitev.organizer.db.repository.TicketLinkRepository;
 
 /**
  * The aim of service is to provide give, remove and save DTOs and VOs.

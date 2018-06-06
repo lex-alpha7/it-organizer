@@ -66,7 +66,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
                                     <tr><td>Priority:</td><td><input type="text" th:field="*{priority}" /></td></tr>
                                     <tr><td>Status:</td><td>
                                         <select th:field="*{status}" th:remove="all-but-first">
-                                            <option th:each="possibleStatus : ${T(ru.akhitev.organizer.enums.Status).values()}"
+                                            <option th:each="possibleStatus : ${T(ru.akhitev.organizer.db.enums.Status).values()}"
                                                     th:value="${possibleStatus}" th:text="${possibleStatus.toString()}"></option>
                                         </select>
                                     </td></tr>

@@ -20,11 +20,11 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.akhitev.organizer.entity.Ticket;
+import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.logic.business.converter.TicketConverter;
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEdit;
-import ru.akhitev.organizer.repository.TicketRepository;
+import ru.akhitev.organizer.db.repository.TicketRepository;
 
 import java.util.Collections;
 import java.util.Set;

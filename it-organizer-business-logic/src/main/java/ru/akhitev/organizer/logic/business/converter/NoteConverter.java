@@ -19,8 +19,8 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.entity.Note;
-import ru.akhitev.organizer.entity.Project;
+import ru.akhitev.organizer.db.entity.Note;
+import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.note.NoteForShow;
 

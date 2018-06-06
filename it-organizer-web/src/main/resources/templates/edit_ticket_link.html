@@ -32,7 +32,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
             Адрес ссылки: <input type="text" th:field="*{link}" /><br/>
             Тип:
             <select th:field="*{type}" th:remove="all-but-first">
-                <option th:each="possibleType : ${T(ru.akhitev.organizer.enums.LinkType).values()}"
+                <option th:each="possibleType : ${T(ru.akhitev.organizer.db.enums.LinkType).values()}"
                         th:value="${possibleType}" th:text="${possibleType.toString()}"></option>
             </select>
             <input type="submit" value="Сохранить" />

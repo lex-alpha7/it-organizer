@@ -18,7 +18,7 @@
  */
 package ru.akhitev.organizer.logic.business.vo.ticket.link;
 
-import ru.akhitev.organizer.enums.LinkType;
+import ru.akhitev.organizer.db.enums.LinkType;
 
 public class TicketLinkForShow {
     private final Integer id;
