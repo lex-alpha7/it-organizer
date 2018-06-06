@@ -1,10 +1,23 @@
-# README #
+# IT Organizer #
 
-Organizer for a developer.
+Organizer for a IT specialists.
 
 ## Reason for it ##
 
 This project is for main routine of a developer.
+
+### Ticket
+While you work on your task, you need a place, where you could write your findings, paste log fragments or code fragments. Ideally, if code formatting is kept.
+Using the organizer, you have such a place.
+You may save steps for reproduce, links to an issue tracking system and your workspace (rich editor, where you might keep you current findings).
+
+### Place for your notes, connected with a project
+With this application you don't need to place your notes in some txt/doc/other files and save them somewhere.
+You can make a note in this Organizer and you don't loose it.
+
+### Links, connected with a project
+I believe it's more convenient to create an external link in this Organizer but not in browser bookmark.
+It will keep an order in your browser bookmarks.
 
 For now, it looks like this:
 ![Demo screen shot](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/demo_screenshot.JPG)
