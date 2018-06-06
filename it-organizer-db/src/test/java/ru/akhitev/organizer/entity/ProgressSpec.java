@@ -31,7 +31,7 @@ public class ProgressSpec {
     private Progress progress;
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp(){

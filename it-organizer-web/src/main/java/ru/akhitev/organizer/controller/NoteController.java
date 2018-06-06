@@ -26,36 +26,36 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEditor;
+import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
 import ru.akhitev.organizer.logic.business.service.NoteService;
 
 @Controller
 @RequestMapping(value = "/project/note/")
-public class NoteController {
+public class NoteController extends AbstractController {
     @Autowired
     private NoteService noteService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newNote(Model model) {
-        model.addAttribute("note", new NoteForEditor());
-        return "edit_note";
+        model.addAttribute("note", new NoteForEdit());
+        return EDIT_NOTE_PATH;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editNote(@PathVariable("id") Integer noteID, Model model) {
         model.addAttribute("note", noteService.giveNoteForEdit(noteID));
-        return "edit_note";
+        return EDIT_NOTE_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNote(@ModelAttribute NoteForEditor not, BindingResult bindingResult, Model model) {
+    public String saveNote(@ModelAttribute NoteForEdit not, BindingResult bindingResult, Model model) {
         noteService.saveNote(not);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteNote(@PathVariable("id") Integer noteID, Model model) {
         noteService.removeLink(noteID);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 }

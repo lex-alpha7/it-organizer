@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEditor;
+import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
 import ru.akhitev.organizer.logic.business.service.TicketLinkService;
 import ru.akhitev.organizer.logic.business.service.TicketService;
 
 @Controller
 @RequestMapping(value = "/ticket/link")
-public class TicketLinkController {
+public class TicketLinkController extends AbstractController {
     @Autowired
     private TicketLinkService ticketLinkService;
 
@@ -41,19 +41,19 @@ public class TicketLinkController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newLink(Model model) {
-        model.addAttribute("ticketLink", new TicketLinkForEditor());
-        return "edit_ticket_link";
+        model.addAttribute("ticketLink", new TicketLinkForEdit());
+        return EDIT_TICKET_LINK_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveLink(@ModelAttribute TicketLinkForEditor link, BindingResult bindingResult, Model model) {
+    public String saveLink(@ModelAttribute TicketLinkForEdit link, BindingResult bindingResult, Model model) {
         ticketLinkService.saveLink(link);
-        return "redirect:/ticket/edit/" + ticketService.getActiveTicket().getId();
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
         ticketLinkService.removeLink(linkId);
-        return "redirect:/ticket/edit/" + ticketService.getActiveTicket().getId();
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
 }

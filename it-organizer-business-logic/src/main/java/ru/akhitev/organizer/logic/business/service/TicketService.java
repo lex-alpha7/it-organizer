@@ -82,16 +82,15 @@ public class TicketService {
      * {@link ProjectService#activeProject} is set to project in the ticket.
      *
      * @param ticketForEdit DTO, which will be saved.
-     * @return ID of saved entity.
      */
-    public Integer saveTicket(TicketForEdit ticketForEdit) {
+    public void saveTicket(TicketForEdit ticketForEdit) {
         Integer id = ticketForEdit.getId();
         Ticket ticket = null;
         if (id != null) {
             ticket = repository.getOne(id);
         }
         ticket = converter.mergeProjectForEditToProject(ticket, ticketForEdit, projectService.getActiveProject());
-        return repository.save(ticket).getId();
+        repository.save(ticket);
     }
 
     /**

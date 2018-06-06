@@ -27,12 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class NoteSpec {
     private Note note;
-    private final Integer id = 0;
-    private final String title = "The best note";
-    private final String noteText = "You need to read the Clean Code book.";
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -41,6 +38,7 @@ public class NoteSpec {
 
     @Test
     public void whenTitleWasSetThenReturnIt() {
+        String title = "The best note";
         note.setTitle(title);
         assertThat(note.getTitle())
                 .as("When a title was set, return it.")
@@ -57,6 +55,7 @@ public class NoteSpec {
 
     @Test
     public void whenNoteWasSetThenReturnIt() {
+        String noteText = "You need to read the Clean Code book.";
         note.setNote(noteText);
         assertThat(note.getNote())
                 .as("WHen a note was set, return it.")
@@ -72,6 +71,7 @@ public class NoteSpec {
 
     @Test
     public void whenIdWasSetThenReturnIt() {
+        Integer id = 0;
         note.setId(id);
         assertThat(note.getId())
                 .as("When an id was set, return it.")

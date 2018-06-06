@@ -72,16 +72,15 @@ public class ProjectService {
      * If it is a create operation and there is no entity, then a new one is created.
      *
      * @param projectForEdit DTO, which will be saved.
-     * @return ID of saved entity.
      */
-    public Integer saveProject(ProjectForEdit projectForEdit) {
+    public void saveProject(ProjectForEdit projectForEdit) {
         Integer id = projectForEdit.getId();
         Project project = null;
         if (id != null) {
             project = repository.getOne(id);
         }
         project = converter.mergeProjectForEditToProject(project, projectForEdit);
-        return repository.save(project).getId();
+        repository.save(project);
     }
 
     /**

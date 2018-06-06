@@ -26,36 +26,36 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEditor;
+import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
 import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
 
 @Controller
 @RequestMapping(value = "/project/reference_link/")
-public class ReferenceLinkController {
+public class ReferenceLinkController extends AbstractController {
     @Autowired
     private ReferenceLinkService linkService;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newLink(Model model) {
-        model.addAttribute("referenceLink", new ReferenceLinkForEditor());
-        return "edit_reference_link";
+        model.addAttribute("referenceLink", new ReferenceLinkForEdit());
+        return EDIT_REFERENCE_LINK_PATH;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editLink(@PathVariable("id") Integer linkID, Model model) {
         model.addAttribute("referenceLink", linkService.giveTicketForEdit(linkID));
-        return "edit_reference_link";
+        return EDIT_REFERENCE_LINK_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveLink(@ModelAttribute ReferenceLinkForEditor link, BindingResult bindingResult, Model model) {
+    public String saveLink(@ModelAttribute ReferenceLinkForEdit link, BindingResult bindingResult, Model model) {
         linkService.saveLink(link);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
         linkService.removeLink(linkId);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 }

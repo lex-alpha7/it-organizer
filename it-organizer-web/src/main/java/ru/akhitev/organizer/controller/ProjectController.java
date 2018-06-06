@@ -23,43 +23,42 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.akhitev.organizer.logic.business.dto.project.ProjectForEditor;
+import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
 
 @Controller
 @RequestMapping(value = "/project")
-public class ProjectController {
-
+public class ProjectController extends AbstractController {
     @Autowired
     private ProjectService service;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProject(Model model) {
-        model.addAttribute("project", new ProjectForEditor());
-        return "edit_project";
+        model.addAttribute("project", new ProjectForEdit());
+        return EDIT_PROJECT_PATH;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editProject(@PathVariable("id") Integer projectId, Model model) {
         model.addAttribute("project", service.giveProjectForEdit(projectId, 20));
-        return "edit_project";
+        return EDIT_PROJECT_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteProject(@PathVariable("id") Integer projectId, Model model) {
         service.removeProject(projectId);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveProject(@ModelAttribute ProjectForEditor project, BindingResult bindingResult, Model model) {
+    public String saveProject(@ModelAttribute ProjectForEdit project, BindingResult bindingResult, Model model) {
         service.saveProject(project);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 
     @RequestMapping(value = "/activate/{id}", method = RequestMethod.GET)
     public String activateProject(@PathVariable("id") Integer projectId, Model model) {
         service.activateProject(projectId);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 }

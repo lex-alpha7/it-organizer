@@ -79,16 +79,15 @@ public class ReferenceLinkService {
      * {@link ProjectService#activeProject} is set to project in the link.
      *
      * @param linkForEditor DTO, which will be saved.
-     * @return ID of saved entity.
      */
-    public Integer saveLink(ReferenceLinkForEdit linkForEditor) {
+    public void saveLink(ReferenceLinkForEdit linkForEditor) {
         Integer id = linkForEditor.getId();
         ReferenceLink link = null;
         if (id != null) {
             link = repository.getOne(id);
         }
         link = converter.mergeLinkForEditToLink(link, linkForEditor, projectService.getActiveProject());
-        return repository.save(link).getId();
+        repository.save(link);
     }
 
     /**

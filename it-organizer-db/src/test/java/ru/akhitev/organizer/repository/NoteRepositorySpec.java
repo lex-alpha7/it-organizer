@@ -43,7 +43,7 @@ public class NoteRepositorySpec {
     private NoteRepository repository;
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void whenFindAllThenFindAll() {

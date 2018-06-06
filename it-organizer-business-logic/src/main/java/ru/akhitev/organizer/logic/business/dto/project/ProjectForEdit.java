@@ -16,27 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.ticket.link;
+package ru.akhitev.organizer.logic.business.dto.project;
 
-import ru.akhitev.organizer.entity.Ticket;
-import ru.akhitev.organizer.enums.LinkType;
+import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 
-public class TicketLinkForEditor {
+import java.util.Set;
+
+public class ProjectForEdit {
     private Integer id;
-    private Ticket ticket;
-    private LinkType type;
     private String name;
-    private String link;
+    private Set<TicketForShow> tickets;
 
-    public TicketLinkForEditor() {
+    public ProjectForEdit() {
     }
 
-    public TicketLinkForEditor(Integer id, Ticket ticket, LinkType type, String name, String link) {
+    public ProjectForEdit(Integer id, String name, Set<TicketForShow> tickets) {
         this.id = id;
-        this.ticket = ticket;
-        this.type = type;
         this.name = name;
-        this.link = link;
+        this.tickets = tickets;
     }
 
     public Integer getId() {
@@ -47,22 +44,6 @@ public class TicketLinkForEditor {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
-    }
-
-    public LinkType getType() {
-        return type;
-    }
-
-    public void setType(LinkType type) {
-        this.type = type;
-    }
-
     public String getName() {
         return name;
     }
@@ -71,11 +52,11 @@ public class TicketLinkForEditor {
         this.name = name;
     }
 
-    public String getLink() {
-        return link;
+    public Set<TicketForShow> getTickets() {
+        return tickets;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setTickets(Set<TicketForShow> tickets) {
+        this.tickets = tickets;
     }
 }

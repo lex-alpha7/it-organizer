@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.dto.project.note;
+package ru.akhitev.organizer.logic.business.dto.project.link;
 
-public class NoteForEditor {
+public class ReferenceLinkForEdit {
     private Integer id;
-    private String title;
-    private String note;
+    private String name;
+    private String link;
 
-    public NoteForEditor() {
+    public ReferenceLinkForEdit() {
     }
 
-    public NoteForEditor(Integer id, String title, String note) {
+    public ReferenceLinkForEdit(Integer id, String name, String link) {
         this.id = id;
-        this.title = title;
-        this.note = note;
+        this.name = name;
+        this.link = link;
     }
 
     public Integer getId() {
@@ -40,19 +40,19 @@ public class NoteForEditor {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNote() {
-        return note;
+    public String getLink() {
+        return link;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setLink(String link) {
+        this.link = link;
     }
 }

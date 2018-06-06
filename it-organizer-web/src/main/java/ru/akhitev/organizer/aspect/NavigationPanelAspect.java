@@ -18,7 +18,6 @@
  */
 package ru.akhitev.organizer.aspect;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +28,10 @@ import ru.akhitev.organizer.logic.business.service.ProjectService;
 import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
 import ru.akhitev.organizer.logic.business.service.TicketService;
 
-import java.util.Arrays;
-
 @Aspect
 @Configuration
 public class NavigationPanelAspect {
-    public static final int NAME_SIZE = 35;
+    private static final int NAME_SIZE = 35;
 
     @Autowired
     private ProjectService projectService;
@@ -53,10 +50,10 @@ public class NavigationPanelAspect {
         if (model == null) {
             return;
         }
-        model.addAttribute("projects", projectService.giveProjectsForList(NAME_SIZE));
-        model.addAttribute("tickets", ticketService.giveTicketsForListByProject(NAME_SIZE));
-        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForListByProject(NAME_SIZE));
-        model.addAttribute("notes", noteService.giveNotesForListByProject(NAME_SIZE));
+        model.addAttribute("projects", projectService.giveProjectsForShow(NAME_SIZE));
+        model.addAttribute("tickets", ticketService.giveTicketsForShowForActiveProject(NAME_SIZE));
+        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForShowForActiveProject(NAME_SIZE));
+        model.addAttribute("notes", noteService.giveNotesForShowForActiveProject(NAME_SIZE));
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());
     }

@@ -79,16 +79,15 @@ public class NoteService {
      * {@link ProjectService#activeProject} is set to project in the ticket.
      *
      * @param noteForEdit DTO, which will be saved.
-     * @return ID of saved entity.
      */
-    public Integer saveNote(NoteForEdit noteForEdit) {
+    public void saveNote(NoteForEdit noteForEdit) {
         Integer id = noteForEdit.getId();
         Note note = null;
         if (id != null) {
             note = repository.getOne(id);
         }
         note = converter.mergeLinkForEditToLink(note, noteForEdit, projectService.getActiveProject());
-        return repository.save(note).getId();
+        repository.save(note);
     }
 
     /**

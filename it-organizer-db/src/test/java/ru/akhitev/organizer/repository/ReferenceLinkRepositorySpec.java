@@ -40,10 +40,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReferenceLinkRepositorySpec {
     @Inject
-    ReferenceLinkRepository repository;
+    private ReferenceLinkRepository repository;
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Test
     public void whenFindAllThenFindAll() {

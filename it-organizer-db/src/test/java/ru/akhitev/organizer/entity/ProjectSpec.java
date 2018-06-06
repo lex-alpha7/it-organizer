@@ -29,10 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectSpec {
     private Project project;
-    private String projectName = "Test Project";
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -41,6 +40,7 @@ public class ProjectSpec {
 
     @Test
     public void whenNameWasSetThenReturnIt() {
+        String projectName = "Test Project";
         project.setName(projectName);
         assertThat(project.getName())
                 .as("When a name was set, return it.")

@@ -22,30 +22,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.TicketLink;
 import ru.akhitev.organizer.logic.business.converter.TicketLinkConverter;
-import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEditor;
+import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
 import ru.akhitev.organizer.repository.TicketLinkRepository;
 
+/**
+ * The aim of service is to provide give, remove and save DTOs and VOs.
+ * A service uses converters, repositories and other services.
+ * No one else should use data base layer.
+ */
 @Service
 public class TicketLinkService {
+    /** The main repository. */
     @Autowired
     private TicketLinkRepository linkRepository;
 
-    @Autowired
-    private TicketService ticketService;
-
+    /** The main converter. */
     @Autowired
     private TicketLinkConverter converter;
 
-    public Integer saveLink(TicketLinkForEditor linkForEditor) {
+    /** Uses for getting {@link TicketService#activeTicket}. */
+    @Autowired
+    private TicketService ticketService;
+
+    /**
+     * The method saves DTO.
+     * If it is a create operation and there is no entity, then a new one is created.
+     * {@link TicketService#activeTicket} is set to project in the ticket.
+     *
+     * @param linkForEditor DTO, which will be saved.
+     */
+    public void saveLink(TicketLinkForEdit linkForEditor) {
         Integer id = linkForEditor.getId();
         TicketLink link = null;
         if (id != null) {
             link = linkRepository.getOne(id);
         }
-        link = converter.mergeLinkForListToLink(link, linkForEditor, ticketService.getActiveTicket());
-        return linkRepository.save(link).getId();
+        link = converter.mergeLinkForEditToLink(link, linkForEditor, ticketService.getActiveTicket());
+        linkRepository.save(link);
     }
 
+    /**
+     * The method removes found by id entity in data base.
+     * @param linkID ID to find entity in data base.
+     */
     public void removeLink(Integer linkID) {
         linkRepository.deleteById(linkID);
     }

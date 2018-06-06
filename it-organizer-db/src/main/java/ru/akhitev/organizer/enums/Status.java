@@ -19,5 +19,5 @@
 package ru.akhitev.organizer.enums;
 
 public enum Status {
-    OPEN, IN_PROGRESS, WAIT, CLOSED;
+    OPEN, IN_PROGRESS, WAIT, CLOSED
 }

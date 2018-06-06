@@ -22,20 +22,7 @@ All entity, repository classes and classes, connected to the data base layer are
 
 ### Business Logic
 Data transfer objects, converters, services are situated in the it-organizer-business-logic module.
-
-#### Data Transfer Objects
-To not transfer a full entity to a ui side, DTOs were made.
-For forming lists [entity name]ForList DTOs are used.
-For editor forms [entity name]ForEditor DTOs are used.
-Such things like display name with a length limit is also realized here.
-
-#### Converter
-There are converters for any entity.
-This classes convert to DTO and to Entity.
-It also creates a new object if it is new.
-
-#### Services
-Business logic is realized in services. Such things, like activating projects or tickets and using converters and repositories are realized in services.
+You may read more on ![this wiki page](https://github.com/aleksei-khitev/it-organizer/wiki/it-organizer-business-logic)
 
 ### Spring MVC
 All controllers, view files, css, js and other files, connected to the web based user interface layer are situated in the it-organizer-web module

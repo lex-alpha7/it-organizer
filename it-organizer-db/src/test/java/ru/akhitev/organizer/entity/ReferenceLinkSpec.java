@@ -27,12 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReferenceLinkSpec {
     private ReferenceLink link;
-    private final Integer id = 0;
-    private final String name = "The best link";
-    private final String linkText = "http://www.best.link.com";
 
     @Rule
-    public ExpectedException exception = ExpectedException.none();
+    public final ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -41,6 +38,7 @@ public class ReferenceLinkSpec {
 
     @Test
     public void whenNameWasSetThenReturnIt() {
+        String name = "The best link";
         link.setName(name);
         assertThat(link.getName())
                 .as("When a name was set, return it.")
@@ -57,6 +55,7 @@ public class ReferenceLinkSpec {
 
     @Test
     public void whenLinkWasSetThenReturnIt() {
+        String linkText = "http://www.best.link.com";
         link.setLink(linkText);
         assertThat(link.getLink())
                 .as("When a link was set, return it.")
@@ -72,6 +71,7 @@ public class ReferenceLinkSpec {
 
     @Test
     public void whenIdWasSetThenReturnIt() {
+        Integer id = 0;
         link.setId(id);
         assertThat(link.getId())
                 .as("When an id was set, return it.")

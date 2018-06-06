@@ -31,32 +31,32 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 
 @Controller
 @RequestMapping(value = "/ticket")
-public class TicketController {
+public class TicketController extends AbstractController {
     @Autowired
-    TicketService service;
+    private TicketService service;
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newTicket(Model model) {
         model.addAttribute("ticket", new TicketForEdit());
-        return "edit_ticket";
+        return EDIT_TICKET_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveTicket(@ModelAttribute TicketForEdit ticket, BindingResult bindingResult, Model model) {
         service.saveTicket(ticket);
-        return "redirect:/ticket/edit/" + ticket.getId();
+        return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticket.getId());
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editTicket(@PathVariable("id") Integer ticketId, Model model) {
         model.addAttribute("ticket", service.giveTicketForEdit(ticketId));
         service.activateTicket(ticketId);
-        return "edit_ticket";
+        return EDIT_TICKET_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deletTicket(@PathVariable("id") Integer ticketId, Model model) {
         service.removeTicket(ticketId);
-        return "redirect:/";
+        return MAIN_REDIRECT_PATH;
     }
 }
