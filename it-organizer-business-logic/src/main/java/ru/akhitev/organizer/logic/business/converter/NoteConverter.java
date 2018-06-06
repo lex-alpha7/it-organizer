@@ -21,8 +21,8 @@ package ru.akhitev.organizer.logic.business.converter;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Note;
 import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEditor;
-import ru.akhitev.organizer.logic.business.vo.project.note.NoteForList;
+import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
+import ru.akhitev.organizer.logic.business.vo.project.note.NoteForShow;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,13 +42,13 @@ public class NoteConverter {
      * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<NoteForList> prepareNotesForList(Collection<Note> notes, Integer nameSize) {
+    public Set<NoteForShow> prepareNotesForShow(Collection<Note> notes, Integer nameSize) {
         if (notes == null) {
             return Collections.emptySet();
         }
         return notes.stream()
                 .map( note ->
-                        new NoteForList(note.getId(),
+                        new NoteForShow(note.getId(),
                                 note.getTitle(),
                                 note.getNote(),
                                 nameSize))
@@ -62,8 +62,8 @@ public class NoteConverter {
      * @param note entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public NoteForEditor prepareReferenceLinkForEditor(Note note) {
-        return new NoteForEditor(note.getId(), note.getTitle(), note.getNote());
+    public NoteForEdit prepareReferenceLinkForEdit(Note note) {
+        return new NoteForEdit(note.getId(), note.getTitle(), note.getNote());
     }
 
     /**
@@ -71,17 +71,17 @@ public class NoteConverter {
      * If there is no note (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
      *
      * @param note could be null. it is safe.
-     * @param noteForEditor mustn't be null. It's data will be set to entity.
+     * @param noteForEdit mustn't be null. It's data will be set to entity.
      * @param project will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public Note mergeLinkForListToLink(Note note, NoteForEditor noteForEditor, Project project) {
+    public Note mergeLinkForEditToLink(Note note, NoteForEdit noteForEdit, Project project) {
         if (note == null) {
             note = new Note();
         }
-        note.setTitle(noteForEditor.getTitle());
+        note.setTitle(noteForEdit.getTitle());
         note.setProject(project);
-        note.setNote(noteForEditor.getNote());
+        note.setNote(noteForEdit.getNote());
         return note;
     }
 }

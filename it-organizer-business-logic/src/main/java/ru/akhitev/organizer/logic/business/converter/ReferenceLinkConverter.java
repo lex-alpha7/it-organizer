@@ -21,8 +21,8 @@ package ru.akhitev.organizer.logic.business.converter;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Project;
 import ru.akhitev.organizer.entity.ReferenceLink;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEditor;
-import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForList;
+import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
+import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForShow;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,13 +42,13 @@ public class ReferenceLinkConverter {
      * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<ReferenceLinkForList> prepareLinksForList(Collection<ReferenceLink> links, Integer nameSize) {
+    public Set<ReferenceLinkForShow> prepareLinksForShow(Collection<ReferenceLink> links, Integer nameSize) {
         if (links == null) {
             return Collections.emptySet();
         }
         return links.stream()
                 .map( link ->
-                        new ReferenceLinkForList(link.getId(),
+                        new ReferenceLinkForShow(link.getId(),
                                 link.getName(),
                                 link.getLink(),
                                 nameSize))
@@ -62,8 +62,8 @@ public class ReferenceLinkConverter {
      * @param link entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public ReferenceLinkForEditor prepareReferenceLinkForEditor(ReferenceLink link) {
-        return new ReferenceLinkForEditor(link.getId(), link.getName(), link.getLink());
+    public ReferenceLinkForEdit prepareReferenceLinkForEdit(ReferenceLink link) {
+        return new ReferenceLinkForEdit(link.getId(), link.getName(), link.getLink());
     }
 
     /**
@@ -75,7 +75,7 @@ public class ReferenceLinkConverter {
      * @param project will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public ReferenceLink mergeLinkForListToLink(ReferenceLink link, ReferenceLinkForEditor linkForEditor, Project project) {
+    public ReferenceLink mergeLinkForEditToLink(ReferenceLink link, ReferenceLinkForEdit linkForEditor, Project project) {
         if (link == null) {
             link = new ReferenceLink();
         }

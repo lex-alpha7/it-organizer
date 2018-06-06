@@ -16,43 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.vo.ticket.link;
+package ru.akhitev.organizer.logic.business.vo.ticket;
 
-import ru.akhitev.organizer.enums.LinkType;
+import ru.akhitev.organizer.logic.business.dto.ticket.TemplatedDisplayName;
+import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
 
-public class TicketLinkForList {
+public class TicketForShow implements AdjustableNameSize, TemplatedDisplayName {
     private final Integer id;
-    private final LinkType type;
-    private final String name;
-    private final String link;
-    private final String displayName;
+    private final String displayedName;
 
-    public TicketLinkForList(Integer id, LinkType type, String name, String link) {
+    public TicketForShow(Integer id, String key, String priority, String name, Integer nameSize) {
         this.id = id;
-        this.type = type;
-        this.name = name;
-        this.link = link;
-        this.displayName = String.format("%s (%s)", name, type);
+        this.displayedName = constructDisplayedName(key, priority, name, nameSize);
+    }
+
+    private String constructDisplayedName(String key, String priority, String name, Integer nameSize) {
+        return adjustSize(String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name), nameSize);
     }
 
     public Integer getId() {
         return id;
     }
 
-    public LinkType getType() {
-        return type;
+    public String getDisplayedName() {
+        return displayedName;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
 }

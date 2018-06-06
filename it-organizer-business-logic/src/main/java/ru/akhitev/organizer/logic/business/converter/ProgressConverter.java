@@ -20,7 +20,7 @@ package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Progress;
-import ru.akhitev.organizer.logic.business.dto.ticket.progress.ProgressForEditor;
+import ru.akhitev.organizer.logic.business.dto.ticket.progress.ProgressForEdit;
 import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 
 import java.util.Collection;
@@ -58,7 +58,7 @@ public class ProgressConverter {
      * @param progress entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public ProgressForEditor prepareProgressForEditor(Progress progress) {
-        return new ProgressForEditor();
+    public ProgressForEdit prepareProgressForEdit(Progress progress) {
+        return new ProgressForEdit();
     }
 }

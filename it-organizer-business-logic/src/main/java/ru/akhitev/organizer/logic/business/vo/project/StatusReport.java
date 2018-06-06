@@ -18,20 +18,20 @@
  */
 package ru.akhitev.organizer.logic.business.vo.project;
 
-import ru.akhitev.organizer.logic.business.vo.ticket.TicketForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 
 import java.util.Map;
 import java.util.Set;
 
 public class StatusReport {
-    private final Map<TicketForList, Set<ProgressForShow>> progress;
+    private final Map<TicketForShow, Set<ProgressForShow>> progress;
 
-    public StatusReport(Map<TicketForList, Set<ProgressForShow>> progress) {
+    public StatusReport(Map<TicketForShow, Set<ProgressForShow>> progress) {
         this.progress = progress;
     }
 
-    public Map<TicketForList, Set<ProgressForShow>> getProgress() {
+    public Map<TicketForShow, Set<ProgressForShow>> getProgress() {
         return progress;
     }
 }

@@ -16,30 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.vo.project.link;
+package ru.akhitev.organizer.logic.business.dto.ticket.progress;
 
-import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
+public class ProgressForEdit {
+    private String progress;
 
-public class ReferenceLinkForList implements AdjustableNameSize {
-    private final Integer id;
-    private final String name;
-    private final String link;
-
-    public ReferenceLinkForList(Integer id, String name, String link, Integer nameSize) {
-        this.id = id;
-        this.link = link;
-        this.name = adjustSize(name, nameSize);
+    public String getProgress() {
+        return progress;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLink() {
-        return link;
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 }

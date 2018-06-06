@@ -19,11 +19,11 @@
 package ru.akhitev.organizer.logic.business.dto.ticket;
 
 import ru.akhitev.organizer.enums.Status;
-import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForList;
+import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
 
 import java.util.Set;
 
-public class TicketForEditor implements TemplatedDisplayName {
+public class TicketForEdit implements TemplatedDisplayName {
     private Integer id;
     private Integer projectId;
     private String key;
@@ -33,12 +33,12 @@ public class TicketForEditor implements TemplatedDisplayName {
     private String displayedName;
     private Status status;
     private String stepsToReproduce;
-    private Set<TicketLinkForList> links;
+    private Set<TicketLinkForShow> links;
 
-    public TicketForEditor() {}
+    public TicketForEdit() {}
 
-    public TicketForEditor(Integer id, Integer projectId, String key, String priority, String name, String workspace,
-                           Status status, String stepsToReproduce, Set<TicketLinkForList> links) {
+    public TicketForEdit(Integer id, Integer projectId, String key, String priority, String name, String workspace,
+                         Status status, String stepsToReproduce, Set<TicketLinkForShow> links) {
         this.id = id;
         this.projectId = projectId;
         this.key = key;
@@ -114,11 +114,11 @@ public class TicketForEditor implements TemplatedDisplayName {
         this.stepsToReproduce = stepsToReproduce;
     }
 
-    public Set<TicketLinkForList> getLinks() {
+    public Set<TicketLinkForShow> getLinks() {
         return links;
     }
 
-    public void setLinks(Set<TicketLinkForList> links) {
+    public void setLinks(Set<TicketLinkForShow> links) {
         this.links = links;
     }
 }

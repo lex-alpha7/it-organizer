@@ -21,8 +21,8 @@ package ru.akhitev.organizer.logic.business.converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Project;
-import ru.akhitev.organizer.logic.business.dto.project.ProjectForEditor;
-import ru.akhitev.organizer.logic.business.vo.project.ProjectForList;
+import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
+import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
 
 import java.util.List;
 import java.util.Set;
@@ -44,8 +44,8 @@ public class ProjectConverter {
      * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<ProjectForList> prepareProjectsForList(List<Project> projects, Integer nameSize) {
-        return projects.stream().map((project) -> new ProjectForList(project.getId(), project.getName(), nameSize))
+    public Set<ProjectForShow> prepareProjectsForShow(List<Project> projects, Integer nameSize) {
+        return projects.stream().map((project) -> new ProjectForShow(project.getId(), project.getName(), nameSize))
                 .collect(Collectors.toSet());
     }
 
@@ -57,9 +57,9 @@ public class ProjectConverter {
      * @param nameSize is used for preparing ticket list.
      * @return a DTO, filled with data from an entity.
      */
-    public ProjectForEditor prepareProjectForEditor(Project project, Integer nameSize) {
-        return new ProjectForEditor(project.getId(), project.getName(),
-                ticketConverter.prepareTicketsForList(project.getTickets(), nameSize));
+    public ProjectForEdit prepareProjectForEdit(Project project, Integer nameSize) {
+        return new ProjectForEdit(project.getId(), project.getName(),
+                ticketConverter.prepareTicketsForShow(project.getTickets(), nameSize));
     }
 
     /**
@@ -67,14 +67,14 @@ public class ProjectConverter {
      * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
      *
      * @param project could be null. it is safe.
-     * @param projectForEditor mustn't be null. It's data will be set to entity.
+     * @param projectForEdit mustn't be null. It's data will be set to entity.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public Project mergeProjectForListToProject(Project project, ProjectForEditor projectForEditor) {
+    public Project mergeProjectForEditToProject(Project project, ProjectForEdit projectForEdit) {
         if (project == null) {
             project = new Project();
         }
-        project.setName(projectForEditor.getName());
+        project.setName(projectForEdit.getName());
         return project;
     }
 }

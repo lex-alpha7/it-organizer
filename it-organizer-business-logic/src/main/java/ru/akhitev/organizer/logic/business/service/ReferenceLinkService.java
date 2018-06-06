@@ -22,46 +22,79 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.ReferenceLink;
 import ru.akhitev.organizer.logic.business.converter.ReferenceLinkConverter;
-import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEditor;
-import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForList;
+import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
+import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForShow;
 import ru.akhitev.organizer.repository.ReferenceLinkRepository;
 
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ * The aim of service is to provide give, remove and save DTOs and VOs.
+ * A service uses converters, repositories and other services.
+ * No one else should use data base layer.
+ */
 @Service
 public class ReferenceLinkService {
+    /** The main repository. */
     @Autowired
     private ReferenceLinkRepository repository;
 
+    /** The main converter. */
     @Autowired
     private ReferenceLinkConverter converter;
 
+    /** Uses for getting {@link ProjectService#activeProject}. */
     @Autowired
     private ProjectService projectService;
 
-    public Set<ReferenceLinkForList> giveReferenceLinksForListByProject(Integer nameSize) {
+    /**
+     * Returns collection of VOs.
+     * If there is no {@link ProjectService#activeProject}, then empty set is returned.
+     *
+     * @param nameSize name of a VO is adjusted by this size.
+     * @return collection of VOs.
+     */
+    public Set<ReferenceLinkForShow> giveReferenceLinksForShowForActiveProject(Integer nameSize) {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
         }
         Set<ReferenceLink> links = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareLinksForList(links, nameSize);
+        return converter.prepareLinksForShow(links, nameSize);
     }
 
-    public Integer saveLink(ReferenceLinkForEditor linkForEditor) {
+    /**
+     * The method prepares DTO from entity, get by ID.
+     *
+     * @param linkID ID to find entity in data base.
+     * @return DTO from entity.
+     */
+    public ReferenceLinkForEdit giveTicketForEdit(Integer linkID) {
+        return converter.prepareReferenceLinkForEdit(repository.getOne(linkID));
+    }
+
+    /**
+     * The method saves DTO.
+     * If it is a create operation and there is no entity, then a new one is created.
+     * {@link ProjectService#activeProject} is set to project in the link.
+     *
+     * @param linkForEditor DTO, which will be saved.
+     * @return ID of saved entity.
+     */
+    public Integer saveLink(ReferenceLinkForEdit linkForEditor) {
         Integer id = linkForEditor.getId();
         ReferenceLink link = null;
         if (id != null) {
             link = repository.getOne(id);
         }
-        link = converter.mergeLinkForListToLink(link, linkForEditor, projectService.getActiveProject());
+        link = converter.mergeLinkForEditToLink(link, linkForEditor, projectService.getActiveProject());
         return repository.save(link).getId();
     }
 
-    public ReferenceLinkForEditor giveTicketForEdit(Integer linkID) {
-        return converter.prepareReferenceLinkForEditor(repository.getOne(linkID));
-    }
-
+    /**
+     * The method removes found by id entity in data base.
+     * @param linkID ID to find entity in data base.
+     */
     public void removeLink(Integer linkID) {
         repository.deleteById(linkID);
     }

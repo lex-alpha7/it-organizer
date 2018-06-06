@@ -16,29 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.vo.ticket;
+package ru.akhitev.organizer.logic.business.vo.project;
 
-import ru.akhitev.organizer.logic.business.dto.ticket.TemplatedDisplayName;
 import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
 
-public class TicketForList implements AdjustableNameSize, TemplatedDisplayName {
+public class ProjectForShow implements AdjustableNameSize {
     private final Integer id;
-    private final String displayedName;
+    private final String name;
 
-    public TicketForList(Integer id, String key, String priority, String name, Integer nameSize) {
+    public ProjectForShow(Integer id, String name, Integer nameSize) {
         this.id = id;
-        this.displayedName = constructDisplayedName(key, priority, name, nameSize);
-    }
-
-    private String constructDisplayedName(String key, String priority, String name, Integer nameSize) {
-        return adjustSize(String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name), nameSize);
+        this.name = adjustSize(name, nameSize);
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getDisplayedName() {
-        return displayedName;
+    public String getName() {
+        return name;
     }
 }

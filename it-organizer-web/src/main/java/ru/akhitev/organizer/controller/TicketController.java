@@ -26,12 +26,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.akhitev.organizer.entity.Ticket;
-import ru.akhitev.organizer.entity.TicketLink;
-import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEditor;
-import ru.akhitev.organizer.logic.business.service.ProjectService;
+import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEdit;
 import ru.akhitev.organizer.logic.business.service.TicketService;
-import ru.akhitev.organizer.repository.TicketRepository;
 
 @Controller
 @RequestMapping(value = "/ticket")
@@ -41,12 +37,12 @@ public class TicketController {
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newTicket(Model model) {
-        model.addAttribute("ticket", new TicketForEditor());
+        model.addAttribute("ticket", new TicketForEdit());
         return "edit_ticket";
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveTicket(@ModelAttribute TicketForEditor ticket, BindingResult bindingResult, Model model) {
+    public String saveTicket(@ModelAttribute TicketForEdit ticket, BindingResult bindingResult, Model model) {
         service.saveTicket(ticket);
         return "redirect:/ticket/edit/" + ticket.getId();
     }

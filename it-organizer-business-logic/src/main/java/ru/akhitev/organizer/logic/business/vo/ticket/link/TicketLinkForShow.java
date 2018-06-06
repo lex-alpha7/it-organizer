@@ -16,24 +16,43 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.vo.project;
+package ru.akhitev.organizer.logic.business.vo.ticket.link;
 
-import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
+import ru.akhitev.organizer.enums.LinkType;
 
-public class ProjectForList implements AdjustableNameSize {
+public class TicketLinkForShow {
     private final Integer id;
+    private final LinkType type;
     private final String name;
+    private final String link;
+    private final String displayName;
 
-    public ProjectForList(Integer id, String name, Integer nameSize) {
+    public TicketLinkForShow(Integer id, LinkType type, String name, String link) {
         this.id = id;
-        this.name = adjustSize(name, nameSize);
+        this.type = type;
+        this.name = name;
+        this.link = link;
+        this.displayName = String.format("%s (%s)", name, type);
     }
 
     public Integer getId() {
         return id;
     }
 
+    public LinkType getType() {
+        return type;
+    }
+
     public String getName() {
         return name;
     }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
 }

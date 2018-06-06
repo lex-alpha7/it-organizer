@@ -16,30 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package ru.akhitev.organizer.logic.business.vo.project.note;
+package ru.akhitev.organizer.logic.business.dto.project;
 
-import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
+import org.junit.Test;
 
-public class NoteForList implements AdjustableNameSize {
-    private final Integer id;
-    private final String title;
-    private final String note;
+public class ProjectForShowSpec {
 
-    public NoteForList(Integer id, String title, String note, Integer nameSize) {
-        this.id = id;
-        this.title = adjustSize(title, nameSize);
-        this.note = note;
+    @Test
+    public void whenProjectForListHasIdAndNameThenValidationOk() {
+        //ProjectForShow projectForList = ProjectForShow.newInstance(1, "Test Project");
     }
 
-    public Integer getId() {
-        return id;
-    }
+    @Test
+    public void whenProjectForListHasOnlyIdThenValidationFailes() {
+        //ProjectForShow projectForList = ProjectForShow.newInstance(1, null);
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getNote() {
-        return note;
     }
 }

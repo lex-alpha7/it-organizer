@@ -21,8 +21,8 @@ package ru.akhitev.organizer.logic.business.converter;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.entity.Ticket;
 import ru.akhitev.organizer.entity.TicketLink;
-import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEditor;
-import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForList;
+import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
+import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,13 +41,13 @@ public class TicketLinkConverter {
      * @param links could be null. it is safe.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<TicketLinkForList> prepareLinksForList(Collection<TicketLink> links) {
+    public Set<TicketLinkForShow> prepareLinksForShow(Collection<TicketLink> links) {
         if (links == null) {
             return Collections.emptySet();
         }
         return links.stream()
                 .map( link ->
-                        new TicketLinkForList(link.getId(),
+                        new TicketLinkForShow(link.getId(),
                                 link.getType(),
                                 link.getName(),
                                 link.getLink()))
@@ -63,7 +63,7 @@ public class TicketLinkConverter {
      * @param ticket will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public TicketLink mergeLinkForListToLink(TicketLink link, TicketLinkForEditor linkForEditor, Ticket ticket) {
+    public TicketLink mergeLinkForEditToLink(TicketLink link, TicketLinkForEdit linkForEditor, Ticket ticket) {
         if (link == null) {
             link = new TicketLink();
         }

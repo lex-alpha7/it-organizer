@@ -22,47 +22,80 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.entity.Note;
 import ru.akhitev.organizer.logic.business.converter.NoteConverter;
-import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEditor;
-import ru.akhitev.organizer.logic.business.vo.project.note.NoteForList;
+import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
+import ru.akhitev.organizer.logic.business.vo.project.note.NoteForShow;
 import ru.akhitev.organizer.repository.NoteRepository;
 
 import java.util.Collections;
 import java.util.Set;
 
+/**
+ * The aim of service is to provide give, remove and save DTOs and VOs.
+ * A service uses converters, repositories and other services.
+ * No one else should use data base layer.
+ */
 @Service
 public class NoteService {
+    /** The main repository. */
     @Autowired
     private NoteRepository repository;
 
+    /** The main converter. */
     @Autowired
     private NoteConverter converter;
 
+    /** Uses for getting {@link ProjectService#activeProject}. */
     @Autowired
     private ProjectService projectService;
 
-    public Set<NoteForList> giveNotesForListByProject(Integer nameSize) {
+    /**
+     * Returns collection of VOs.
+     * If there is no {@link ProjectService#activeProject}, then empty set is returned.
+     *
+     * @param nameSize name of a VO is adjusted by this size.
+     * @return collection of VOs.
+     */
+    public Set<NoteForShow> giveNotesForShowForActiveProject(Integer nameSize) {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
         }
         Set<Note> notes = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareNotesForList(notes, nameSize);
+        return converter.prepareNotesForShow(notes, nameSize);
     }
 
-    public Integer saveNote(NoteForEditor noteForEditor) {
-        Integer id = noteForEditor.getId();
+    /**
+     * The method prepares DTO from entity, get by ID.
+     *
+     * @param noteID ID to find entity in data base.
+     * @return DTO from entity.
+     */
+    public NoteForEdit giveNoteForEdit(Integer noteID) {
+        return converter.prepareReferenceLinkForEdit(repository.getOne(noteID));
+    }
+
+    /**
+     * The method saves DTO.
+     * If it is a create operation and there is no entity, then a new one is created.
+     * {@link ProjectService#activeProject} is set to project in the ticket.
+     *
+     * @param noteForEdit DTO, which will be saved.
+     * @return ID of saved entity.
+     */
+    public Integer saveNote(NoteForEdit noteForEdit) {
+        Integer id = noteForEdit.getId();
         Note note = null;
         if (id != null) {
             note = repository.getOne(id);
         }
-        note = converter.mergeLinkForListToLink(note, noteForEditor, projectService.getActiveProject());
+        note = converter.mergeLinkForEditToLink(note, noteForEdit, projectService.getActiveProject());
         return repository.save(note).getId();
     }
 
-    public NoteForEditor giveNoteForEdit(Integer linkID) {
-        return converter.prepareReferenceLinkForEditor(repository.getOne(linkID));
-    }
-
-    public void removeLink(Integer linkID) {
-        repository.deleteById(linkID);
+    /**
+     * The method removes found by id entity in data base.
+     * @param noteID ID to find entity in data base.
+     */
+    public void removeLink(Integer noteID) {
+        repository.deleteById(noteID);
     }
 }
