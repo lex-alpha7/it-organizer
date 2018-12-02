@@ -7,7 +7,7 @@ spring:
   jmx:
     enabled: false
   datasource:
-    url: jdbc:h2:file:./data/it-organizer-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:file:/home/aleksei_khitev/Dropbox/Reference Materials/it-organizer-db/it-organizer-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     platform: h2
     username: sa
     password:

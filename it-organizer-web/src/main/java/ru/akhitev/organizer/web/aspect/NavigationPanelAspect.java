@@ -31,7 +31,7 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 @Aspect
 @Configuration
 public class NavigationPanelAspect {
-    private static final int NAME_SIZE = 35;
+    public static final int NAME_SIZE = 35;
 
     @Autowired
     private ProjectService projectService;

@@ -20,12 +20,13 @@ package ru.akhitev.organizer.logic.business.vo;
 
 public interface AdjustableNameSize {
      default String adjustSize(String input, Integer size) {
-        String output;
+        StringBuilder output = new StringBuilder();
         if (input.length() <= size) {
-            output = input;
+            output.append(input);
         } else {
-            output = input.substring(0, size);
+            output.append(input.substring(0, size));
+            output.append("...");
         }
-        return output;
+        return output.toString();
     }
 }

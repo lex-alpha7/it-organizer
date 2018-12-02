@@ -40,7 +40,7 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editProject(@PathVariable("id") Integer projectId, Model model) {
-        model.addAttribute("project", service.giveProjectForEdit(projectId, 20));
+        model.addAttribute("project", service.giveProjectForEdit(projectId, NAME_SIZE));
         return EDIT_PROJECT_PATH;
     }
 
