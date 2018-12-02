@@ -34,7 +34,7 @@ import java.util.Set;
  * No one else should use data base layer.
  */
 @Service
-public class ProjectService {
+public class ProjectService extends AbstractService<ProjectConverter, ProjectRepository, Project, ProjectForShow, ProjectForEdit> {
     /** The main repository. */
     @Autowired
     private ProjectRepository repository;
@@ -46,26 +46,6 @@ public class ProjectService {
     /** If there is an active project, then tickets, reference links, notes and other lists is shown. */
     private Project activeProject;
 
-    /**
-     * Returns collection of VOs.
-     *
-     * @param nameSize name of a VO is adjusted by this size.
-     * @return collection of VOs.
-     */
-    public Set<ProjectForShow> giveProjectsForShow(Integer nameSize) {
-        return converter.prepareProjectsForShow(repository.findAll(), nameSize);
-    }
-
-    /**
-     * The method prepares DTO from entity, get by ID.
-     *
-     * @param projectId ID to find entity in data base.
-     * @param nameSize is used to adjust tickets to show as list in project.
-     * @return DTO from entity.
-     */
-    public ProjectForEdit giveProjectForEdit(Integer projectId, Integer nameSize) {
-        return converter.prepareProjectForEdit(repository.getOne(projectId), nameSize);
-    }
 
     /**
      * The method saves DTO.
@@ -79,16 +59,8 @@ public class ProjectService {
         if (id != null) {
             project = repository.getOne(id);
         }
-        project = converter.mergeProjectForEditToProject(project, projectForEdit);
+        project = converter.merge(project, projectForEdit);
         repository.save(project);
-    }
-
-    /**
-     * The method removes found by id entity in data base.
-     * @param projectID ID to find entity in data base.
-     */
-    public void removeProject(Integer projectID) {
-        repository.deleteById(projectID);
     }
 
     /**
@@ -117,5 +89,16 @@ public class ProjectService {
      */
     public boolean ifActiveProject() {
         return activeProject != null;
+    }
+
+
+    @Override
+    ProjectConverter converter() {
+        return converter;
+    }
+
+    @Override
+    ProjectRepository repository() {
+        return repository;
     }
 }

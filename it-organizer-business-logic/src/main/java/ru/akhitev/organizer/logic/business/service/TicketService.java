@@ -55,15 +55,14 @@ public class TicketService {
      * Returns collection of VOs.
      * If there is no {@link ProjectService#activeProject}, then empty set is returned.
      *
-     * @param nameSize name of a VO is adjusted by this size.
      * @return collection of VOs.
      */
-    public Set<TicketForShow> giveTicketsForShowForActiveProject(Integer nameSize) {
+    public Set<TicketForShow> giveTicketsForShowForActiveProject() {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
         }
         Set<Ticket> tickets = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareTicketsForShow(tickets, nameSize);
+        return converter.prepareForShow(tickets);
     }
 
     /**
@@ -73,7 +72,7 @@ public class TicketService {
      * @return DTO from entity.
      */
     public TicketForEdit giveTicketForEdit(Integer ticketId) {
-        return converter.prepareTicketForEdit(repository.getOne(ticketId));
+        return converter.prepareForEdit(repository.getOne(ticketId));
     }
 
     /**
@@ -89,7 +88,8 @@ public class TicketService {
         if (id != null) {
             ticket = repository.getOne(id);
         }
-        ticket = converter.mergeProjectForEditToProject(ticket, ticketForEdit, projectService.getActiveProject());
+        ticket = converter.merge(ticket, ticketForEdit);
+        ticket.setProject(projectService.getActiveProject());
         repository.save(ticket);
     }
 

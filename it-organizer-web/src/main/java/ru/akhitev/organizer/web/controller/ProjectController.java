@@ -40,13 +40,13 @@ public class ProjectController extends AbstractController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editProject(@PathVariable("id") Integer projectId, Model model) {
-        model.addAttribute("project", service.giveProjectForEdit(projectId, NAME_SIZE));
+        model.addAttribute("project", service.giveForEdit(projectId));
         return EDIT_PROJECT_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteProject(@PathVariable("id") Integer projectId, Model model) {
-        service.removeProject(projectId);
+        service.remove(projectId);
         return MAIN_REDIRECT_PATH;
     }
 

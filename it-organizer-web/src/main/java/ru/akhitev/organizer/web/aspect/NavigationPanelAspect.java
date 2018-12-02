@@ -31,7 +31,6 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 @Aspect
 @Configuration
 public class NavigationPanelAspect {
-    public static final int NAME_SIZE = 35;
 
     @Autowired
     private ProjectService projectService;
@@ -50,10 +49,10 @@ public class NavigationPanelAspect {
         if (model == null) {
             return;
         }
-        model.addAttribute("projects", projectService.giveProjectsForShow(NAME_SIZE));
-        model.addAttribute("tickets", ticketService.giveTicketsForShowForActiveProject(NAME_SIZE));
-        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForShowForActiveProject(NAME_SIZE));
-        model.addAttribute("notes", noteService.giveNotesForShowForActiveProject(NAME_SIZE));
+        model.addAttribute("projects", projectService.giveForShow());
+        model.addAttribute("tickets", ticketService.giveTicketsForShowForActiveProject());
+        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForShowForActiveProject());
+        model.addAttribute("notes", noteService.giveNotesForShowForActiveProject());
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());
     }

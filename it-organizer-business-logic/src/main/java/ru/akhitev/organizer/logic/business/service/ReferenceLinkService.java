@@ -52,15 +52,14 @@ public class ReferenceLinkService {
      * Returns collection of VOs.
      * If there is no {@link ProjectService#activeProject}, then empty set is returned.
      *
-     * @param nameSize name of a VO is adjusted by this size.
      * @return collection of VOs.
      */
-    public Set<ReferenceLinkForShow> giveReferenceLinksForShowForActiveProject(Integer nameSize) {
+    public Set<ReferenceLinkForShow> giveReferenceLinksForShowForActiveProject() {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
         }
         Set<ReferenceLink> links = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareLinksForShow(links, nameSize);
+        return converter.prepareForShow(links);
     }
 
     /**
@@ -70,7 +69,7 @@ public class ReferenceLinkService {
      * @return DTO from entity.
      */
     public ReferenceLinkForEdit giveTicketForEdit(Integer linkID) {
-        return converter.prepareReferenceLinkForEdit(repository.getOne(linkID));
+        return converter.prepareForEdit(repository.getOne(linkID));
     }
 
     /**
@@ -86,7 +85,8 @@ public class ReferenceLinkService {
         if (id != null) {
             link = repository.getOne(id);
         }
-        link = converter.mergeLinkForEditToLink(link, linkForEditor, projectService.getActiveProject());
+        link = converter.merge(link, linkForEditor);
+        link.setProject(projectService.getActiveProject());
         repository.save(link);
     }
 

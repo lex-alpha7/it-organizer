@@ -19,8 +19,10 @@
 package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.db.entity.Note;
+import ru.akhitev.organizer.logic.business.converter.Converter;
 import ru.akhitev.organizer.logic.business.converter.NoteConverter;
 import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.note.NoteForShow;
@@ -35,7 +37,7 @@ import java.util.Set;
  * No one else should use data base layer.
  */
 @Service
-public class NoteService {
+public class NoteService extends AbstractService<NoteConverter, NoteRepository, Note, NoteForShow, NoteForEdit> {
     /** The main repository. */
     @Autowired
     private NoteRepository repository;
@@ -52,25 +54,14 @@ public class NoteService {
      * Returns collection of VOs.
      * If there is no {@link ProjectService#activeProject}, then empty set is returned.
      *
-     * @param nameSize name of a VO is adjusted by this size.
      * @return collection of VOs.
      */
-    public Set<NoteForShow> giveNotesForShowForActiveProject(Integer nameSize) {
+    public Set<NoteForShow> giveNotesForShowForActiveProject() {
         if (projectService.getActiveProject() == null) {
             return Collections.emptySet();
         }
         Set<Note> notes = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareNotesForShow(notes, nameSize);
-    }
-
-    /**
-     * The method prepares DTO from entity, get by ID.
-     *
-     * @param noteID ID to find entity in data base.
-     * @return DTO from entity.
-     */
-    public NoteForEdit giveNoteForEdit(Integer noteID) {
-        return converter.prepareReferenceLinkForEdit(repository.getOne(noteID));
+        return converter.prepareForShow(notes);
     }
 
     /**
@@ -86,15 +77,18 @@ public class NoteService {
         if (id != null) {
             note = repository.getOne(id);
         }
-        note = converter.mergeLinkForEditToLink(note, noteForEdit, projectService.getActiveProject());
+        note = converter.merge(note, noteForEdit);
+        note.setProject(projectService.getActiveProject());
         repository.save(note);
     }
 
-    /**
-     * The method removes found by id entity in data base.
-     * @param noteID ID to find entity in data base.
-     */
-    public void removeLink(Integer noteID) {
-        repository.deleteById(noteID);
+    @Override
+    NoteConverter converter() {
+        return converter;
+    }
+
+    @Override
+    NoteRepository repository() {
+        return repository;
     }
 }

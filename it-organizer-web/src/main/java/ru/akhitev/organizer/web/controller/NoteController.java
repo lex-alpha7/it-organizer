@@ -43,7 +43,7 @@ public class NoteController extends AbstractController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editNote(@PathVariable("id") Integer noteID, Model model) {
-        model.addAttribute("note", noteService.giveNoteForEdit(noteID));
+        model.addAttribute("note", noteService.giveForEdit(noteID));
         return EDIT_NOTE_PATH;
     }
 
@@ -55,7 +55,7 @@ public class NoteController extends AbstractController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteNote(@PathVariable("id") Integer noteID, Model model) {
-        noteService.removeLink(noteID);
+        noteService.remove(noteID);
         return MAIN_REDIRECT_PATH;
     }
 }

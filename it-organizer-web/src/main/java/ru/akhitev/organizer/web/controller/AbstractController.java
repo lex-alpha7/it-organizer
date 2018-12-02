@@ -1,7 +1,6 @@
 package ru.akhitev.organizer.web.controller;
 
 abstract class AbstractController {
-    final Integer NAME_SIZE = 36;
     final String MAIN_PATH = "main";
     final String MAIN_REDIRECT_PATH = "redirect:/";
     final String EDIT_PROJECT_PATH = "edit_project";

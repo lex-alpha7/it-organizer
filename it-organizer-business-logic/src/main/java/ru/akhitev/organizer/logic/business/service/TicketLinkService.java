@@ -57,7 +57,8 @@ public class TicketLinkService {
         if (id != null) {
             link = linkRepository.getOne(id);
         }
-        link = converter.mergeLinkForEditToLink(link, linkForEditor, ticketService.getActiveTicket());
+        link = converter.merge(link, linkForEditor);
+        link.setTicket(ticketService.getActiveTicket());
         linkRepository.save(link);
     }
 

@@ -47,7 +47,7 @@ public class ProjectControllerSpec {
     @Test
     public void whenEditExistingProjectWithNoTicketsThenFillFields() throws Exception {
         ProjectForEdit projectForEdit = new ProjectForEdit(0, "It Organizer", Collections.emptySet());
-        when(projectService.giveProjectForEdit(0, 36)).thenReturn(projectForEdit);
+        when(projectService.giveForEdit(0)).thenReturn(projectForEdit);
         mockMvc.perform(get("/project/edit/0"))
                 .andDo(print())
                 .andExpect(status().isOk())

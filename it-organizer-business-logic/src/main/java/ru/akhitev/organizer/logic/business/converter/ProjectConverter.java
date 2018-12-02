@@ -19,12 +19,13 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,19 +33,21 @@ import java.util.stream.Collectors;
  * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
  */
 @Component
-public class ProjectConverter {
+public class ProjectConverter implements Converter<Project, ProjectForShow, ProjectForEdit> {
     /** Uses to prepare tickets during preparation for editor. */
     @Autowired
     private TicketConverter ticketConverter;
+
+    @Value("${name.size}")
+    private Integer nameSize;
 
     /**
      * This method converts notes into VOs to show in a sidebar.
      *
      * @param projects could be null. it is safe.
-     * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<ProjectForShow> prepareProjectsForShow(List<Project> projects, Integer nameSize) {
+    public Set<ProjectForShow> prepareForShow(Collection<Project> projects) {
         return projects.stream().map((project) -> new ProjectForShow(project.getId(), project.getName(), nameSize))
                 .collect(Collectors.toSet());
     }
@@ -54,12 +57,11 @@ public class ProjectConverter {
      * Data from entity is set into DTO.
      *
      * @param project entity, which is a source for DTO.
-     * @param nameSize is used for preparing ticket list.
      * @return a DTO, filled with data from an entity.
      */
-    public ProjectForEdit prepareProjectForEdit(Project project, Integer nameSize) {
+    public ProjectForEdit prepareForEdit(Project project) {
         return new ProjectForEdit(project.getId(), project.getName(),
-                ticketConverter.prepareTicketsForShow(project.getTickets(), nameSize));
+                ticketConverter.prepareForShow(project.getTickets()));
     }
 
     /**
@@ -70,7 +72,7 @@ public class ProjectConverter {
      * @param projectForEdit mustn't be null. It's data will be set to entity.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public Project mergeProjectForEditToProject(Project project, ProjectForEdit projectForEdit) {
+    public Project merge(Project project, ProjectForEdit projectForEdit) {
         if (project == null) {
             project = new Project();
         }

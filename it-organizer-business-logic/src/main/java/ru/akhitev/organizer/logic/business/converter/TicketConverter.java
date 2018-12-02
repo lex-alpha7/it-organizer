@@ -19,8 +19,8 @@
 package ru.akhitev.organizer.logic.business.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEdit;
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
@@ -34,7 +34,10 @@ import java.util.stream.Collectors;
  * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
  */
 @Component
-public class TicketConverter {
+public class TicketConverter implements Converter<Ticket, TicketForShow, TicketForEdit> {
+    @Value("${name.size}")
+    private Integer nameSize;
+
     /** Uses to prepare ticket links during preparation for editor. */
     @Autowired
     private TicketLinkConverter linkConverter;
@@ -43,10 +46,9 @@ public class TicketConverter {
      * This method converts notes into VOs to show in a sidebar.
      *
      * @param tickets could be null. it is safe.
-     * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<TicketForShow> prepareTicketsForShow(Collection<Ticket> tickets, Integer nameSize) {
+    public Set<TicketForShow> prepareForShow(Collection<Ticket> tickets) {
         if (tickets == null) {
             return Collections.emptySet();
         }
@@ -67,10 +69,10 @@ public class TicketConverter {
      * @param ticket entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public TicketForEdit prepareTicketForEdit(Ticket ticket) {
+    public TicketForEdit prepareForEdit(Ticket ticket) {
         return new TicketForEdit(ticket.getId(), ticket.getProject().getId(), ticket.getKey(), ticket.getPriority(),
                 ticket.getName(), ticket.getWorkspace(), ticket.getStatus(), ticket.getStepsToReproduce(),
-                linkConverter.prepareLinksForShow(ticket.getLinks()));
+                linkConverter.prepareForShow(ticket.getLinks()));
     }
 
     /**
@@ -79,15 +81,13 @@ public class TicketConverter {
      *
      * @param ticket could be null. it is safe.
      * @param ticketForEdit mustn't be null. It's data will be set to entity.
-     * @param activeProject will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public Ticket mergeProjectForEditToProject(Ticket ticket, TicketForEdit ticketForEdit, Project activeProject) {
+    public Ticket merge(Ticket ticket, TicketForEdit ticketForEdit) {
         if (ticket == null) {
             ticket = new Ticket();
         }
         ticket.setName(ticketForEdit.getName());
-        ticket.setProject(activeProject);
         ticket.setKey(ticketForEdit.getKey());
         ticket.setWorkspace(ticketForEdit.getWorkspace());
         ticket.setStatus(ticketForEdit.getStatus());

@@ -18,6 +18,7 @@
  */
 package ru.akhitev.organizer.logic.business.converter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.db.entity.TicketLink;
@@ -33,7 +34,10 @@ import java.util.stream.Collectors;
  * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
  */
 @Component
-public class TicketLinkConverter {
+public class TicketLinkConverter implements Converter<TicketLink, TicketLinkForShow, TicketLinkForEdit> {
+
+    @Value("${name.size}")
+    private Integer nameSize;
 
     /**
      * This method converts notes into VOs to show in a sidebar.
@@ -41,7 +45,7 @@ public class TicketLinkConverter {
      * @param links could be null. it is safe.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<TicketLinkForShow> prepareLinksForShow(Collection<TicketLink> links) {
+    public Set<TicketLinkForShow> prepareForShow(Collection<TicketLink> links) {
         if (links == null) {
             return Collections.emptySet();
         }
@@ -54,21 +58,25 @@ public class TicketLinkConverter {
                 .collect(Collectors.toSet());
     }
 
+    // TODO
+    @Override
+    public TicketLinkForEdit prepareForEdit(TicketLink entity) {
+        return null;
+    }
+
     /**
      * This method prepares an entity for saving.
      * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
      *
      * @param link could be null. it is safe.
      * @param linkForEditor mustn't be null. It's data will be set to entity.
-     * @param ticket will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public TicketLink mergeLinkForEditToLink(TicketLink link, TicketLinkForEdit linkForEditor, Ticket ticket) {
+    public TicketLink merge(TicketLink link, TicketLinkForEdit linkForEditor) {
         if (link == null) {
             link = new TicketLink();
         }
         link.setName(linkForEditor.getName());
-        link.setTicket(ticket);
         link.setType(linkForEditor.getType());
         link.setLink(linkForEditor.getLink());
         return link;

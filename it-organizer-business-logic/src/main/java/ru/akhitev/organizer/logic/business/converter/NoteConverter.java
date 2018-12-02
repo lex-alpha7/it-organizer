@@ -18,6 +18,7 @@
  */
 package ru.akhitev.organizer.logic.business.converter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.db.entity.Note;
 import ru.akhitev.organizer.db.entity.Project;
@@ -33,16 +34,18 @@ import java.util.stream.Collectors;
  * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
  */
 @Component
-public class NoteConverter {
+public class NoteConverter implements Converter<Note, NoteForShow, NoteForEdit> {
+
+    @Value("${name.size}")
+    private Integer nameSize;
 
     /**
      * This method converts notes into VOs to show in a sidebar.
      *
      * @param notes could be null. it is safe.
-     * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<NoteForShow> prepareNotesForShow(Collection<Note> notes, Integer nameSize) {
+    public Set<NoteForShow> prepareForShow(Collection<Note> notes) {
         if (notes == null) {
             return Collections.emptySet();
         }
@@ -62,7 +65,7 @@ public class NoteConverter {
      * @param note entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public NoteForEdit prepareReferenceLinkForEdit(Note note) {
+    public NoteForEdit prepareForEdit(Note note) {
         return new NoteForEdit(note.getId(), note.getTitle(), note.getNote());
     }
 
@@ -72,15 +75,13 @@ public class NoteConverter {
      *
      * @param note could be null. it is safe.
      * @param noteForEdit mustn't be null. It's data will be set to entity.
-     * @param project will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public Note mergeLinkForEditToLink(Note note, NoteForEdit noteForEdit, Project project) {
+    public Note merge(Note note, NoteForEdit noteForEdit) {
         if (note == null) {
             note = new Note();
         }
         note.setTitle(noteForEdit.getTitle());
-        note.setProject(project);
         note.setNote(noteForEdit.getNote());
         return note;
     }

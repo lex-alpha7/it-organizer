@@ -18,6 +18,7 @@
  */
 package ru.akhitev.organizer.logic.business.converter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.db.entity.ReferenceLink;
@@ -33,16 +34,17 @@ import java.util.stream.Collectors;
  * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
  */
 @Component
-public class ReferenceLinkConverter {
+public class ReferenceLinkConverter implements Converter<ReferenceLink, ReferenceLinkForShow, ReferenceLinkForEdit> {
+    @Value("${name.size}")
+    private Integer nameSize;
 
     /**
      * This method converts notes into VOs to show in a sidebar.
      *
      * @param links could be null. it is safe.
-     * @param nameSize a note's name will be adjusted by this size.
      * @return emptyList if progresses are equal to null or a set of VOs
      */
-    public Set<ReferenceLinkForShow> prepareLinksForShow(Collection<ReferenceLink> links, Integer nameSize) {
+    public Set<ReferenceLinkForShow> prepareForShow(Collection<ReferenceLink> links) {
         if (links == null) {
             return Collections.emptySet();
         }
@@ -62,7 +64,7 @@ public class ReferenceLinkConverter {
      * @param link entity, which is a source for DTO.
      * @return a DTO, filled with data from an entity.
      */
-    public ReferenceLinkForEdit prepareReferenceLinkForEdit(ReferenceLink link) {
+    public ReferenceLinkForEdit prepareForEdit(ReferenceLink link) {
         return new ReferenceLinkForEdit(link.getId(), link.getName(), link.getLink());
     }
 
@@ -72,15 +74,13 @@ public class ReferenceLinkConverter {
      *
      * @param link could be null. it is safe.
      * @param linkForEditor mustn't be null. It's data will be set to entity.
-     * @param project will be used to link an entity to it in database.
      * @return full prepared entity will be returned. It'll be ready to store in a data base.
      */
-    public ReferenceLink mergeLinkForEditToLink(ReferenceLink link, ReferenceLinkForEdit linkForEditor, Project project) {
+    public ReferenceLink merge(ReferenceLink link, ReferenceLinkForEdit linkForEditor) {
         if (link == null) {
             link = new ReferenceLink();
         }
         link.setName(linkForEditor.getName());
-        link.setProject(project);
         link.setLink(linkForEditor.getLink());
         return link;
     }
