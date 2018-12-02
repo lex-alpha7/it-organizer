@@ -52,7 +52,7 @@ public class NavigationPanelAspect {
         model.addAttribute("projects", projectService.giveForShow());
         model.addAttribute("tickets", ticketService.giveTicketsForShowForActiveProject());
         model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForShowForActiveProject());
-        model.addAttribute("notes", noteService.giveNotesForShowForActiveProject());
+        model.addAttribute("notes", noteService.giveForShowForActiveRoot());
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());
     }

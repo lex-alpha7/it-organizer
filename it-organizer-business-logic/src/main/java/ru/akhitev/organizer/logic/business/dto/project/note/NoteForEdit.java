@@ -18,7 +18,9 @@
  */
 package ru.akhitev.organizer.logic.business.dto.project.note;
 
-public class NoteForEdit {
+import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
+
+public class NoteForEdit implements DataTransferObject {
     private Integer id;
     private String title;
     private String note;

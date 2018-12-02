@@ -26,7 +26,7 @@ import javax.persistence.*;
 @Table(name = "note")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "project")
-public class Note {
+public class Note implements NodeDataBaseEntity<Project> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
@@ -71,5 +71,10 @@ public class Note {
 
     public void setNote(@NonNull String note) {
         this.note = note;
+    }
+
+    @Override
+    public void setRoot(Project root) {
+        setProject(root);
     }
 }

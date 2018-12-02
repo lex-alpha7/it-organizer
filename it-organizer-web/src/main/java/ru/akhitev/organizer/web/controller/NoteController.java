@@ -49,7 +49,7 @@ public class NoteController extends AbstractController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveNote(@ModelAttribute NoteForEdit not, BindingResult bindingResult, Model model) {
-        noteService.saveNote(not);
+        noteService.save(not);
         return MAIN_REDIRECT_PATH;
     }
 

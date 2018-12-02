@@ -27,7 +27,8 @@ import ru.akhitev.organizer.db.enums.Status;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity @Table(name = "Ticket")
+@Entity
+@Table(name = "Ticket")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "project")
 public class Ticket {

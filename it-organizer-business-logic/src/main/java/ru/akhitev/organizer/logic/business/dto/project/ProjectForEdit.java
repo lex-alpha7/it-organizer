@@ -18,11 +18,12 @@
  */
 package ru.akhitev.organizer.logic.business.dto.project;
 
+import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 
 import java.util.Set;
 
-public class ProjectForEdit {
+public class ProjectForEdit implements DataTransferObject {
     private Integer id;
     private String name;
     private Set<TicketForShow> tickets;

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import ru.akhitev.organizer.db.entity.Note;
+import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.logic.business.converter.Converter;
 import ru.akhitev.organizer.logic.business.converter.NoteConverter;
 import ru.akhitev.organizer.logic.business.dto.project.note.NoteForEdit;
@@ -37,7 +38,7 @@ import java.util.Set;
  * No one else should use data base layer.
  */
 @Service
-public class NoteService extends AbstractService<NoteConverter, NoteRepository, Note, NoteForShow, NoteForEdit> {
+public class NoteService extends AbstractNodeService<Project, NoteConverter, NoteRepository, Note, NoteForShow, NoteForEdit> {
     /** The main repository. */
     @Autowired
     private NoteRepository repository;
@@ -50,36 +51,14 @@ public class NoteService extends AbstractService<NoteConverter, NoteRepository, 
     @Autowired
     private ProjectService projectService;
 
-    /**
-     * Returns collection of VOs.
-     * If there is no {@link ProjectService#activeProject}, then empty set is returned.
-     *
-     * @return collection of VOs.
-     */
-    public Set<NoteForShow> giveNotesForShowForActiveProject() {
-        if (projectService.getActiveProject() == null) {
-            return Collections.emptySet();
-        }
-        Set<Note> notes = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareForShow(notes);
+    @Override
+    Set<Note> queryEntitiesForActiveRoot() {
+        return repository.findByProject(projectService.getActiveProject());
     }
 
-    /**
-     * The method saves DTO.
-     * If it is a create operation and there is no entity, then a new one is created.
-     * {@link ProjectService#activeProject} is set to project in the ticket.
-     *
-     * @param noteForEdit DTO, which will be saved.
-     */
-    public void saveNote(NoteForEdit noteForEdit) {
-        Integer id = noteForEdit.getId();
-        Note note = null;
-        if (id != null) {
-            note = repository.getOne(id);
-        }
-        note = converter.merge(note, noteForEdit);
-        note.setProject(projectService.getActiveProject());
-        repository.save(note);
+    @Override
+    Project activeRoot() {
+        return projectService.getActiveProject();
     }
 
     @Override

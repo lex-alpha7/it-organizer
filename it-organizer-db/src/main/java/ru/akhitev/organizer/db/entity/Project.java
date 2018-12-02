@@ -29,7 +29,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Project")
 @SequenceGenerator(name = "seq", initialValue = 20)
-public class Project {
+public class Project implements DataBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
