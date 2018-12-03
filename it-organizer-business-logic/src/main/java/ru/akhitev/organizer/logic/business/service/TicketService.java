@@ -30,18 +30,9 @@ import ru.akhitev.organizer.db.repository.TicketRepository;
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * The aim of service is to provide give, remove and save DTOs and VOs.
- * A service uses converters, repositories and other services.
- * No one else should use data base layer.
- */
+/** {@inheritDoc} */
 @Service
 public class TicketService extends AbstractNodeService<Project, TicketConverter, TicketRepository, Ticket, TicketForShow, TicketForEdit> {
-    /** The main repository. */
-    private final TicketRepository repository;
-
-    /** The main converter. */
-    private final TicketConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
     private final ProjectService projectService;
@@ -51,8 +42,7 @@ public class TicketService extends AbstractNodeService<Project, TicketConverter,
 
     @Autowired
     public TicketService(TicketRepository repository, TicketConverter converter, ProjectService projectService) {
-        this.repository = repository;
-        this.converter = converter;
+        super(converter, repository);
         this.projectService = projectService;
     }
 
@@ -84,23 +74,15 @@ public class TicketService extends AbstractNodeService<Project, TicketConverter,
         return activeTicket != null;
     }
 
+    /** {@inheritDoc} */
     @Override
     Set<Ticket> queryEntitiesForActiveRoot() {
         return repository.findByProject(projectService.getActiveProject());
     }
 
+    /** {@inheritDoc} */
     @Override
     Project activeRoot() {
         return projectService.getActiveProject();
-    }
-
-    @Override
-    TicketConverter converter() {
-        return converter;
-    }
-
-    @Override
-    TicketRepository repository() {
-        return repository;
     }
 }

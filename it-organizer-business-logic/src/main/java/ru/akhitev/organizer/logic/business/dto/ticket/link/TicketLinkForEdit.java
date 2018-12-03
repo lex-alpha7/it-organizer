@@ -40,6 +40,7 @@ public class TicketLinkForEdit implements DataTransferObject {
         this.link = link;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

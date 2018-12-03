@@ -52,6 +52,7 @@ public class TicketForEdit implements TemplatedDisplayName, DataTransferObject {
         this.displayedName = String.format(DISPLAYED_NAME_TEMPLATE, key, priority, name);
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

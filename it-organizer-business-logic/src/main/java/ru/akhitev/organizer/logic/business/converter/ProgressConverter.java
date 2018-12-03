@@ -28,18 +28,11 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
- */
+/** {@inheritDoc} */
 @Component
 public class ProgressConverter implements Converter<Progress, ProgressForShow, ProgressForEdit> {
 
-    /**
-     * This method converts progress into VOs to show in a ticket.
-     *
-     * @param progresses could be null. it is safe
-     * @return emptyList if progresses are equal to null or a set of VOs
-     */
+    /** {@inheritDoc} */
     public Set<ProgressForShow> prepareForShow(Collection<Progress> progresses) {
         if (progresses == null) {
             return Collections.emptySet();
@@ -51,18 +44,13 @@ public class ProgressConverter implements Converter<Progress, ProgressForShow, P
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * The method prepares object for editor.
-     * Data from entity is set into DTO.
-     *
-     * @param progress entity, which is a source for DTO.
-     * @return a DTO, filled with data from an entity.
-     */
+    /** {@inheritDoc} */
     public ProgressForEdit prepareForEdit(Progress progress) {
         return new ProgressForEdit();
     }
 
     //TODO
+    /** {@inheritDoc} */
     @Override
     public Progress merge(Progress entity, ProgressForEdit dataTransferObject) {
         return null;

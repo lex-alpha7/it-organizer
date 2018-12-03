@@ -37,6 +37,7 @@ public class ProjectForEdit implements DataTransferObject {
         this.tickets = tickets;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

@@ -32,46 +32,28 @@ import ru.akhitev.organizer.db.repository.NoteRepository;
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * The aim of service is to provide give, remove and save DTOs and VOs.
- * A service uses converters, repositories and other services.
- * No one else should use data base layer.
- */
+/** {@inheritDoc} */
 @Service
 public class NoteService extends AbstractNodeService<Project, NoteConverter, NoteRepository, Note, NoteForShow, NoteForEdit> {
-    /** The main repository. */
-    private final NoteRepository repository;
-
-    /** The main converter. */
-    private final NoteConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
     private final ProjectService projectService;
 
     @Autowired
     public NoteService(NoteRepository repository, NoteConverter converter, ProjectService projectService) {
-        this.repository = repository;
-        this.converter = converter;
+        super(converter, repository);
         this.projectService = projectService;
     }
 
+    /** {@inheritDoc} */
     @Override
     Set<Note> queryEntitiesForActiveRoot() {
         return repository.findByProject(projectService.getActiveProject());
     }
 
+    /** {@inheritDoc} */
     @Override
     Project activeRoot() {
         return projectService.getActiveProject();
-    }
-
-    @Override
-    NoteConverter converter() {
-        return converter;
-    }
-
-    @Override
-    NoteRepository repository() {
-        return repository;
     }
 }

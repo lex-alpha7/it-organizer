@@ -30,11 +30,11 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
- */
+/** {@inheritDoc} */
 @Component
 public class TicketConverter implements Converter<Ticket, TicketForShow, TicketForEdit> {
+
+    /** size for adjustment too long names */
     @Value("${name.size}")
     private Integer nameSize;
 
@@ -46,12 +46,8 @@ public class TicketConverter implements Converter<Ticket, TicketForShow, TicketF
         this.linkConverter = linkConverter;
     }
 
-    /**
-     * This method converts notes into VOs to show in a sidebar.
-     *
-     * @param tickets could be null. it is safe.
-     * @return emptyList if progresses are equal to null or a set of VOs
-     */
+    /** {@inheritDoc} */
+    @Override
     public Set<TicketForShow> prepareForShow(Collection<Ticket> tickets) {
         if (tickets == null) {
             return Collections.emptySet();
@@ -66,27 +62,16 @@ public class TicketConverter implements Converter<Ticket, TicketForShow, TicketF
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * The method prepares object for editor.
-     * Data from entity is set into DTO.
-     *
-     * @param ticket entity, which is a source for DTO.
-     * @return a DTO, filled with data from an entity.
-     */
+    /** {@inheritDoc} */
+    @Override
     public TicketForEdit prepareForEdit(Ticket ticket) {
         return new TicketForEdit(ticket.getId(), ticket.getProject().getId(), ticket.getKey(), ticket.getPriority(),
                 ticket.getName(), ticket.getWorkspace(), ticket.getStatus(), ticket.getStepsToReproduce(),
                 linkConverter.prepareForShow(ticket.getLinks()));
     }
 
-    /**
-     * This method prepares an entity for saving.
-     * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
-     *
-     * @param ticket could be null. it is safe.
-     * @param ticketForEdit mustn't be null. It's data will be set to entity.
-     * @return full prepared entity will be returned. It'll be ready to store in a data base.
-     */
+    /** {@inheritDoc} */
+    @Override
     public Ticket merge(Ticket ticket, TicketForEdit ticketForEdit) {
         if (ticket == null) {
             ticket = new Ticket();

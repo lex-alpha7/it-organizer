@@ -29,46 +29,28 @@ import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
 
 import java.util.Set;
 
-/**
- * The aim of service is to provide give, remove and save DTOs and VOs.
- * A service uses converters, repositories and other services.
- * No one else should use data base layer.
- */
+/** {@inheritDoc} */
 @Service
 public class TicketLinkService extends AbstractNodeService<Ticket, TicketLinkConverter, TicketLinkRepository, TicketLink, TicketLinkForShow, TicketLinkForEdit> {
-    /** The main repository. */
-    private final TicketLinkRepository repository;
-
-    /** The main converter. */
-    private final TicketLinkConverter converter;
 
     /** Uses for getting {@link TicketService#activeTicket}. */
     private final TicketService ticketService;
 
     @Autowired
     public TicketLinkService(TicketLinkRepository repository, TicketLinkConverter converter, TicketService ticketService) {
-        this.repository = repository;
-        this.converter = converter;
+        super(converter, repository);
         this.ticketService = ticketService;
     }
 
+    /** {@inheritDoc} */
     @Override
     Set<TicketLink> queryEntitiesForActiveRoot() {
         return repository.findByTicket(ticketService.getActiveTicket());
     }
 
+    /** {@inheritDoc} */
     @Override
     Ticket activeRoot() {
         return ticketService.getActiveTicket();
-    }
-
-    @Override
-    TicketLinkConverter converter() {
-        return converter;
-    }
-
-    @Override
-    TicketLinkRepository repository() {
-        return repository;
     }
 }

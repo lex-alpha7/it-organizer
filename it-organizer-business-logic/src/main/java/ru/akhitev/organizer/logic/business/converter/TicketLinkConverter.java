@@ -30,21 +30,16 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
- */
+/** {@inheritDoc} */
 @Component
 public class TicketLinkConverter implements Converter<TicketLink, TicketLinkForShow, TicketLinkForEdit> {
 
+    /** size for adjustment too long names */
     @Value("${name.size}")
     private Integer nameSize;
 
-    /**
-     * This method converts notes into VOs to show in a sidebar.
-     *
-     * @param links could be null. it is safe.
-     * @return emptyList if progresses are equal to null or a set of VOs
-     */
+    /** {@inheritDoc} */
+    @Override
     public Set<TicketLinkForShow> prepareForShow(Collection<TicketLink> links) {
         if (links == null) {
             return Collections.emptySet();
@@ -59,19 +54,14 @@ public class TicketLinkConverter implements Converter<TicketLink, TicketLinkForS
     }
 
     // TODO
+    /** {@inheritDoc} */
     @Override
     public TicketLinkForEdit prepareForEdit(TicketLink entity) {
         return null;
     }
 
-    /**
-     * This method prepares an entity for saving.
-     * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
-     *
-     * @param link could be null. it is safe.
-     * @param linkForEditor mustn't be null. It's data will be set to entity.
-     * @return full prepared entity will be returned. It'll be ready to store in a data base.
-     */
+    /** {@inheritDoc} */
+    @Override
     public TicketLink merge(TicketLink link, TicketLinkForEdit linkForEditor) {
         if (link == null) {
             link = new TicketLink();

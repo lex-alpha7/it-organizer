@@ -28,26 +28,16 @@ import ru.akhitev.organizer.db.repository.ProjectRepository;
 
 import java.util.Set;
 
-/**
- * The aim of service is to provide give, remove and save DTOs and VOs.
- * A service uses converters, repositories and other services.
- * No one else should use data base layer.
- */
+/** {@inheritDoc} */
 @Service
 public class ProjectService extends AbstractService<ProjectConverter, ProjectRepository, Project, ProjectForShow, ProjectForEdit> {
-    /** The main repository. */
-    private final ProjectRepository repository;
-
-    /** The main converter. */
-    private final ProjectConverter converter;
 
     /** If there is an active project, then tickets, reference links, notes and other lists is shown. */
     private Project activeProject;
 
     @Autowired
     public ProjectService(ProjectRepository repository, ProjectConverter converter) {
-        this.repository = repository;
-        this.converter = converter;
+        super(converter, repository);
     }
 
 
@@ -93,16 +83,5 @@ public class ProjectService extends AbstractService<ProjectConverter, ProjectRep
      */
     public boolean ifActiveProject() {
         return activeProject != null;
-    }
-
-
-    @Override
-    ProjectConverter converter() {
-        return converter;
-    }
-
-    @Override
-    ProjectRepository repository() {
-        return repository;
     }
 }

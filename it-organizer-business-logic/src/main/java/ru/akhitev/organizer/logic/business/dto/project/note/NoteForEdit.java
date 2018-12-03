@@ -34,6 +34,7 @@ public class NoteForEdit implements DataTransferObject {
         this.note = note;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

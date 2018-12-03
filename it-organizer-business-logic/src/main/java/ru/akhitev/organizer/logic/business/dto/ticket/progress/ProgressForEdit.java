@@ -18,8 +18,21 @@
  */
 package ru.akhitev.organizer.logic.business.dto.ticket.progress;
 
-public class ProgressForEdit {
+import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
+
+public class ProgressForEdit implements DataTransferObject {
+    private Integer id;
+
     private String progress;
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getProgress() {
         return progress;

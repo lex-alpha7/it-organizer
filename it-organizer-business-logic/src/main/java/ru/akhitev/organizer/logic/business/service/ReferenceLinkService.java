@@ -30,46 +30,28 @@ import ru.akhitev.organizer.db.repository.ReferenceLinkRepository;
 import java.util.Collections;
 import java.util.Set;
 
-/**
- * The aim of service is to provide give, remove and save DTOs and VOs.
- * A service uses converters, repositories and other services.
- * No one else should use data base layer.
- */
+/** {@inheritDoc} */
 @Service
 public class ReferenceLinkService extends AbstractNodeService<Project, ReferenceLinkConverter, ReferenceLinkRepository, ReferenceLink, ReferenceLinkForShow, ReferenceLinkForEdit> {
-    /** The main repository. */
-    private final ReferenceLinkRepository repository;
-
-    /** The main converter. */
-    private final ReferenceLinkConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
     private final ProjectService projectService;
 
     @Autowired
     public ReferenceLinkService(ReferenceLinkRepository repository, ReferenceLinkConverter converter, ProjectService projectService) {
-        this.repository = repository;
-        this.converter = converter;
+        super(converter, repository);
         this.projectService = projectService;
     }
 
+    /** {@inheritDoc} */
     @Override
     Set<ReferenceLink> queryEntitiesForActiveRoot() {
         return repository.findByProject(projectService.getActiveProject());
     }
 
+    /** {@inheritDoc} */
     @Override
     Project activeRoot() {
         return projectService.getActiveProject();
-    }
-
-    @Override
-    ReferenceLinkConverter converter() {
-        return converter;
-    }
-
-    @Override
-    ReferenceLinkRepository repository() {
-        return repository;
     }
 }

@@ -30,21 +30,16 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
- */
+/** {@inheritDoc} */
 @Component
 public class NoteConverter implements Converter<Note, NoteForShow, NoteForEdit> {
 
+    /** size for adjustment too long names */
     @Value("${name.size}")
     private Integer nameSize;
 
-    /**
-     * This method converts notes into VOs to show in a sidebar.
-     *
-     * @param notes could be null. it is safe.
-     * @return emptyList if progresses are equal to null or a set of VOs
-     */
+    /** {@inheritDoc} */
+    @Override
     public Set<NoteForShow> prepareForShow(Collection<Note> notes) {
         if (notes == null) {
             return Collections.emptySet();
@@ -58,25 +53,14 @@ public class NoteConverter implements Converter<Note, NoteForShow, NoteForEdit> 
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * The method prepares object for editor.
-     * Data from entity is set into DTO.
-     *
-     * @param note entity, which is a source for DTO.
-     * @return a DTO, filled with data from an entity.
-     */
+    /** {@inheritDoc} */
+    @Override
     public NoteForEdit prepareForEdit(Note note) {
         return new NoteForEdit(note.getId(), note.getTitle(), note.getNote());
     }
 
-    /**
-     * This method prepares an entity for saving.
-     * If there is no note (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
-     *
-     * @param note could be null. it is safe.
-     * @param noteForEdit mustn't be null. It's data will be set to entity.
-     * @return full prepared entity will be returned. It'll be ready to store in a data base.
-     */
+    /** {@inheritDoc} */
+    @Override
     public Note merge(Note note, NoteForEdit noteForEdit) {
         if (note == null) {
             note = new Note();

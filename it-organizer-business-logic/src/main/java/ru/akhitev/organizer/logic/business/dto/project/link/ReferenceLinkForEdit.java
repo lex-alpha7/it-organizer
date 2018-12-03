@@ -34,6 +34,7 @@ public class ReferenceLinkForEdit implements DataTransferObject {
         this.link = link;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

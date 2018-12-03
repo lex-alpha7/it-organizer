@@ -75,10 +75,16 @@ h2 {
     padding-right: 30px;
 }
 
+input, select {
+    background-color: papayawhip;
+}
+
+
 button {
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;
     overflow: hidden;
     outline:none;
+    background-color: papayawhip;
 }

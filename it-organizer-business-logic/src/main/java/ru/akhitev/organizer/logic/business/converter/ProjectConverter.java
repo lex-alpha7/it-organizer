@@ -29,14 +29,13 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/**
- * The aim of the class is to create VO, DTO or their lists from entity. And make entity from them.
- */
+/** {@inheritDoc} */
 @Component
 public class ProjectConverter implements Converter<Project, ProjectForShow, ProjectForEdit> {
     /** Uses to prepare tickets during preparation for editor. */
     private final TicketConverter ticketConverter;
 
+    /** size for adjustment too long names */
     @Value("${name.size}")
     private Integer nameSize;
 
@@ -45,37 +44,22 @@ public class ProjectConverter implements Converter<Project, ProjectForShow, Proj
         this.ticketConverter = ticketConverter;
     }
 
-    /**
-     * This method converts notes into VOs to show in a sidebar.
-     *
-     * @param projects could be null. it is safe.
-     * @return emptyList if progresses are equal to null or a set of VOs
-     */
+    /** {@inheritDoc} */
+    @Override
     public Set<ProjectForShow> prepareForShow(Collection<Project> projects) {
         return projects.stream().map((project) -> new ProjectForShow(project.getId(), project.getName(), nameSize))
                 .collect(Collectors.toSet());
     }
 
-    /**
-     * The method prepares object for editor.
-     * Data from entity is set into DTO.
-     *
-     * @param project entity, which is a source for DTO.
-     * @return a DTO, filled with data from an entity.
-     */
+    /** {@inheritDoc} */
+    @Override
     public ProjectForEdit prepareForEdit(Project project) {
         return new ProjectForEdit(project.getId(), project.getName(),
                 ticketConverter.prepareForShow(project.getTickets()));
     }
 
-    /**
-     * This method prepares an entity for saving.
-     * If there is no entity (in case, it's a new one), a new note will be created and used. In another case an existed one will be used.
-     *
-     * @param project could be null. it is safe.
-     * @param projectForEdit mustn't be null. It's data will be set to entity.
-     * @return full prepared entity will be returned. It'll be ready to store in a data base.
-     */
+    /** {@inheritDoc} */
+    @Override
     public Project merge(Project project, ProjectForEdit projectForEdit) {
         if (project == null) {
             project = new Project();
