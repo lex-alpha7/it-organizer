@@ -35,11 +35,15 @@ import java.util.stream.Collectors;
 @Component
 public class ProjectConverter implements Converter<Project, ProjectForShow, ProjectForEdit> {
     /** Uses to prepare tickets during preparation for editor. */
-    @Autowired
-    private TicketConverter ticketConverter;
+    private final TicketConverter ticketConverter;
 
     @Value("${name.size}")
     private Integer nameSize;
+
+    @Autowired
+    public ProjectConverter(TicketConverter ticketConverter) {
+        this.ticketConverter = ticketConverter;
+    }
 
     /**
      * This method converts notes into VOs to show in a sidebar.

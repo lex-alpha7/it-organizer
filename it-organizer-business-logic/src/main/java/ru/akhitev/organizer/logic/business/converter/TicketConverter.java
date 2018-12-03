@@ -39,8 +39,12 @@ public class TicketConverter implements Converter<Ticket, TicketForShow, TicketF
     private Integer nameSize;
 
     /** Uses to prepare ticket links during preparation for editor. */
+    private final TicketLinkConverter linkConverter;
+
     @Autowired
-    private TicketLinkConverter linkConverter;
+    public TicketConverter(TicketLinkConverter linkConverter) {
+        this.linkConverter = linkConverter;
+    }
 
     /**
      * This method converts notes into VOs to show in a sidebar.

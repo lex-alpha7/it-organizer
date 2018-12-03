@@ -29,8 +29,12 @@ import ru.akhitev.organizer.logic.business.service.ProjectService;
 @Controller
 @RequestMapping(value = "/project")
 public class ProjectController extends AbstractController {
+    private final ProjectService service;
+
     @Autowired
-    private ProjectService service;
+    public ProjectController(ProjectService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProject(Model model) {

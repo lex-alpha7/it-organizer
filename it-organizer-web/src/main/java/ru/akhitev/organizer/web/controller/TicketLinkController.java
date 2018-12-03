@@ -33,11 +33,15 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 @Controller
 @RequestMapping(value = "/ticket/link")
 public class TicketLinkController extends AbstractController {
-    @Autowired
-    private TicketLinkService ticketLinkService;
+    private final TicketLinkService ticketLinkService;
+
+    private final TicketService ticketService;
 
     @Autowired
-    private TicketService ticketService;
+    public TicketLinkController(TicketLinkService ticketLinkService, TicketService ticketService) {
+        this.ticketLinkService = ticketLinkService;
+        this.ticketService = ticketService;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newLink(Model model) {
@@ -47,13 +51,14 @@ public class TicketLinkController extends AbstractController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveLink(@ModelAttribute TicketLinkForEdit link, BindingResult bindingResult, Model model) {
-        ticketLinkService.saveLink(link);
+        ticketLinkService.save(link);
         return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
-        ticketLinkService.removeLink(linkId);
+        ticketLinkService.remove(linkId);
         return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticketService.getActiveTicket().getId());
     }
+
 }

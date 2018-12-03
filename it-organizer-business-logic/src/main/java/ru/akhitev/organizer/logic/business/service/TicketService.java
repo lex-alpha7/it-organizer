@@ -20,6 +20,7 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.logic.business.converter.TicketConverter;
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
@@ -35,70 +36,24 @@ import java.util.Set;
  * No one else should use data base layer.
  */
 @Service
-public class TicketService {
+public class TicketService extends AbstractNodeService<Project, TicketConverter, TicketRepository, Ticket, TicketForShow, TicketForEdit> {
     /** The main repository. */
-    @Autowired
-    private TicketRepository repository;
+    private final TicketRepository repository;
 
     /** The main converter. */
-    @Autowired
-    private TicketConverter converter;
+    private final TicketConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
-    @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     /** If there is an active ticket, then tasks and other lists is shown and saved with correct link to this ticket. */
     private Ticket activeTicket;
 
-    /**
-     * Returns collection of VOs.
-     * If there is no {@link ProjectService#activeProject}, then empty set is returned.
-     *
-     * @return collection of VOs.
-     */
-    public Set<TicketForShow> giveTicketsForShowForActiveProject() {
-        if (projectService.getActiveProject() == null) {
-            return Collections.emptySet();
-        }
-        Set<Ticket> tickets = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareForShow(tickets);
-    }
-
-    /**
-     * The method prepares DTO from entity, get by ID.
-     *
-     * @param ticketId ID to find entity in data base.
-     * @return DTO from entity.
-     */
-    public TicketForEdit giveTicketForEdit(Integer ticketId) {
-        return converter.prepareForEdit(repository.getOne(ticketId));
-    }
-
-    /**
-     * The method saves DTO.
-     * If it is a create operation and there is no entity, then a new one is created.
-     * {@link ProjectService#activeProject} is set to project in the ticket.
-     *
-     * @param ticketForEdit DTO, which will be saved.
-     */
-    public void saveTicket(TicketForEdit ticketForEdit) {
-        Integer id = ticketForEdit.getId();
-        Ticket ticket = null;
-        if (id != null) {
-            ticket = repository.getOne(id);
-        }
-        ticket = converter.merge(ticket, ticketForEdit);
-        ticket.setProject(projectService.getActiveProject());
-        repository.save(ticket);
-    }
-
-    /**
-     * The method removes found by id entity in data base.
-     * @param ticketID ID to find entity in data base.
-     */
-    public void removeTicket(Integer ticketID) {
-        repository.deleteById(ticketID);
+    @Autowired
+    public TicketService(TicketRepository repository, TicketConverter converter, ProjectService projectService) {
+        this.repository = repository;
+        this.converter = converter;
+        this.projectService = projectService;
     }
 
     /**
@@ -127,5 +82,25 @@ public class TicketService {
      */
     public boolean ifActiveTicket() {
         return activeTicket != null;
+    }
+
+    @Override
+    Set<Ticket> queryEntitiesForActiveRoot() {
+        return repository.findByProject(projectService.getActiveProject());
+    }
+
+    @Override
+    Project activeRoot() {
+        return projectService.getActiveProject();
+    }
+
+    @Override
+    TicketConverter converter() {
+        return converter;
+    }
+
+    @Override
+    TicketRepository repository() {
+        return repository;
     }
 }

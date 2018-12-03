@@ -20,10 +20,14 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.db.entity.TicketLink;
 import ru.akhitev.organizer.logic.business.converter.TicketLinkConverter;
 import ru.akhitev.organizer.logic.business.dto.ticket.link.TicketLinkForEdit;
 import ru.akhitev.organizer.db.repository.TicketLinkRepository;
+import ru.akhitev.organizer.logic.business.vo.ticket.link.TicketLinkForShow;
+
+import java.util.Set;
 
 /**
  * The aim of service is to provide give, remove and save DTOs and VOs.
@@ -31,42 +35,40 @@ import ru.akhitev.organizer.db.repository.TicketLinkRepository;
  * No one else should use data base layer.
  */
 @Service
-public class TicketLinkService {
+public class TicketLinkService extends AbstractNodeService<Ticket, TicketLinkConverter, TicketLinkRepository, TicketLink, TicketLinkForShow, TicketLinkForEdit> {
     /** The main repository. */
-    @Autowired
-    private TicketLinkRepository linkRepository;
+    private final TicketLinkRepository repository;
 
     /** The main converter. */
-    @Autowired
-    private TicketLinkConverter converter;
+    private final TicketLinkConverter converter;
 
     /** Uses for getting {@link TicketService#activeTicket}. */
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
-    /**
-     * The method saves DTO.
-     * If it is a create operation and there is no entity, then a new one is created.
-     * {@link TicketService#activeTicket} is set to project in the ticket.
-     *
-     * @param linkForEditor DTO, which will be saved.
-     */
-    public void saveLink(TicketLinkForEdit linkForEditor) {
-        Integer id = linkForEditor.getId();
-        TicketLink link = null;
-        if (id != null) {
-            link = linkRepository.getOne(id);
-        }
-        link = converter.merge(link, linkForEditor);
-        link.setTicket(ticketService.getActiveTicket());
-        linkRepository.save(link);
+    @Autowired
+    public TicketLinkService(TicketLinkRepository repository, TicketLinkConverter converter, TicketService ticketService) {
+        this.repository = repository;
+        this.converter = converter;
+        this.ticketService = ticketService;
     }
 
-    /**
-     * The method removes found by id entity in data base.
-     * @param linkID ID to find entity in data base.
-     */
-    public void removeLink(Integer linkID) {
-        linkRepository.deleteById(linkID);
+    @Override
+    Set<TicketLink> queryEntitiesForActiveRoot() {
+        return repository.findByTicket(ticketService.getActiveTicket());
+    }
+
+    @Override
+    Ticket activeRoot() {
+        return ticketService.getActiveTicket();
+    }
+
+    @Override
+    TicketLinkConverter converter() {
+        return converter;
+    }
+
+    @Override
+    TicketLinkRepository repository() {
+        return repository;
     }
 }

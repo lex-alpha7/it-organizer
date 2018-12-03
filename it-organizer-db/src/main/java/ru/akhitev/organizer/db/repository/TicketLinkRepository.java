@@ -19,7 +19,11 @@
 package ru.akhitev.organizer.db.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.db.entity.TicketLink;
 
+import java.util.Set;
+
 public interface TicketLinkRepository extends JpaRepository<TicketLink, Integer> {
+    Set<TicketLink> findByTicket(Ticket ticket);
 }

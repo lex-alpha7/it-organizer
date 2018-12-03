@@ -18,7 +18,9 @@
  */
 package ru.akhitev.organizer.logic.business.dto.project.link;
 
-public class ReferenceLinkForEdit {
+import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
+
+public class ReferenceLinkForEdit implements DataTransferObject {
     private Integer id;
     private String name;
     private String link;

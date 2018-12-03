@@ -26,7 +26,7 @@ import javax.persistence.*;
 @Table(name = "Reference_Link")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "project")
-public class ReferenceLink {
+public class ReferenceLink implements NodeDataBaseEntity<Project> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
@@ -71,5 +71,10 @@ public class ReferenceLink {
 
     public void setLink(@NonNull String link) {
         this.link = link;
+    }
+
+    @Override
+    public void setRoot(Project root) {
+        setProject(root);
     }
 }

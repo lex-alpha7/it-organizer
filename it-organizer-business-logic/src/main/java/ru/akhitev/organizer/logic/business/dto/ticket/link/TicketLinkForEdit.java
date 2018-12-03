@@ -20,8 +20,9 @@ package ru.akhitev.organizer.logic.business.dto.ticket.link;
 
 import ru.akhitev.organizer.db.entity.Ticket;
 import ru.akhitev.organizer.db.enums.LinkType;
+import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
 
-public class TicketLinkForEdit {
+public class TicketLinkForEdit implements DataTransferObject {
     private Integer id;
     private Ticket ticket;
     private LinkType type;

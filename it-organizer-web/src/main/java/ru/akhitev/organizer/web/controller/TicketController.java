@@ -32,8 +32,12 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 @Controller
 @RequestMapping(value = "/ticket")
 public class TicketController extends AbstractController {
+    private final TicketService service;
+
     @Autowired
-    private TicketService service;
+    public TicketController(TicketService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newTicket(Model model) {
@@ -43,20 +47,20 @@ public class TicketController extends AbstractController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveTicket(@ModelAttribute TicketForEdit ticket, BindingResult bindingResult, Model model) {
-        service.saveTicket(ticket);
+        service.save(ticket);
         return String.format(EDIT_TICKET_WITH_ID_PATH_TEMPLATE, ticket.getId());
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editTicket(@PathVariable("id") Integer ticketId, Model model) {
-        model.addAttribute("ticket", service.giveTicketForEdit(ticketId));
+        model.addAttribute("ticket", service.giveForEdit(ticketId));
         service.activateTicket(ticketId);
         return EDIT_TICKET_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deletTicket(@PathVariable("id") Integer ticketId, Model model) {
-        service.removeTicket(ticketId);
+        service.remove(ticketId);
         return MAIN_REDIRECT_PATH;
     }
 }

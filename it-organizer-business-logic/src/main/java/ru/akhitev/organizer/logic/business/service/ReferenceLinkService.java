@@ -20,6 +20,7 @@ package ru.akhitev.organizer.logic.business.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.db.entity.ReferenceLink;
 import ru.akhitev.organizer.logic.business.converter.ReferenceLinkConverter;
 import ru.akhitev.organizer.logic.business.dto.project.link.ReferenceLinkForEdit;
@@ -35,66 +36,40 @@ import java.util.Set;
  * No one else should use data base layer.
  */
 @Service
-public class ReferenceLinkService {
+public class ReferenceLinkService extends AbstractNodeService<Project, ReferenceLinkConverter, ReferenceLinkRepository, ReferenceLink, ReferenceLinkForShow, ReferenceLinkForEdit> {
     /** The main repository. */
-    @Autowired
-    private ReferenceLinkRepository repository;
+    private final ReferenceLinkRepository repository;
 
     /** The main converter. */
-    @Autowired
-    private ReferenceLinkConverter converter;
+    private final ReferenceLinkConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
+    private final ProjectService projectService;
+
     @Autowired
-    private ProjectService projectService;
-
-    /**
-     * Returns collection of VOs.
-     * If there is no {@link ProjectService#activeProject}, then empty set is returned.
-     *
-     * @return collection of VOs.
-     */
-    public Set<ReferenceLinkForShow> giveReferenceLinksForShowForActiveProject() {
-        if (projectService.getActiveProject() == null) {
-            return Collections.emptySet();
-        }
-        Set<ReferenceLink> links = repository.findByProject(projectService.getActiveProject());
-        return converter.prepareForShow(links);
+    public ReferenceLinkService(ReferenceLinkRepository repository, ReferenceLinkConverter converter, ProjectService projectService) {
+        this.repository = repository;
+        this.converter = converter;
+        this.projectService = projectService;
     }
 
-    /**
-     * The method prepares DTO from entity, get by ID.
-     *
-     * @param linkID ID to find entity in data base.
-     * @return DTO from entity.
-     */
-    public ReferenceLinkForEdit giveTicketForEdit(Integer linkID) {
-        return converter.prepareForEdit(repository.getOne(linkID));
+    @Override
+    Set<ReferenceLink> queryEntitiesForActiveRoot() {
+        return repository.findByProject(projectService.getActiveProject());
     }
 
-    /**
-     * The method saves DTO.
-     * If it is a create operation and there is no entity, then a new one is created.
-     * {@link ProjectService#activeProject} is set to project in the link.
-     *
-     * @param linkForEditor DTO, which will be saved.
-     */
-    public void saveLink(ReferenceLinkForEdit linkForEditor) {
-        Integer id = linkForEditor.getId();
-        ReferenceLink link = null;
-        if (id != null) {
-            link = repository.getOne(id);
-        }
-        link = converter.merge(link, linkForEditor);
-        link.setProject(projectService.getActiveProject());
-        repository.save(link);
+    @Override
+    Project activeRoot() {
+        return projectService.getActiveProject();
     }
 
-    /**
-     * The method removes found by id entity in data base.
-     * @param linkID ID to find entity in data base.
-     */
-    public void removeLink(Integer linkID) {
-        repository.deleteById(linkID);
+    @Override
+    ReferenceLinkConverter converter() {
+        return converter;
+    }
+
+    @Override
+    ReferenceLinkRepository repository() {
+        return repository;
     }
 }

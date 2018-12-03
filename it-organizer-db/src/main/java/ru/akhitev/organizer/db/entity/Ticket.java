@@ -31,7 +31,7 @@ import java.util.*;
 @Table(name = "Ticket")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "project")
-public class Ticket {
+public class Ticket implements NodeDataBaseEntity<Project> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
@@ -182,5 +182,10 @@ public class Ticket {
                 ", status=" + status +
                 ", stepsToReproduce='" + stepsToReproduce + '\'' +
                 '}';
+    }
+
+    @Override
+    public void setRoot(Project root) {
+        setProject(root);
     }
 }

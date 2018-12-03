@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.akhitev.organizer.logic.business.service.AbstractService;
 
 @Controller
 public class MainController extends AbstractController{
@@ -30,4 +31,5 @@ public class MainController extends AbstractController{
     public String project(@RequestParam(value="name", required=false, defaultValue="AirTransat") String name, Model model) {
         return MAIN_PATH;
     }
+
 }

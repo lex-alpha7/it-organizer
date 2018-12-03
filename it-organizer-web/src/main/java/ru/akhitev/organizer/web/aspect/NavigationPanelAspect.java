@@ -32,17 +32,21 @@ import ru.akhitev.organizer.logic.business.service.TicketService;
 @Configuration
 public class NavigationPanelAspect {
 
-    @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
+
+    private final TicketService ticketService;
+
+    private final ReferenceLinkService referenceLinkService;
+
+    private final NoteService noteService;
 
     @Autowired
-    private TicketService ticketService;
-
-    @Autowired
-    private ReferenceLinkService referenceLinkService;
-
-    @Autowired
-    private NoteService noteService;
+    public NavigationPanelAspect(ProjectService projectService, TicketService ticketService, ReferenceLinkService referenceLinkService, NoteService noteService) {
+        this.projectService = projectService;
+        this.ticketService = ticketService;
+        this.referenceLinkService = referenceLinkService;
+        this.noteService = noteService;
+    }
 
     @Before("execution(* ru.akhitev.organizer.web.controller.*.*(..))  && args(..,model)")
     public void beforeImpl(Model model) {
@@ -50,8 +54,8 @@ public class NavigationPanelAspect {
             return;
         }
         model.addAttribute("projects", projectService.giveForShow());
-        model.addAttribute("tickets", ticketService.giveTicketsForShowForActiveProject());
-        model.addAttribute("referenceLinks", referenceLinkService.giveReferenceLinksForShowForActiveProject());
+        model.addAttribute("tickets", ticketService.giveForShowForActiveRoot());
+        model.addAttribute("referenceLinks", referenceLinkService.giveForShowForActiveRoot());
         model.addAttribute("notes", noteService.giveForShowForActiveRoot());
         model.addAttribute("ifActiveProject", projectService.ifActiveProject());
         model.addAttribute("ifActiveTicket", ticketService.ifActiveTicket());

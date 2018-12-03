@@ -32,8 +32,12 @@ import ru.akhitev.organizer.logic.business.service.ReferenceLinkService;
 @Controller
 @RequestMapping(value = "/project/reference_link/")
 public class ReferenceLinkController extends AbstractController {
+    private final ReferenceLinkService linkService;
+
     @Autowired
-    private ReferenceLinkService linkService;
+    public ReferenceLinkController(ReferenceLinkService linkService) {
+        this.linkService = linkService;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newLink(Model model) {
@@ -43,19 +47,19 @@ public class ReferenceLinkController extends AbstractController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editLink(@PathVariable("id") Integer linkID, Model model) {
-        model.addAttribute("referenceLink", linkService.giveTicketForEdit(linkID));
+        model.addAttribute("referenceLink", linkService.giveForEdit(linkID));
         return EDIT_REFERENCE_LINK_PATH;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveLink(@ModelAttribute ReferenceLinkForEdit link, BindingResult bindingResult, Model model) {
-        linkService.saveLink(link);
+        linkService.save(link);
         return MAIN_REDIRECT_PATH;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteLinkt(@PathVariable("id") Integer linkId, Model model) {
-        linkService.removeLink(linkId);
+        linkService.remove(linkId);
         return MAIN_REDIRECT_PATH;
     }
 }

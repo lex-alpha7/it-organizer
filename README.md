@@ -19,7 +19,7 @@ You can make a note in this Organizer and you don't loose it.
 I believe it's more convenient to create an external link in this Organizer but not in browser bookmark.
 It will keep an order in your browser bookmarks.
 
-For now, it looks like this:
+#### For now, it looks like this:
 ![Demo screen shot](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/demo_screenshot.JPG)
 
 ## Short Description

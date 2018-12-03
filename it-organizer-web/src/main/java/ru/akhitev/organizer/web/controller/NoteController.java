@@ -32,8 +32,12 @@ import ru.akhitev.organizer.logic.business.service.NoteService;
 @Controller
 @RequestMapping(value = "/project/note/")
 public class NoteController extends AbstractController {
+    private final NoteService noteService;
+
     @Autowired
-    private NoteService noteService;
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newNote(Model model) {

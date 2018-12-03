@@ -27,7 +27,7 @@ import javax.persistence.*;
 @Table(name = "Ticket_Link")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "ticket")
-public class TicketLink {
+public class TicketLink implements NodeDataBaseEntity<Ticket> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Integer id;
@@ -94,5 +94,10 @@ public class TicketLink {
 
     public void setLink(@NonNull String link) {
         this.link = link;
+    }
+
+    @Override
+    public void setRoot(Ticket root) {
+        setTicket(root);
     }
 }

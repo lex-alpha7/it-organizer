@@ -36,15 +36,19 @@ import java.util.Set;
 @Service
 public class ProjectService extends AbstractService<ProjectConverter, ProjectRepository, Project, ProjectForShow, ProjectForEdit> {
     /** The main repository. */
-    @Autowired
-    private ProjectRepository repository;
+    private final ProjectRepository repository;
 
     /** The main converter. */
-    @Autowired
-    private ProjectConverter converter;
+    private final ProjectConverter converter;
 
     /** If there is an active project, then tickets, reference links, notes and other lists is shown. */
     private Project activeProject;
+
+    @Autowired
+    public ProjectService(ProjectRepository repository, ProjectConverter converter) {
+        this.repository = repository;
+        this.converter = converter;
+    }
 
 
     /**

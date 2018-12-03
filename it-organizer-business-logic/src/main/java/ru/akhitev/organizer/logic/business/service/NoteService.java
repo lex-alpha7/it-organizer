@@ -40,16 +40,20 @@ import java.util.Set;
 @Service
 public class NoteService extends AbstractNodeService<Project, NoteConverter, NoteRepository, Note, NoteForShow, NoteForEdit> {
     /** The main repository. */
-    @Autowired
-    private NoteRepository repository;
+    private final NoteRepository repository;
 
     /** The main converter. */
-    @Autowired
-    private NoteConverter converter;
+    private final NoteConverter converter;
 
     /** Uses for getting {@link ProjectService#activeProject}. */
+    private final ProjectService projectService;
+
     @Autowired
-    private ProjectService projectService;
+    public NoteService(NoteRepository repository, NoteConverter converter, ProjectService projectService) {
+        this.repository = repository;
+        this.converter = converter;
+        this.projectService = projectService;
+    }
 
     @Override
     Set<Note> queryEntitiesForActiveRoot() {
