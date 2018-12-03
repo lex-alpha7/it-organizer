@@ -1,0 +1,20 @@
+# ==============
+# open via http://localhost/
+# --------------
+# The script uses these environment variables.
+# Set them before use
+# Here are examples:
+# PATH_TO_JAR=""
+# YOUR_DATABASE_PATH="/home/aleksei_khitev/Dropbox/Reference Materials/it-organizer-db/"
+version: '2'
+services:
+  it-organizer:
+    image: openjdk:8-jre-slim
+    volumes:
+        - $YOUR_DATABASE_PATH:/home/aleksei_khitev/Dropbox/Reference Materials/it-organizer-db/:ro
+        - $PATH_TO_JAR/it-organizer.jar:/tmp/it-organizer/it-organizer.jar
+    working_dir: /tmp/it-organizer
+    command: jave -jar it-organizer.jar
+    container_name: it-organizer
+    ports:
+      - "9091:9091"
