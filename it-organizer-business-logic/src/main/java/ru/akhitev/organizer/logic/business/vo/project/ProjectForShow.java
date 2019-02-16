@@ -20,6 +20,8 @@ package ru.akhitev.organizer.logic.business.vo.project;
 
 import ru.akhitev.organizer.logic.business.vo.AdjustableNameSize;
 
+import java.util.Objects;
+
 public class ProjectForShow implements AdjustableNameSize {
     private final Integer id;
     private final String name;
@@ -35,5 +37,19 @@ public class ProjectForShow implements AdjustableNameSize {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectForShow that = (ProjectForShow) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

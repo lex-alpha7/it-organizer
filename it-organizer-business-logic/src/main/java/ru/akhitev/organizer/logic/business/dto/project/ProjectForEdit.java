@@ -21,6 +21,7 @@ package ru.akhitev.organizer.logic.business.dto.project;
 import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
 import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class ProjectForEdit implements DataTransferObject {
@@ -60,5 +61,20 @@ public class ProjectForEdit implements DataTransferObject {
 
     public void setTickets(Set<TicketForShow> tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProjectForEdit that = (ProjectForEdit) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(tickets, that.tickets);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, tickets);
     }
 }

@@ -25,8 +25,7 @@ import ru.akhitev.organizer.db.entity.Project;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /** {@inheritDoc} */
@@ -47,13 +46,20 @@ public class ProjectConverter implements Converter<Project, ProjectForShow, Proj
     /** {@inheritDoc} */
     @Override
     public Set<ProjectForShow> prepareForShow(Collection<Project> projects) {
-        return projects.stream().map((project) -> new ProjectForShow(project.getId(), project.getName(), nameSize))
-                .collect(Collectors.toSet());
+        if (projects != null) {
+            return projects.stream().filter(Objects::nonNull).map((project) -> new ProjectForShow(project.getId(), project.getName(), nameSize))
+                    .collect(Collectors.toSet());
+        } else {
+            return Collections.emptySet();
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public ProjectForEdit prepareForEdit(Project project) {
+        if (project == null) {
+            throw new IllegalArgumentException(" project is null in prepare for edit", null);
+        }
         return new ProjectForEdit(project.getId(), project.getName(),
                 ticketConverter.prepareForShow(project.getTickets()));
     }
@@ -61,6 +67,9 @@ public class ProjectConverter implements Converter<Project, ProjectForShow, Proj
     /** {@inheritDoc} */
     @Override
     public Project merge(Project project, ProjectForEdit projectForEdit) {
+        if (projectForEdit == null) {
+            throw new IllegalArgumentException("Project for edit is null for merge", null);
+        }
         if (project == null) {
             project = new Project();
         }

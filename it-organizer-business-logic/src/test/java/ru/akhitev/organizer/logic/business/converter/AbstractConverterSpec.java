@@ -54,7 +54,7 @@ public abstract class AbstractConverterSpec<E, VO, DTO extends DataTransferObjec
     @Test
     public void whenNullEntitiesAreInCollectionThenIgnoreNulls() {
         Set<VO> results = converter().prepareForShow(entitiesContainsNull().entities);
-        assertThat(results).isEmpty();
+        assertThat(results).containsAll(entitiesContainsNull().expectedValueObjects);
     }
 
     abstract TestPairOfEntitiesAndValueObjects<E,VO> entitiesExists();

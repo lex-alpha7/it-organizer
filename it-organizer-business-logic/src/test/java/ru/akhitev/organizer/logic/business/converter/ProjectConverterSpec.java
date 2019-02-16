@@ -101,6 +101,7 @@ public class ProjectConverterSpec extends AbstractConverterSpec<Project, Project
     @Override
     TestPairOfDataTransferObjectAndEntitiesBeforeAndAfter<Project, ProjectForEdit> newEntityAndNotNullDTO() {
         ProjectForEdit projectForEdit = new ProjectForEdit(project1.getId(), project1.getName(), Collections.emptySet());
+        project1.setId(null);
         return new TestPairOfDataTransferObjectAndEntitiesBeforeAndAfter<>(null, projectForEdit, project1);
     }
 

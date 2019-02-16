@@ -24,6 +24,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -104,5 +105,22 @@ public class Project implements DataBaseEntity {
                 ", links=" + links +
                 ", notes=" + notes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) &&
+                Objects.equals(name, project.name) &&
+                Objects.equals(tickets, project.tickets) &&
+                Objects.equals(links, project.links) &&
+                Objects.equals(notes, project.notes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, tickets, links, notes);
     }
 }
