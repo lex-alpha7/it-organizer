@@ -14,7 +14,7 @@ services:
         - $YOUR_DATABASE_PATH:/home/aleksei_khitev/Dropbox/Reference Materials/it-organizer-db/:ro
         - $PATH_TO_JAR/it-organizer.jar:/tmp/it-organizer/it-organizer.jar
     working_dir: /tmp/it-organizer
-    command: jave -jar it-organizer.jar
+    command: java -jar it-organizer.jar
     container_name: it-organizer
     ports:
       - "9091:9091"

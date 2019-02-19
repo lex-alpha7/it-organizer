@@ -79,7 +79,8 @@ public abstract class AbstractNodeService<P extends DataBaseEntity,
         }
         entity = converter.merge(entity, dto);
         entity.setRoot(activeRoot());
-        repository.save(entity);
+        entity = repository.save(entity);
+        dto.setId(entity.getId());
     }
 
     /**
