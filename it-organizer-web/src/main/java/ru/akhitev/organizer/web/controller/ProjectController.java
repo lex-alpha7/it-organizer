@@ -25,6 +25,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.service.ProjectService;
+import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
+
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping(value = "/project")
@@ -64,5 +68,11 @@ public class ProjectController extends AbstractController {
     public String activateProject(@PathVariable("id") Integer projectId, Model model) {
         service.activateProject(projectId);
         return MAIN_REDIRECT_PATH;
+    }
+
+    @GetMapping(value = "/list", produces = "application/json")
+    public @ResponseBody
+    Set<ProjectForShow> getBook() {
+        return service.giveForShow();
     }
 }
