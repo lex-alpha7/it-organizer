@@ -4,15 +4,31 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     compile project (':it-organizer-business-logic')
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:2.0.2.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-web:2.0.2.RELEASE'
-    compile 'org.springframework.boot:spring-boot-starter-aop:2.0.2.RELEASE'
+    compile ('org.springframework.boot:spring-boot-starter-thymeleaf:2.0.2.RELEASE') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile ('org.springframework.boot:spring-boot-starter-web:2.0.2.RELEASE') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
+    compile ('org.springframework.boot:spring-boot-starter-aop:2.0.2.RELEASE') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile ("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}") {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile 'javax.xml.bind:jaxb-api:2.3.0'
+    compile ("org.aspectj:aspectjweaver:1.8.9")
     compile group: 'com.h2database', name: 'h2', version: '+'
+    compile ("org.jboss.logging:jboss-logging:3.2.0.Final")
 }
 
-jar {
-    manifest.attributes("Main-Class": "ru.akhitev.organizer.Main");
+war {
+    baseName = 'it-organizer'
+    version = '1.2'
+    enabled = true
 }

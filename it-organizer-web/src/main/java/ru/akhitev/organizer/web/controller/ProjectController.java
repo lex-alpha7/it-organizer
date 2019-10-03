@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
+@CrossOrigin
 @RequestMapping(value = "/project")
 public class ProjectController extends AbstractController {
     private final ProjectService service;
@@ -72,7 +73,7 @@ public class ProjectController extends AbstractController {
 
     @GetMapping(value = "/list", produces = "application/json")
     public @ResponseBody
-    Set<ProjectForShow> getBook() {
+    Set<ProjectForShow> getList() {
         return service.giveForShow();
     }
 }

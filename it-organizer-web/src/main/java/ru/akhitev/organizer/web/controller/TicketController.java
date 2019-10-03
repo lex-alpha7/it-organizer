@@ -22,14 +22,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ru.akhitev.organizer.logic.business.dto.ticket.TicketForEdit;
 import ru.akhitev.organizer.logic.business.service.TicketService;
+import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
+
+import java.util.Set;
 
 @Controller
+@CrossOrigin
 @RequestMapping(value = "/ticket")
 public class TicketController extends AbstractController {
     private final TicketService service;
@@ -62,5 +63,11 @@ public class TicketController extends AbstractController {
     public String deletTicket(@PathVariable("id") Integer ticketId, Model model) {
         service.remove(ticketId);
         return MAIN_REDIRECT_PATH;
+    }
+
+    @GetMapping(value = "/list", produces = "application/json")
+    public @ResponseBody
+    Set<TicketForShow> getList() {
+        return service.giveForShow();
     }
 }

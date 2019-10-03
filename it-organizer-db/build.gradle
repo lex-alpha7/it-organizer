@@ -11,11 +11,20 @@ jar {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-jdbc:2.0.2.RELEASE'
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.0.7.RELEASE'
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '+'
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '+'
+    compile ('org.springframework.boot:spring-boot-starter-jdbc:2.0.2.RELEASE') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile ('org.springframework.data:spring-data-jpa:2.0.7.RELEASE') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile ('org.hibernate:hibernate-core:5.4.1.Final') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
+    compile ('org.hibernate:hibernate-entitymanager:5.4.1.Final') {
+        exclude group: 'org.jboss.logging', module: "jboss-logging"
+    }
     compile group: 'com.h2database', name: 'h2', version: '+'
+    compile ("org.javassist:javassist:3.23.1-GA")
 
     testCompile group: 'org.dbunit', name: 'dbunit', version: '+'
 }
