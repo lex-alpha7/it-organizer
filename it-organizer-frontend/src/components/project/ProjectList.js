@@ -1,5 +1,7 @@
 import React from 'react';
 import ProjectListItem from './ProjectListItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faEdit, faFileMedical } from '@fortawesome/free-solid-svg-icons'
 
 const ProjectList = (props) => {
     let project_element_html = "";
@@ -19,6 +21,9 @@ const ProjectList = (props) => {
                 { project_element_html &&
                     <div className="dropdown-menu">
                         {project_element_html}
+                        <div className="btn-group dropdown-item">
+                            <button type="button" className="btn btn-outline-success"><FontAwesomeIcon icon={faFileMedical} /></button>
+                        </div>
                     </div>
                 }
         </div>
