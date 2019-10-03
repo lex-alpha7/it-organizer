@@ -9,7 +9,7 @@ import ru.akhitev.organizer.logic.business.vo.project.ProjectForShow;
 import java.util.Set;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("/rest/project")
 public class ProjectRestController {
     private final ProjectService service;

@@ -6,3 +6,5 @@ gradlew
 gradlew.bat
 gradle
 .gradle
+node_modules
+build

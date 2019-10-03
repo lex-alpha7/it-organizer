@@ -7,7 +7,6 @@ const ProjectList = (props) => {
     if (props.projects) {
         project_element_html = props.projects.map(
             function(project) {
-                let activation_url = `http://localhost:8080/it-organizer/project/activate/${project.id}`;
                 return <tr><td className='nav_list_element'><button onClick={props.activateAndGetTickets}>{project.name}</button></td></tr>;
             }
         );

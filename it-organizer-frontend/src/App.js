@@ -16,7 +16,7 @@ class App extends React.Component {
     }
 
     getProjectList = async () => {
-//        e.preventDefault();
+        //e.preventDefault();
         const project_list_rest = await fetch('http://localhost:8080/it-organizer/rest/project/list');
         const project_list = await project_list_rest.json();
         console.log(project_list);
@@ -25,9 +25,7 @@ class App extends React.Component {
     }
 
     activateProjectAndGetTickets = async () => {
-        const project_acivate_rest = await fetch('http://localhost:8080/it-organizer/rest/project/acivate/272');
-        const project_acivate_reply = await project_acivate_rest.json();
-        console.log(project_acivate_reply);
+        const project_acivate_rest = await fetch('http://localhost:8080/it-organizer/rest/project/activate/272');
         this.getTicketList();
     }
 

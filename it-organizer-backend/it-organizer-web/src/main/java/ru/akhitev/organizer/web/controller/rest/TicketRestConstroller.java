@@ -10,7 +10,7 @@ import ru.akhitev.organizer.logic.business.vo.ticket.TicketForShow;
 import java.util.Set;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("/rest/ticket")
 public class TicketRestConstroller {
     private final TicketService service;
