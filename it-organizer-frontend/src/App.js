@@ -1,8 +1,9 @@
 import React from 'react';
-import ProjectList from './components/ProjectList';
-import TicketList from './components/TicketList';
+import ProjectList from './components/project/ProjectList';
+import TicketList from './components/ticket/TicketList';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './components/main.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import './css/main.css'
 
 class App extends React.Component {
     state = {
@@ -38,10 +39,16 @@ class App extends React.Component {
 
     render() {
         return(
-            <nav className="navbar-left">
-                <ProjectList projects={this.state.projects} activateAndGetTickets={this.activateProjectAndGetTickets} />
-                <TicketList tickets={this.state.tickets} />
+            <nav className="navbar navbar-expand-sm  bg-dark">
+                <ul className="navbar-nav">
+                    <li className='nav-item'>
+                        <ProjectList projects={this.state.projects} activateAndGetTickets={this.activateProjectAndGetTickets} />
+                    </li>
+                    <li className='nav-item'><TicketList tickets={this.state.tickets} /></li>
+                </ul>
+                <span className='fas fa-edit'></span>
             </nav>
+
         );
     }
 }
