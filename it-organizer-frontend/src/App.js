@@ -6,6 +6,7 @@ import MenuHeader from './components/MenuHeader'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import './css/main.css'
+import $ from 'jquery';
 
 class App extends React.Component {
     state = {
@@ -14,6 +15,7 @@ class App extends React.Component {
         activeProject: undefined,
         activeTicket: undefined,
         currentMain: undefined,
+        resultMessage: undefined
     }
 
     constructor(props) {
@@ -49,7 +51,34 @@ class App extends React.Component {
     }
 
     editProject = (projectId) => {
-        this.setState({currentMain: (<ProjectEditor project_id={projectId}/>)});
+        this.setState({currentMain: (<ProjectEditor project_id={projectId}
+                                    showSuccessAlert={this.showSuccessAlert}
+                                    showErrorAlert={this.showErrorAlert}/>)});
+    }
+
+    updateNavBar = () => {
+        this.getProjectList();
+        this.getTicketList();
+    }
+
+    showSuccessAlert = (message) => {
+        this.setState({resultMessage: message});
+        $('#result_alert').removeClass();
+        $('#result_alert').addClass('alert alert-success  show');
+        $("#result_alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#result_alert").slideUp(500);
+        });
+        this.updateNavBar();
+    }
+
+    showErrorAlert = (message) => {
+        this.setState({resultMessage: message});
+        $('#result_alert').removeClass();
+        $('#result_alert').addClass('alert alert-danger  show');
+        $("#result_alert").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#result_alert").slideUp(500);
+                });
+        this.updateNavBar();
     }
 
     render() {
@@ -62,13 +91,18 @@ class App extends React.Component {
                                 <ProjectList
                                     projects={this.state.projects}
                                     activateAndGetTickets={this.activateProjectAndGetTickets}
-                                    editProject={this.editProject}/>
+                                    editProject={this.editProject}
+                                    showSuccessAlert={this.showSuccessAlert}
+                                    showErrorAlert={this.showErrorAlert}/>
                             </li>
                             <li className='nav-item'><TicketList tickets={this.state.tickets} editTicket={this.editTicket} /></li>
                         </ul>
                     </div>
                     <MenuHeader project={this.state.activeProject} ticket={this.state.activeTicket} />
                 </nav>
+                <div id='result_alert' class="fade">
+                    {this.state.resultMessage && this.state.resultMessage}
+                </div>
                 {this.state.currentMain && this.state.currentMain}
             </div>
         );

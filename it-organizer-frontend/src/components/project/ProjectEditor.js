@@ -29,6 +29,12 @@ class ProjectEditor extends React.Component {
         {
             name: projectName,
             id: projectId
+        }).then((result) => {
+            if (result.status === 200) {
+                this.props.showSuccessAlert('Проект успешно сохранен');
+            } else {
+                this.props.showErrorAlert('При сохранении проекта произошла ошибка');
+            }
         });
     }
 
@@ -41,18 +47,22 @@ class ProjectEditor extends React.Component {
 
     render() {
         return(
-            <form className="was-validated" onSubmit={this.saveProject}>
-                <input type='hidden' name='projectId' id='projectId' value={this.state.id} />
-                <div class="form-group">
-                    <label>Project Name:</label>
-                    <input id='projectName' name='projectName' type='text' className='form-control'
-                        value={this.state.name} required='required'
-                        onChange={e => this.onProjectNameChange(e.target.value)}/>
-                    <div className="valid-feedback">Valid.</div>
-                    <div className="invalid-feedback">Please fill out this field.</div>
+            <div className='container'>
+                <div className='jumbotron'>
+                    <form className="was-validated" onSubmit={this.saveProject}>
+                        <input type='hidden' name='projectId' id='projectId' value={this.state.id} />
+                        <div class="form-group">
+                            <label>Project Name:</label>
+                            <input id='projectName' name='projectName' type='text' className='form-control'
+                                value={this.state.name} required='required'
+                                onChange={e => this.onProjectNameChange(e.target.value)}/>
+                            <div className="valid-feedback">Valid.</div>
+                            <div className="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <button type='submit' className='btn btn-primary'>Сохранить</button>
+                    </form>
                 </div>
-                <button type='submit' className='btn btn-primary'>Сохранить</button>
-            </form>);
+            </div>);
     }
 }
 

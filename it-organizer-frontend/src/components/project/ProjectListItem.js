@@ -6,7 +6,15 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 class ProjectListItem extends React.Component {
     deleteProject = async (projectId) => {
         let delete_project_url = `http://localhost:8080/it-organizer/rest/project/delete/${projectId}`;
-        axios.delete(delete_project_url);
+        axios.delete(delete_project_url)
+        .then((result) => {
+            if (result.status === 200) {
+                this.props.showSuccessAlert('Проект успешно удален');
+            } else {
+                this.props.showErrorAlert('При удалении проекта произошла ошибка');
+            }
+        });
+
     }
 
     render() {

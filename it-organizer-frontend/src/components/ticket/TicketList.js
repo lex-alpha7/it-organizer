@@ -16,7 +16,7 @@ const TicketList = (props) => {
     return(
             <div className="btn-group">
               <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Tickets
+                Tickets {props.tickets && <span class="badge badge-dark">{props.tickets.length}</span>}
               </button>
                     { ticket_element_html &&
                         <div className="dropdown-menu">

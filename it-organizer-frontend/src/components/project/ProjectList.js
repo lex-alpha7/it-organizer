@@ -11,7 +11,9 @@ const ProjectList = (props) => {
                 return <ProjectListItem
                     activateAndGetTickets={props.activateAndGetTickets}
                     project={project}
-                    editProject={props.editProject}/>;
+                    editProject={props.editProject}
+                    showSuccessAlert={props.showSuccessAlert}
+                    showErrorAlert={props.showErrorAlert}/>;
             }
         );
     }
@@ -19,7 +21,7 @@ const ProjectList = (props) => {
     return(
         <div className="btn-group">
           <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            Projects
+            Projects {props.projects && <span class="badge badge-dark">{props.projects.length}</span>}
           </button>
                 { project_element_html &&
                     <div className="dropdown-menu">
