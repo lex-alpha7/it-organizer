@@ -1,7 +1,7 @@
 import React from 'react';
 import TicketListItem from './TicketListItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit, faFileMedical } from '@fortawesome/free-solid-svg-icons'
+import { faFileMedical } from '@fortawesome/free-solid-svg-icons'
 
 const TicketList = (props) => {
     let ticket_element_html = "";

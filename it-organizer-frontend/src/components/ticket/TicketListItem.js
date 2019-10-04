@@ -1,10 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const TicketListItem = (props) => {
     let displayedName = props.ticket.displayedName;
-    console.log("ticket " + props.ticket + " /ticket");
     return <div>{ displayedName &&
                 <div className="btn-group dropdown-item">
                 <button type="button" className="btn btn-outline-primary" onClick={() => props.editTicket(props.ticket)}>{displayedName}</button>

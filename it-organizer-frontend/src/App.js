@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectList from './components/project/ProjectList';
+import ProjectEditor from './components/project/ProjectEditor';
 import TicketList from './components/ticket/TicketList';
 import MenuHeader from './components/MenuHeader'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,7 +12,8 @@ class App extends React.Component {
         projects: undefined,
         tickets: undefined,
         activeProject: undefined,
-        activeTicket: undefined
+        activeTicket: undefined,
+        currentMain: undefined,
     }
 
     constructor(props) {
@@ -30,7 +32,7 @@ class App extends React.Component {
 
     activateProjectAndGetTickets = async (project) => {
         const activate_url = `http://localhost:8080/it-organizer/rest/project/activate/${project.id}`;
-        const project_acivate_rest = await fetch(activate_url);
+        await fetch(activate_url);
         this.setState({activeProject: project});
         this.getTicketList();
     }
@@ -46,20 +48,29 @@ class App extends React.Component {
         this.setState({activeTicket: ticket});
     }
 
+    editProject = (projectId) => {
+        this.setState({currentMain: (<ProjectEditor project_id={projectId}/>)});
+    }
+
     render() {
         return(
-            <nav className="navbar navbar-expand-sm  navbar-dark bg-dark">
-                <div className="collapse navbar-collapse" id="navbarText">
-                    <ul className="navbar-nav">
-                        <li className='nav-item'>
-                            <ProjectList projects={this.state.projects} activateAndGetTickets={this.activateProjectAndGetTickets} />
-                        </li>
-                        <li className='nav-item'><TicketList tickets={this.state.tickets} editTicket={this.editTicket} /></li>
-                    </ul>
-                </div>
-                <MenuHeader project={this.state.activeProject} ticket={this.state.activeTicket} />
-            </nav>
-
+            <div>
+                <nav className="navbar navbar-expand-sm  navbar-dark bg-dark">
+                    <div className="collapse navbar-collapse" id="navbarText">
+                        <ul className="navbar-nav">
+                            <li className='nav-item'>
+                                <ProjectList
+                                    projects={this.state.projects}
+                                    activateAndGetTickets={this.activateProjectAndGetTickets}
+                                    editProject={this.editProject}/>
+                            </li>
+                            <li className='nav-item'><TicketList tickets={this.state.tickets} editTicket={this.editTicket} /></li>
+                        </ul>
+                    </div>
+                    <MenuHeader project={this.state.activeProject} ticket={this.state.activeTicket} />
+                </nav>
+                {this.state.currentMain && this.state.currentMain}
+            </div>
         );
     }
 }

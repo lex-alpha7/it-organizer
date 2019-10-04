@@ -1,14 +1,17 @@
 import React from 'react';
 import ProjectListItem from './ProjectListItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit, faFileMedical } from '@fortawesome/free-solid-svg-icons'
+import { faFileMedical } from '@fortawesome/free-solid-svg-icons'
 
 const ProjectList = (props) => {
     let project_element_html = "";
     if (props.projects) {
         project_element_html = props.projects.map(
             function(project) {
-                return <ProjectListItem activateAndGetTickets={props.activateAndGetTickets} project={project} />;
+                return <ProjectListItem
+                    activateAndGetTickets={props.activateAndGetTickets}
+                    project={project}
+                    editProject={props.editProject}/>;
             }
         );
     }
