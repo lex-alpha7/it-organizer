@@ -1,7 +1,6 @@
 package ru.akhitev.organizer.web.controller.rest;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.akhitev.organizer.logic.business.dto.project.ProjectForEdit;
 import ru.akhitev.organizer.logic.business.service.ProjectService;

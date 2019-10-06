@@ -21,6 +21,9 @@ package ru.akhitev.organizer.logic.business.vo;
 public interface AdjustableNameSize {
      default String adjustSize(String input, Integer size) {
         StringBuilder output = new StringBuilder();
+        if (input == null) {
+            input = "empty";
+        }
         if (input.length() <= size) {
             output.append(input);
         } else {

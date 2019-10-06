@@ -8,7 +8,8 @@ const ProjectList = (props) => {
     if (props.projects) {
         project_element_html = props.projects.map(
             function(project) {
-                return <ProjectListItem
+                let projectKey = 'pid' + project.id;
+                return <ProjectListItem key={projectKey}
                     activateAndGetTickets={props.activateAndGetTickets}
                     project={project}
                     editProject={props.editProject}
@@ -21,13 +22,13 @@ const ProjectList = (props) => {
     return(
         <div className="btn-group">
           <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            Projects {props.projects && <span class="badge badge-dark">{props.projects.length}</span>}
+            Projects {props.projects && <span className="badge badge-dark">{props.projects.length}</span>}
           </button>
                 { project_element_html &&
                     <div className="dropdown-menu">
                         {project_element_html}
                         <div className="btn-group dropdown-item">
-                            <button type="button" className="btn btn-outline-success"><FontAwesomeIcon icon={faFileMedical} /></button>
+                            <button type="button" className="btn btn-outline-success" onClick={() => props.editProject(undefined)}><FontAwesomeIcon icon={faFileMedical} /></button>
                         </div>
                     </div>
                 }

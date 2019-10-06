@@ -9,16 +9,20 @@ class ProjectEditor extends React.Component {
 
     constructor(props) {
         super(props);
-        this.getProject(props.project_id);
+        this.state = {
+            id: props.projectForEdit.id,
+            name: props.projectForEdit.name
+        }
     }
 
-    getProject = async (project_id) => {
-        const project_edit_url = `http://localhost:8080/it-organizer/rest/project/edit/${project_id}`;
-        const project_edit_rest = await fetch(project_edit_url);
-        const project_for_edit = await project_edit_rest.json();
-        console.log(project_for_edit);
-        this.setState({id: project_for_edit.id});
-        this.setState({name: project_for_edit.name});
+    componentDidUpdate(prevProps) {
+        if (this.props.projectForEdit.id !== prevProps.projectForEdit.id ||
+            this.props.projectForEdit.name !== prevProps.projectForEdit.name) {
+            this.setState({
+                id: this.props.projectForEdit.id,
+                name: this.props.projectForEdit.name
+            });
+        }
     }
 
     saveProject = async (e) => {
@@ -47,11 +51,11 @@ class ProjectEditor extends React.Component {
 
     render() {
         return(
-            <div className='container'>
+            <div id='projectEdit' className='container'>
                 <div className='jumbotron'>
                     <form className="was-validated" onSubmit={this.saveProject}>
                         <input type='hidden' name='projectId' id='projectId' value={this.state.id} />
-                        <div class="form-group">
+                        <div className="form-group">
                             <label>Project Name:</label>
                             <input id='projectName' name='projectName' type='text' className='form-control'
                                 value={this.state.name} required='required'

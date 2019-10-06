@@ -1,7 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import ProjectList from './components/project/ProjectList';
-import ProjectEditor from './components/project/ProjectEditor';
 import TicketList from './components/ticket/TicketList';
+import NoteList from './components/note/NoteList';
+import ReferenceLinkList from './components/referenceLink/ReferenceLinkList';
+import ProjectEditor from './components/project/ProjectEditor';
+import NoteEditor from './components/note/NoteEditor';
+import ReferenceLinkEditor from './components/referenceLink/ReferenceLinkEditor';
 import MenuHeader from './components/MenuHeader'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
@@ -12,9 +17,13 @@ class App extends React.Component {
     state = {
         projects: undefined,
         tickets: undefined,
+        notes: undefined,
+        referenceLinks: undefined,
         activeProject: undefined,
         activeTicket: undefined,
-        currentMain: undefined,
+        projectForEdit: undefined,
+        noteForEdit: undefined,
+        referenceLinkForEdit: undefined,
         resultMessage: undefined
     }
 
@@ -27,9 +36,7 @@ class App extends React.Component {
         //e.preventDefault();
         const project_list_rest = await fetch('http://localhost:8080/it-organizer/rest/project/list');
         const project_list = await project_list_rest.json();
-        console.log(project_list);
         this.setState({projects: project_list});
-        this.setState({tickets: project_list});
     }
 
     activateProjectAndGetTickets = async (project) => {
@@ -37,28 +44,101 @@ class App extends React.Component {
         await fetch(activate_url);
         this.setState({activeProject: project});
         this.getTicketList();
+        this.getNoteList();
+        this.getReferenceLinkList();
     }
 
     getTicketList = async () => {
         const ticket_list_rest = await fetch('http://localhost:8080/it-organizer/rest/ticket/list');
         const ticket_list = await ticket_list_rest.json();
-        console.log(ticket_list);
         this.setState({tickets: ticket_list});
+    }
+
+    getNoteList = async () => {
+        const rest = await fetch('http://localhost:8080/it-organizer/rest/note/list');
+        const list = await rest.json();
+        this.setState({notes: list});
+    }
+
+    getReferenceLinkList = async () => {
+        const rest = await fetch('http://localhost:8080/it-organizer/rest/reference_link/list');
+        let list = await rest.json();
+        console.log('list = ' + list)
+        this.setState({referenceLinks: list});
+    }
+
+    cleanMainPart = () => {
+        this.setState({
+            projectForEdit: undefined,
+            noteForEdit: undefined,
+            referenceLinkForEdit: undefined
+        });
     }
 
     editTicket = (ticket) => {
         this.setState({activeTicket: ticket});
     }
 
-    editProject = (projectId) => {
-        this.setState({currentMain: (<ProjectEditor project_id={projectId}
-                                    showSuccessAlert={this.showSuccessAlert}
-                                    showErrorAlert={this.showErrorAlert}/>)});
+    editProject = async (projectId) => {
+        this.cleanMainPart();
+        let projectForEdit = undefined;
+        if (projectId) {
+            const project_edit_url = `http://localhost:8080/it-organizer/rest/project/edit/${projectId}`;
+            const project_edit_rest = await axios(project_edit_url);
+            projectForEdit = await project_edit_rest.data;
+        } else {
+            projectForEdit = {
+                id: undefined,
+                name: undefined
+            }
+        }
+        this.setState({
+            projectForEdit: projectForEdit
+        });
+    }
+
+    editNote = async (noteId) => {
+        this.cleanMainPart();
+        let noteForEdit = undefined;
+        if (noteId) {
+            const url = `http://localhost:8080/it-organizer/rest/note/edit/${noteId}`;
+            const rest = await axios(url);
+            noteForEdit = await rest.data;
+        } else {
+            noteForEdit = {
+                id: undefined,
+                name: undefined
+            }
+        }
+        this.setState({
+            noteForEdit: noteForEdit
+        });
+    }
+
+    editReferenceLink = async (referenceLinkId) => {
+        this.cleanMainPart();
+        let referenceLinkForEdit = undefined;
+        if (referenceLinkId) {
+            const url = `http://localhost:8080/it-organizer/rest/reference_link/edit/${referenceLinkId}`;
+            const rest = await axios(url);
+            referenceLinkForEdit = await rest.data;
+        } else {
+            referenceLinkForEdit = {
+                id: undefined,
+                name: undefined,
+                link: undefined
+            }
+        }
+        this.setState({
+            referenceLinkForEdit: referenceLinkForEdit
+        });
     }
 
     updateNavBar = () => {
         this.getProjectList();
         this.getTicketList();
+        this.getNoteList();
+        this.getReferenceLinkList();
     }
 
     showSuccessAlert = (message) => {
@@ -95,15 +175,45 @@ class App extends React.Component {
                                     showSuccessAlert={this.showSuccessAlert}
                                     showErrorAlert={this.showErrorAlert}/>
                             </li>
-                            <li className='nav-item'><TicketList tickets={this.state.tickets} editTicket={this.editTicket} /></li>
+                            {this.state.tickets &&
+                                <li className='nav-item'><TicketList tickets={this.state.tickets}
+                                    editTicket={this.editTicket}
+                                    showSuccessAlert={this.showSuccessAlert}
+                                    showErrorAlert={this.showErrorAlert}/></li>
+                            }
+                            {this.state.notes &&
+                                <li className='nav-item'><NoteList notes={this.state.notes}
+                                    editNote={this.editNote}
+                                    showSuccessAlert={this.showSuccessAlert}
+                                    showErrorAlert={this.showErrorAlert}/></li>
+                            }
+                            {this.state.referenceLinks &&
+                                <li className='nav-item'>
+                                    <ReferenceLinkList referenceLinks={this.state.referenceLinks}
+                                        editReferenceLink={this.editReferenceLink}
+                                        showSuccessAlert={this.showSuccessAlert}
+                                        showErrorAlert={this.showErrorAlert}/>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <MenuHeader project={this.state.activeProject} ticket={this.state.activeTicket} />
                 </nav>
-                <div id='result_alert' class="fade">
+                <div id='result_alert' className="fade">
                     {this.state.resultMessage && this.state.resultMessage}
                 </div>
-                {this.state.currentMain && this.state.currentMain}
+                {this.state.projectForEdit && <ProjectEditor projectForEdit={this.state.projectForEdit}
+                                                      showSuccessAlert={this.showSuccessAlert}
+                                                      showErrorAlert={this.showErrorAlert}/>
+                }
+                {this.state.noteForEdit && <NoteEditor noteForEdit={this.state.noteForEdit}
+                                                      showSuccessAlert={this.showSuccessAlert}
+                                                      showErrorAlert={this.showErrorAlert}/>
+                }
+                {this.state.referenceLinkForEdit && <ReferenceLinkEditor referenceLink={this.state.referenceLinkForEdit}
+                                                      showSuccessAlert={this.showSuccessAlert}
+                                                      showErrorAlert={this.showErrorAlert}/>
+                }
             </div>
         );
     }
