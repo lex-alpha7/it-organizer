@@ -5,6 +5,7 @@ import TicketList from './components/ticket/TicketList';
 import NoteList from './components/note/NoteList';
 import ReferenceLinkList from './components/referenceLink/ReferenceLinkList';
 import ProjectEditor from './components/project/ProjectEditor';
+import TicketEditor from './components/ticket/TicketEditor';
 import NoteEditor from './components/note/NoteEditor';
 import ReferenceLinkEditor from './components/referenceLink/ReferenceLinkEditor';
 import MenuHeader from './components/MenuHeader'
@@ -21,6 +22,7 @@ class App extends React.Component {
         referenceLinks: undefined,
         activeProject: undefined,
         activeTicket: undefined,
+        ticketForEdit: undefined,
         projectForEdit: undefined,
         noteForEdit: undefined,
         referenceLinkForEdit: undefined,
@@ -75,10 +77,6 @@ class App extends React.Component {
         });
     }
 
-    editTicket = (ticket) => {
-        this.setState({activeTicket: ticket});
-    }
-
     editProject = async (projectId) => {
         this.cleanMainPart();
         let projectForEdit = undefined;
@@ -94,6 +92,34 @@ class App extends React.Component {
         }
         this.setState({
             projectForEdit: projectForEdit
+        });
+    }
+
+    editTicket = async (ticket) => {
+        this.setState({activeTicket: ticket});
+        //ticketForEdit
+        this.cleanMainPart();
+        let ticketForEdit = undefined;
+        if (ticket && ticket.id) {
+            const url = `http://localhost:8080/it-organizer/rest/ticket/edit/${ticket.id}`;
+            const rest = await axios(url);
+            ticketForEdit = await rest.data;
+        } else {
+            ticketForEdit = {
+                id: undefined,
+                projectId: undefined,
+                key: undefined,
+                priority: undefined,
+                name: undefined,
+                stepsToReproduce: undefined,
+                workspace: undefined,
+                displayedName: undefined,
+                status: undefined,
+                links: undefined
+            }
+        }
+        this.setState({
+            ticketForEdit: ticketForEdit
         });
     }
 
@@ -211,6 +237,10 @@ class App extends React.Component {
                                                       showErrorAlert={this.showErrorAlert}/>
                 }
                 {this.state.referenceLinkForEdit && <ReferenceLinkEditor referenceLink={this.state.referenceLinkForEdit}
+                                                      showSuccessAlert={this.showSuccessAlert}
+                                                      showErrorAlert={this.showErrorAlert}/>
+                }
+                {this.state.ticketForEdit && <TicketEditor ticketForEdit={this.state.ticketForEdit}
                                                       showSuccessAlert={this.showSuccessAlert}
                                                       showErrorAlert={this.showErrorAlert}/>
                 }
