@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import RichEditor from '../RichEditor'
 
 class NoteEditor extends React.Component {
     state = {
@@ -29,11 +30,15 @@ class NoteEditor extends React.Component {
         }
     }
 
+    updateNote = (json) => {
+        this.setState({noteNote: json})
+    }
+
     save = async (e) => {
         e.preventDefault();
         const noteTitle = e.target.elements.noteTitle.value;
         const noteId = e.target.elements.noteId.value;
-        const noteNote = e.target.elements.noteNote.value;
+        const noteNote = this.state.noteNote;
         axios.put('http://localhost:8080/it-organizer/rest/note/save',
         {
             title: noteTitle,
@@ -76,9 +81,7 @@ class NoteEditor extends React.Component {
                         </div>
                         <div className="form-group">
                             <label>Note:</label>
-                            <input id='noteNote' name='noteNote' type='text' className='form-control'
-                                value={this.state.noteNote} required='required'
-                                onChange={e => this.onNoteNoteChange(e.target.value)}/>
+                            <RichEditor field={this.state.noteNote} updateWorkSpace={this.updateNote}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>
                         </div>

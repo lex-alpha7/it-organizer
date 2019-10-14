@@ -68,8 +68,8 @@ class TicketEditor extends React.Component {
             key: e.target.elements.ticketKey.value,
             priority: e.target.elements.ticketPriority.value,
             name: e.target.elements.ticketName.value,
-            stepsToReproduce: e.target.elements.ticketStepsToReproduce.value,
-            workspace: JSON.stringify(this.state.workspace),
+            stepsToReproduce: this.state.stepsToReproduce,
+            workspace: this.state.workspace,
             displayedName: this.state.displayedName,
             status: e.target.elements.ticketStatus.value,
             links: this.state.links
@@ -84,6 +84,10 @@ class TicketEditor extends React.Component {
 
     updateWorkSpace = (json) => {
         this.setState({workspace: json})
+    }
+
+    updateStepsToReproduce = (json) => {
+        this.setState({stepsToReproduce: json})
     }
 
     onKeyChange(value) {
@@ -168,9 +172,7 @@ class TicketEditor extends React.Component {
                         <div className="col-sm-8">
                             <div className="form-group">
                                 <label>Steps to Reproduce:</label>
-                                <input id='ticketStepsToReproduce' name='ticketStepsToReproduce' type='text' className='form-control'
-                                    value={this.state.stepsToReproduce} required='required'
-                                    onChange={e => this.onStepsToReproduceChange(e.target.value)}/>
+                                <RichEditor field={this.state.stepsToReproduce} updateWorkSpace={this.updateStepsToReproduce}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
                             </div>

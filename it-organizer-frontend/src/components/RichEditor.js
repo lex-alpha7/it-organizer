@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Editor, EditorState, ContentState, RichUtils, getDefaultKeyBinding, convertToRaw, convertFromRaw, convertFromHTML,    CompositeDecorator} from 'draft-js';
+import {Editor, EditorState, RichUtils, getDefaultKeyBinding, convertToRaw, convertFromRaw, convertFromHTML,    CompositeDecorator} from 'draft-js';
 import 'draft-js/dist/Draft.css'
 import './RichEditor.css'
 
@@ -9,13 +9,7 @@ class RichEditor extends React.Component {
         super(props);
         let contentState;
         try {
-            const blocksFromHTML = convertFromHTML(props.field);
-            const state = ContentState.createFromBlockArray(
-                blocksFromHTML.contentBlocks,
-                blocksFromHTML.entityMap,
-            );
-            console.log("state = " + state)
-            contentState = EditorState.createWithContent(state);
+            contentState = EditorState.createWithContent(convertFromRaw(JSON.parse(props.field)));
         } catch (err) {
             console.log(err)
             contentState = EditorState.createEmpty();
@@ -26,15 +20,13 @@ class RichEditor extends React.Component {
         };
         this.focus = () => this.refs.editor.focus();
         this.onChange = (editorState) => {
-//            const contentState = editorState.getCurrentContent();
-//            let rawState = JSON.stringify(convertToRaw(contentState));
-            const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-            const value = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+            const contentState = editorState.getCurrentContent();
+            let rawState = JSON.stringify(convertToRaw(contentState));
             this.setState({
-                field: value,
+                field: rawState,
                 editorState
             });
-            this.props.updateWorkSpace(value);
+            this.props.updateWorkSpace(rawState);
         }
         this.handleKeyCommand = this._handleKeyCommand.bind(this);
         this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
