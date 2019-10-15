@@ -25,7 +25,7 @@ It will keep an order in your browser bookmarks.
 ## Short Description
 
 ### User interface
-For implementing UI [Thymeleaf](https://www.thymeleaf.org/), Spring MVC via Spring Boot and JS libraries like [nicEdit](http://nicedit.com/) are used.
+For implementing UI [ReactJS](https://reactjs.org/), Spring RestControllers, JS libraries like [draft.js](https://draftjs.org/), bootstrap css are used.,
 More details on ![this wiki page](https://github.com/aleksei-khitev/it-organizer/wiki/it-organizer-web)
 
 ### Business Logic
