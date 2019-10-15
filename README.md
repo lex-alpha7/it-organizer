@@ -20,7 +20,7 @@ I believe it's more convenient to create an external link in this Organizer but 
 It will keep an order in your browser bookmarks.
 
 #### For now, it looks like this:
-![Demo screen shot](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/demo_screenshot.JPG)
+![Demo screen shot](https://github.com/aleksei-khitev/it-organizer/blob/ui_based_on_spring_mvc/docs/it-organizer-ui.png)
 
 ## Short Description
 
