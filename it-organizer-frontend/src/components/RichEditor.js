@@ -9,7 +9,11 @@ class RichEditor extends React.Component {
         super(props);
         let contentState;
         try {
-            contentState = EditorState.createWithContent(convertFromRaw(JSON.parse(props.field)));
+            if (props.field) {
+                contentState = EditorState.createWithContent(convertFromRaw(JSON.parse(props.field)));
+            } else {
+                contentState = EditorState.createEmpty();
+            }
         } catch (err) {
             console.log(err)
             contentState = EditorState.createEmpty();

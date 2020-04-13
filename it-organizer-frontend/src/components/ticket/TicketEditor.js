@@ -134,7 +134,7 @@ class TicketEditor extends React.Component {
                             <div className="form-group">
                                 <label>Key:</label>
                                 <input id='ticketKey' name='ticketKey' type='text' className='form-control'
-                                    value={this.state.key} required='required'
+                                    value={this.state.key || ''} required='required'
                                     onChange={e => this.onKeyChange(e.target.value)}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
@@ -142,7 +142,7 @@ class TicketEditor extends React.Component {
                             <div className="form-group">
                                 <label>Name:</label>
                                 <input id='ticketName' name='ticketName' type='text' className='form-control'
-                                    value={this.state.name} required='required'
+                                    value={this.state.name || ''} required='required'
                                     onChange={e => this.onNameChange(e.target.value)}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
@@ -150,7 +150,7 @@ class TicketEditor extends React.Component {
                             <div className="form-group">
                                 <label>Priority:</label>
                                 <input id='ticketPriority' name='ticketPriority' type='text' className='form-control'
-                                    value={this.state.priority} required='required'
+                                    value={this.state.priority || ''} required='required'
                                     onChange={e => this.onPriorityChange(e.target.value)}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
@@ -158,7 +158,7 @@ class TicketEditor extends React.Component {
                             <div className="form-group">
                                 <label>Status:</label>
                                 <select className="form-control" id='ticketStatus' name='ticketStatus'
-                                    value={this.state.status} required='required'
+                                    value={this.state.status || ''} required='required'
                                     onChange={e => this.onStatusChange(e.target.value)}>
                                     <option>OPEN</option>
                                     <option>IN_PROGRESS</option>
@@ -172,7 +172,7 @@ class TicketEditor extends React.Component {
                         <div className="col-sm-8">
                             <div className="form-group">
                                 <label>Steps to Reproduce:</label>
-                                <RichEditor field={this.state.stepsToReproduce} updateWorkSpace={this.updateStepsToReproduce}/>
+                                <RichEditor field={this.state.stepsToReproduce || ''} updateWorkSpace={this.updateStepsToReproduce}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
                             </div>

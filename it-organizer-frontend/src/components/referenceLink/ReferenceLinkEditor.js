@@ -65,11 +65,11 @@ class ReferenceLinkEditor extends React.Component {
             <div className='container'>
                 <div className='jumbotron'>
                     <form className="was-validated" onSubmit={this.save}>
-                        <input type='hidden' name='refLinkId' id='refLinkId' value={this.state.id} />
+                        <input type='hidden' name='refLinkId' id='refLinkId' value={this.state.id || ''} />
                         <div className="form-group">
                             <label>Note Title:</label>
                             <input id='refLinkName' name='refLinkName' type='text' className='form-control'
-                                value={this.state.name} required='required'
+                                value={this.state.name || ''} required='required'
                                 onChange={e => this.onRefLinkNameChange(e.target.value)}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>
@@ -77,7 +77,7 @@ class ReferenceLinkEditor extends React.Component {
                         <div className="form-group">
                             <label>Note:</label>
                             <input id='refLinkLink' name='refLinkLink' type='text' className='form-control'
-                                value={this.state.link} required='required'
+                                value={this.state.link || ''} required='required'
                                 onChange={e => this.onRefLinkLinkChange(e.target.value)}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>

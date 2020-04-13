@@ -72,6 +72,7 @@ class App extends React.Component {
     cleanMainPart = () => {
         this.setState({
             projectForEdit: undefined,
+            ticketForEdit: undefined,
             noteForEdit: undefined,
             referenceLinkForEdit: undefined
         });

@@ -12,9 +12,9 @@ class NoteEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.noteForEdit.id,
-            title: this.props.noteForEdit.title,
-            noteNote: this.props.noteForEdit.note
+            id: props.noteForEdit.id,
+            title: props.noteForEdit.title,
+            noteNote: props.noteForEdit.note
          }
     }
 
@@ -70,11 +70,11 @@ class NoteEditor extends React.Component {
             <div className='container'>
                 <div className='jumbotron'>
                     <form className="was-validated" onSubmit={this.save}>
-                        <input type='hidden' name='noteId' id='noteId' value={this.state.id} />
+                        <input type='hidden' name='noteId' id='noteId' value={this.state.id || ''} />
                         <div className="form-group">
                             <label>Note Title:</label>
                             <input id='noteTitle' name='noteTitle' type='text' className='form-control'
-                                value={this.state.title} required='required'
+                                value={this.state.title || ''} required='required'
                                 onChange={e => this.onNoteTitleChange(e.target.value)}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>

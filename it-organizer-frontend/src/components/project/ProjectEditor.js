@@ -54,11 +54,11 @@ class ProjectEditor extends React.Component {
             <div id='projectEdit' className='container'>
                 <div className='jumbotron'>
                     <form className="was-validated" onSubmit={this.saveProject}>
-                        <input type='hidden' name='projectId' id='projectId' value={this.state.id} />
+                        <input type='hidden' name='projectId' id='projectId' value={this.state.id || ''} />
                         <div className="form-group">
                             <label>Project Name:</label>
                             <input id='projectName' name='projectName' type='text' className='form-control'
-                                value={this.state.name} required='required'
+                                value={this.state.name || ''} required='required'
                                 onChange={e => this.onProjectNameChange(e.target.value)}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>

@@ -10,7 +10,10 @@ const TicketList = (props) => {
             function(ticket) {
                 const ticketKey = 'tid_' + ticket.id;
                 //let activation_url = `http://localhost:8080/it-organizer/project/activate/${project.id}`;
-                return <TicketListItem key={ticketKey} ticket={ticket} editTicket={props.editTicket}/>;
+                return <TicketListItem key={ticketKey} ticket={ticket}
+                    editTicket={props.editTicket}
+                    showSuccessAlert={props.showSuccessAlert}
+                    showErrorAlert={props.showErrorAlert}/>;
             }
         );
     }
@@ -23,7 +26,7 @@ const TicketList = (props) => {
                         <div className="dropdown-menu">
                             {ticket_element_html}
                             <div className="btn-group dropdown-item">
-                                <button type="button" className="btn btn-outline-success"><FontAwesomeIcon icon={faFileMedical} /></button>
+                                <button type="button" className="btn btn-outline-success" onClick={() => props.editTicket(undefined)}><FontAwesomeIcon icon={faFileMedical} /></button>
                             </div>
                         </div>
                     }
