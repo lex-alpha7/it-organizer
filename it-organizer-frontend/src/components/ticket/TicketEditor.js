@@ -168,6 +168,12 @@ class TicketEditor extends React.Component {
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
                             </div>
+                            <div className="form-group">
+                                <label>Tasks:</label>
+
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
                         </div>
                         <div className="col-sm-8">
                             <div className="form-group">
@@ -176,6 +182,16 @@ class TicketEditor extends React.Component {
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
                             </div>
+                            <div className="form-group">
+                                <label>Progress:</label>
+
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-sm-12">
                             <div className="form-group">
                                 <label>Workspace:</label>
                                 <RichEditor field={this.state.workspace} updateWorkSpace={this.updateWorkSpace}/>
