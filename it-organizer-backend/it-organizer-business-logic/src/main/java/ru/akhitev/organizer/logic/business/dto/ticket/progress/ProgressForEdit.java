@@ -22,8 +22,14 @@ import ru.akhitev.organizer.logic.business.dto.DataTransferObject;
 
 public class ProgressForEdit implements DataTransferObject {
     private Integer id;
-
     private String progress;
+
+    public ProgressForEdit(){}
+
+    public ProgressForEdit(Integer id, String progress) {
+        this.id = id;
+        this.progress = progress;
+    }
 
     @Override
     public Integer getId() {

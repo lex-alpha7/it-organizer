@@ -27,7 +27,7 @@ import java.util.Date;
 @Table(name = "Progress")
 @SequenceGenerator(name = "seq", initialValue = 20)
 @EqualsAndHashCode(exclude = "ticket")
-public class Progress {
+public class Progress implements NodeDataBaseEntity<Ticket> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
@@ -73,5 +73,10 @@ public class Progress {
 
     public void setStatus(@NonNull String status) {
         this.status = status;
+    }
+
+    @Override
+    public void setRoot(Ticket root) {
+        setTicket(root);
     }
 }

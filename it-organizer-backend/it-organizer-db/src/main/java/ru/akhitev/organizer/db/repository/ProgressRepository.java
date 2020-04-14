@@ -20,6 +20,10 @@ package ru.akhitev.organizer.db.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.akhitev.organizer.db.entity.Progress;
+import ru.akhitev.organizer.db.entity.Ticket;
+
+import java.util.Set;
 
 public interface ProgressRepository extends JpaRepository<Progress, Integer> {
+    Set<Progress> findByTicket(Ticket ticket);
 }

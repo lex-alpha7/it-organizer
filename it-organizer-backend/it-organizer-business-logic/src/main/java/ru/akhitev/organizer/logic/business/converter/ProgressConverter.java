@@ -46,13 +46,18 @@ public class ProgressConverter implements Converter<Progress, ProgressForShow, P
 
     /** {@inheritDoc} */
     public ProgressForEdit prepareForEdit(Progress progress) {
-        return new ProgressForEdit();
+        return new ProgressForEdit(progress.getId(), progress.getStatus());
     }
 
     //TODO
     /** {@inheritDoc} */
     @Override
     public Progress merge(Progress entity, ProgressForEdit dataTransferObject) {
+        if (entity == null) {
+            entity = new Progress();
+        }
+        entity.setStatus(dataTransferObject.getProgress());
+        
         return null;
     }
 }
