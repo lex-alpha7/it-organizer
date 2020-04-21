@@ -1,8 +1,5 @@
 import React from 'react';
-import axios from 'axios';
 import ProgressListItem from './ProgressListItem'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileMedical } from '@fortawesome/free-solid-svg-icons'
 
 const ProgressList = (props) => {
     let element_html = "";

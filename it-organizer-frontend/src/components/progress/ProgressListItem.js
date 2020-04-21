@@ -1,11 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 class ProgressListItem extends React.Component {
     deleteProgress = async (progressId) => {
-        console.log("progressId = " + progressId);
             let delete_progressId_url = `http://localhost:8080/it-organizer/rest/progress/delete/${progressId}`;
             axios.delete(delete_progressId_url)
             .then((result) => {

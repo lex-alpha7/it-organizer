@@ -32,7 +32,6 @@ class TicketEditor extends React.Component {
             links: this.props.ticketForEdit.links,
             progresses: this.props.progresses
          }
-         console.log("this.props.progresses = " + this.props.progresses);
     }
 
     componentDidUpdate(prevProps) {
@@ -63,7 +62,6 @@ class TicketEditor extends React.Component {
 
     save = async (e) => {
         e.preventDefault();
-        let workSpaceJson = this.state.workspace;
         axios.put('http://localhost:8080/it-organizer/rest/ticket/save',
         {
             id: this.state.id,

@@ -66,16 +66,13 @@ class App extends React.Component {
     getReferenceLinkList = async () => {
         const rest = await fetch('http://localhost:8080/it-organizer/rest/reference_link/list');
         let list = await rest.json();
-        console.log('list = ' + list)
         this.setState({referenceLinks: list});
     }
 
     getProgressList = async () => {
         const rest = await fetch('http://localhost:8080/it-organizer/rest/progress/list');
         let list = await rest.json();
-        console.log('progresses = ' + list)
         this.setState({progresses: list});
-        console.log('progresses = ' + this.state.progresses);
         return list;
     }
 
@@ -127,7 +124,6 @@ class App extends React.Component {
         if (ticket && ticket.id) {
             const progressRest = await fetch('http://localhost:8080/it-organizer/rest/progress/list');
             let progressList = await progressRest.json();
-            console.log('progresses = ' + progressList)
             this.setState({progresses: progressList});
             const url = `http://localhost:8080/it-organizer/rest/ticket/edit/${ticket.id}`;
             const rest = await axios(url);

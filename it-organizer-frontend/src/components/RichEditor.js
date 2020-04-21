@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Editor, EditorState, RichUtils, getDefaultKeyBinding, convertToRaw, convertFromRaw, convertFromHTML,    CompositeDecorator} from 'draft-js';
+import {Editor, EditorState, RichUtils, getDefaultKeyBinding, convertToRaw, convertFromRaw} from 'draft-js';
 import 'draft-js/dist/Draft.css'
 import './RichEditor.css'
 
