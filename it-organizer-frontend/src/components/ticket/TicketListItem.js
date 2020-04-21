@@ -20,7 +20,7 @@ class TicketListItem extends React.Component {
         render() {
             return <div className="btn-group dropdown-item">
                             <button type="button" className="btn btn-outline-primary" onClick={() => this.props.editTicket(this.props.ticket)}>{this.props.ticket.displayedName}</button>
-                            <button type="button" className="btn btn-danger" onClick={() => this.deleteProject(this.props.ticket.id)}><FontAwesomeIcon icon={faTrash} /></button>thi
+                            <button type="button" className="btn btn-danger" onClick={() => this.deleteProject(this.props.ticket.id)}><FontAwesomeIcon icon={faTrash} /></button>
                         </div>
         }
 }

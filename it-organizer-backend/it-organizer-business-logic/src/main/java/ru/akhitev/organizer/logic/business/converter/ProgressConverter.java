@@ -23,8 +23,10 @@ import ru.akhitev.organizer.db.entity.Progress;
 import ru.akhitev.organizer.logic.business.dto.ticket.progress.ProgressForEdit;
 import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,7 +41,7 @@ public class ProgressConverter implements Converter<Progress, ProgressForShow, P
         }
         return progresses.stream()
                 .map( progress ->
-                        new ProgressForShow(progress.getDate(),
+                        new ProgressForShow(progress.getId(), progress.getDate(),
                                 progress.getStatus()))
                 .collect(Collectors.toSet());
     }
@@ -57,7 +59,7 @@ public class ProgressConverter implements Converter<Progress, ProgressForShow, P
             entity = new Progress();
         }
         entity.setStatus(dataTransferObject.getProgress());
-        
-        return null;
+        entity.setDate(new Date());
+        return entity;
     }
 }

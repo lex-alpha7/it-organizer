@@ -21,12 +21,18 @@ package ru.akhitev.organizer.logic.business.vo.ticket.progress;
 import java.util.Date;
 
 public class ProgressForShow {
+    private final Integer id;
     private final Date date;
     private final String progress;
 
-    public ProgressForShow(Date date, String progress) {
+    public ProgressForShow(Integer id, Date date, String progress) {
+        this.id = id;
         this.date = date;
         this.progress = progress;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public Date getDate() {

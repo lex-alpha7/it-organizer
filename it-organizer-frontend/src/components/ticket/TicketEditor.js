@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import RichEditor from '../RichEditor'
+import ProgressList from '../progress/ProgressList'
 
 class TicketEditor extends React.Component {
     state = {
@@ -28,8 +29,10 @@ class TicketEditor extends React.Component {
             workspace: this.props.ticketForEdit.workspace,
             displayedName: this.props.ticketForEdit.displayedName,
             status: this.props.ticketForEdit.status,
-            links: this.props.ticketForEdit.links
+            links: this.props.ticketForEdit.links,
+            progresses: this.props.progresses
          }
+         console.log("this.props.progresses = " + this.props.progresses);
     }
 
     componentDidUpdate(prevProps) {
@@ -184,7 +187,10 @@ class TicketEditor extends React.Component {
                             </div>
                             <div className="form-group">
                                 <label>Progress:</label>
-
+                                <ProgressList progresses={this.state.progresses}
+                                    saveProgress={this.props.saveProgress}
+                                    showSuccessAlert={this.props.showSuccessAlert}
+                                    showErrorAlert={this.props.showErrorAlert}/>
                                 <div className="valid-feedback">Valid.</div>
                                 <div className="invalid-feedback">Please fill out this field.</div>
                             </div>
