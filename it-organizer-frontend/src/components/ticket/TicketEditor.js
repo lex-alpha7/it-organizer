@@ -139,13 +139,23 @@ class TicketEditor extends React.Component {
                             </button>
                         </li>
                         <li className='nav-item'>
-                            <button type="button" className="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#progressModal">
+                            <button type="button" className="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#progressModal">
                               <FontAwesomeIcon icon={faFileMedical} /> Add Progress
                             </button>
                         </li>
                         <li className='nav-item'>
-                            <button type="button" className="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
-                                <FontAwesomeIcon icon={faFileMedical} /> Add Ticket Link
+                            <button type="button" className="btn btn-outline-warning btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
+                                <FontAwesomeIcon icon={faFileMedical} /> Add Link to Ticket
+                            </button>
+                        </li>
+                        <li className='nav-item'>
+                            <button type="button" className="btn btn-outline-warning btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
+                                <FontAwesomeIcon icon={faFileMedical} /> Add Useful Link
+                            </button>
+                        </li>
+                        <li className='nav-item'>
+                            <button type="button" className="btn btn-outline-warning btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
+                                <FontAwesomeIcon icon={faFileMedical} /> Add Attachment
                             </button>
                         </li>
                     </ul>
