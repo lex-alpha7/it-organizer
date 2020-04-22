@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.akhitev.organizer.logic.business.dto.ticket.progress.ProgressForEdit;
 import ru.akhitev.organizer.logic.business.service.ProgressService;
-import ru.akhitev.organizer.logic.business.vo.project.link.ReferenceLinkForShow;
 import ru.akhitev.organizer.logic.business.vo.ticket.progress.ProgressForShow;
 
 import java.util.Set;
@@ -31,8 +30,8 @@ public class ProgressRestController {
     }
 
     @PutMapping("/save")
-    void save(@RequestBody ProgressForEdit note) {
-        service.save(note);
+    void save(@RequestBody ProgressForEdit progress) {
+        service.save(progress);
     }
 
     @DeleteMapping("/delete/{progressId}")

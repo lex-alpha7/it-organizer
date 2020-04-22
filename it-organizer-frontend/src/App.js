@@ -27,6 +27,7 @@ class App extends React.Component {
         noteForEdit: undefined,
         referenceLinkForEdit: undefined,
         progresses: undefined,
+        ticketLinks: undefined,
         resultMessage: undefined
     }
 
@@ -91,6 +92,23 @@ class App extends React.Component {
         this.getProgressList();
     }
 
+    saveTicketLink = async (name, link, type) => {
+        axios.put('http://localhost:8080/it-organizer/rest/ticket_link/save',
+        {
+            link: link,
+            name: name,
+            type: type
+        }).then((result) => {
+            if (result.status === 200) {
+                this.showSuccessAlert('Тикет успешно сохранен');
+                this.updateTicket(this.state.ticketForEdit);
+            } else {
+                this.showErrorAlert('При сохранении тикеты произошла ошибка');
+            }
+        });
+        this.getProgressList();
+    }
+
     cleanMainPart = () => {
         this.setState({
             projectForEdit: undefined,
@@ -129,6 +147,9 @@ class App extends React.Component {
             const progressRest = await fetch('http://localhost:8080/it-organizer/rest/progress/list');
             let progressList = await progressRest.json();
             this.setState({progresses: progressList});
+            const ticketLinksRest = await fetch('http://localhost:8080/it-organizer/rest/ticket_link/list');
+            let ticketLinks = await ticketLinksRest.json();
+            this.setState({ticketLinks: ticketLinks});
         } else {
             ticketForEdit = {
                 id: undefined,
@@ -272,7 +293,9 @@ class App extends React.Component {
                 }
                 {this.state.ticketForEdit && <TicketEditor ticketForEdit={this.state.ticketForEdit}
                                                       progresses={this.state.progresses}
+                                                      ticketLinks={this.state.ticketLinks}
                                                       saveProgress={this.saveProgress}
+                                                      saveTicketLink={this.saveTicketLink}
                                                       updateTicket={this.updateTicket}
                                                       showSuccessAlert={this.showSuccessAlert}
                                                       showErrorAlert={this.showErrorAlert}/>

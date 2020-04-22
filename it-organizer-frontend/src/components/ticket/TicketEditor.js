@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import RichEditor from '../RichEditor'
 import ProgressList from '../progress/ProgressList'
+import TicketLinkList from '../ticketLink/TicketLinkList'
 
 class TicketEditor extends React.Component {
     state = {
@@ -30,7 +31,8 @@ class TicketEditor extends React.Component {
             displayedName: this.props.ticketForEdit.displayedName,
             status: this.props.ticketForEdit.status,
             links: this.props.ticketForEdit.links,
-            progresses: this.props.progresses
+            progresses: this.props.progresses,
+            ticketLinks: this.props.ticketLinks
          }
     }
 
@@ -168,8 +170,14 @@ class TicketEditor extends React.Component {
                             <div className="invalid-feedback">Please fill out this field.</div>
                         </div>
                         <div className="form-group">
-                            <label>Tasks:</label>
-
+                            <label>Links:</label>
+                            <TicketLinkList ticketLinks={this.state.ticketLinks}
+                                                            saveTicket={this.saveTicket}
+                                                            saveTicketLink={this.props.saveTicketLink}
+                                                            updateTicket={this.props.updateTicket}
+                                                            ticket={this.props.ticketForEdit}
+                                                            showSuccessAlert={this.props.showSuccessAlert}
+                                                            showErrorAlert={this.props.showErrorAlert}/>
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>
                         </div>
@@ -178,6 +186,12 @@ class TicketEditor extends React.Component {
                         <div className="form-group">
                             <label>Steps to Reproduce:</label>
                             <RichEditor field={this.state.stepsToReproduce || ''} updateWorkSpace={this.updateStepsToReproduce}/>
+                            <div className="valid-feedback">Valid.</div>
+                            <div className="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div className="form-group">
+                            <label>Tasks:</label>
+
                             <div className="valid-feedback">Valid.</div>
                             <div className="invalid-feedback">Please fill out this field.</div>
                         </div>
