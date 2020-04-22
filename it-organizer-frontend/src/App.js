@@ -297,6 +297,7 @@ class App extends React.Component {
                                                       saveProgress={this.saveProgress}
                                                       saveTicketLink={this.saveTicketLink}
                                                       updateTicket={this.updateTicket}
+                                                      saveTicket={this.saveTicket}
                                                       showSuccessAlert={this.showSuccessAlert}
                                                       showErrorAlert={this.showErrorAlert}/>
                 }

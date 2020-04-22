@@ -8,9 +8,10 @@ const MenuHeader = (props) => {
             { props.ticket && <span>
                     <button type="button" className="btn btn-dark"><FontAwesomeIcon icon={faCaretRight} /></button>
                     <span>{props.ticket.displayedName} </span>
-                    <button type="button" className="btn btn-outline-success"><FontAwesomeIcon icon={faSave} /></button>
                 </span> }
               </span>
 }
 
 export default MenuHeader;
+
+//<button type="button" className="btn btn-outline-success"><FontAwesomeIcon icon={faSave} /></button>

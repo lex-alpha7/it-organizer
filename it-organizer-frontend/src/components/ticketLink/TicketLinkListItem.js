@@ -18,11 +18,17 @@ class TicketLinkListItem extends React.Component {
             });
 
         }
+
+        openInNewTab = (link) => {
+          const win = window.open(link, '_blank');
+          win.focus();
+        }
+
         render() {
-            return <li className="list-group-item">
-                {this.props.ticketLink.link}<br/>
-                <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.deleteTicketLink(this.props.ticketLink.id)}><FontAwesomeIcon icon={faTrash} /></button>
-            </li>;
+            return <div className="btn-group dropdown-item">
+                <button type="button" className="btn btn-outline-primary" onClick={() => this.openInNewTab(this.props.ticketLink.link)}>{this.props.ticketLink.name}</button>
+                <button type="button" className="btn btn-outline-danger" onClick={() => this.deleteTicketLink(this.props.ticketLink.id)}><FontAwesomeIcon icon={faTrash} /></button>
+            </div>;
         }
 }
 

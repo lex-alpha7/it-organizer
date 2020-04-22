@@ -3,6 +3,8 @@ import axios from 'axios';
 import RichEditor from '../RichEditor'
 import ProgressList from '../progress/ProgressList'
 import TicketLinkList from '../ticketLink/TicketLinkList'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileMedical, faSave, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
 class TicketEditor extends React.Component {
     state = {
@@ -63,7 +65,6 @@ class TicketEditor extends React.Component {
     }
 
     saveTicket = async () => {
-        console.log('save ticket');
         axios.put('http://localhost:8080/it-organizer/rest/ticket/save',
         {
             id: this.state.id,
@@ -129,97 +130,171 @@ class TicketEditor extends React.Component {
 
     render() {
         return(
-            <div className='container-fluid'>
-                <div className="row">
-                    <div className="col-sm-4">
-                        <div className="form-group">
-                            <label>Key:</label>
-                            <input id='ticketKey' name='ticketKey' type='text' className='form-control'
-                                value={this.state.key || ''} required='required'
-                                onChange={e => this.onKeyChange(e.target.value)}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Name:</label>
-                            <input id='ticketName' name='ticketName' type='text' className='form-control'
-                                value={this.state.name || ''} required='required'
-                                onChange={e => this.onNameChange(e.target.value)}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Priority:</label>
-                            <input id='ticketPriority' name='ticketPriority' type='text' className='form-control'
-                                value={this.state.priority || ''} required='required'
-                                onChange={e => this.onPriorityChange(e.target.value)}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Status:</label>
-                            <select className="form-control" id='ticketStatus' name='ticketStatus'
-                                value={this.state.status || ''} required='required'
-                                onChange={e => this.onStatusChange(e.target.value)}>
-                                <option>OPEN</option>
-                                <option>IN_PROGRESS</option>
-                                <option>WAIT</option>
-                                <option>CLOSED</option>
-                            </select>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Links:</label>
-                            <TicketLinkList ticketLinks={this.state.ticketLinks}
-                                                            saveTicket={this.saveTicket}
-                                                            saveTicketLink={this.props.saveTicketLink}
-                                                            updateTicket={this.props.updateTicket}
-                                                            ticket={this.props.ticketForEdit}
-                                                            showSuccessAlert={this.props.showSuccessAlert}
-                                                            showErrorAlert={this.props.showErrorAlert}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                    </div>
-                    <div className="col-sm-8">
-                        <div className="form-group">
-                            <label>Steps to Reproduce:</label>
-                            <RichEditor field={this.state.stepsToReproduce || ''} updateWorkSpace={this.updateStepsToReproduce}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Tasks:</label>
+            <div>
+                <nav className="navbar navbar-expand-sm  navbar-dark bg-dark">
+                    <ul className="navbar-nav">
+                        <li className='nav-item'>
+                            <button type="button" className="btn btn-outline-success btn-sm" onClick={() => this.saveTicket()}>
+                                <FontAwesomeIcon icon={faSave} /> Save Ticket
+                            </button>
+                        </li>
+                        <li className='nav-item'>
+                            <button type="button" className="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#progressModal">
+                              <FontAwesomeIcon icon={faFileMedical} /> Add Progress
+                            </button>
+                        </li>
+                        <li className='nav-item'>
+                            <button type="button" className="btn btn-outline-success btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
+                                <FontAwesomeIcon icon={faFileMedical} /> Add Ticket Link
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
 
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                        <div className="form-group">
-                            <label>Progress:</label>
-                            <ProgressList progresses={this.state.progresses}
-                                saveTicket={this.saveTicket}
-                                saveProgress={this.props.saveProgress}
-                                updateTicket={this.props.updateTicket}
-                                ticket={this.props.ticketForEdit}
-                                showSuccessAlert={this.props.showSuccessAlert}
-                                showErrorAlert={this.props.showErrorAlert}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
-                        </div>
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className="col-sm-12">
-                        <div className="form-group">
-                            <label>Workspace:</label>
-                            <RichEditor field={this.state.workspace} updateWorkSpace={this.updateWorkSpace}/>
-                            <div className="valid-feedback">Valid.</div>
-                            <div className="invalid-feedback">Please fill out this field.</div>
+                <div className="modal" id="progressModal">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                    <h4 className="modal-title">Добавление прогресса</h4>
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="form-group">
+                                    <label htmlFor="progressText">Прогресс:</label>
+                                    <textarea className="form-control" rows="5" id="progressText"></textarea>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" data-dismiss="modal" onClick={() => this.props.saveProgress(document.getElementById("progressText").value)}>Сохранить</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal">Отмена</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button type='button' className='btn btn-primary' onClick={() => this.saveTicket()}>Сохранить</button>
+
+                <div className="modal" id="ticketLinkModal">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h4 className="modal-title">Добавление ссылки</h4>
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="form-group">
+                                    <label htmlFor="ticketLinkName">Название ссылки:</label>
+                                    <input type="text" className="form-control" id="ticketLinkName" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="ticketLinkLink">Ссылка:</label>
+                                    <input type="text" className="form-control" id="ticketLinkLink" />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="ticketLinkType">Тип:</label>
+                                    <select className="form-control" id="ticketLinkType">
+                                        <option>LINK_TO_TICKET</option>
+                                        <option>ATTACHMENT</option>
+                                        <option>USEFUL_LINK</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-success" data-dismiss="modal" onClick={() => this.props.saveTicketLink(document.getElementById("ticketLinkName").value, document.getElementById("ticketLinkLink").value, document.getElementById("ticketLinkType").value)}>Сохранить</button>
+                                <button type="button" className="btn btn-danger" data-dismiss="modal">Отмена</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='container-fluid'>
+                    <div className="row">
+                        <div className="col-sm-4">
+                            <div className="form-group">
+                                <label>Key:</label>
+                                <input id='ticketKey' name='ticketKey' type='text' className='form-control'
+                                    value={this.state.key || ''} required='required'
+                                    onChange={e => this.onKeyChange(e.target.value)}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Name:</label>
+                                <input id='ticketName' name='ticketName' type='text' className='form-control'
+                                    value={this.state.name || ''} required='required'
+                                    onChange={e => this.onNameChange(e.target.value)}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Priority:</label>
+                                <input id='ticketPriority' name='ticketPriority' type='text' className='form-control'
+                                    value={this.state.priority || ''} required='required'
+                                    onChange={e => this.onPriorityChange(e.target.value)}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Status:</label>
+                                <select className="form-control" id='ticketStatus' name='ticketStatus'
+                                    value={this.state.status || ''} required='required'
+                                    onChange={e => this.onStatusChange(e.target.value)}>
+                                    <option>OPEN</option>
+                                    <option>IN_PROGRESS</option>
+                                    <option>WAIT</option>
+                                    <option>CLOSED</option>
+                                </select>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <TicketLinkList ticketLinks={this.state.ticketLinks}
+                                                                saveTicket={this.saveTicket}
+                                                                saveTicketLink={this.props.saveTicketLink}
+                                                                updateTicket={this.props.updateTicket}
+                                                                ticket={this.props.ticketForEdit}
+                                                                showSuccessAlert={this.props.showSuccessAlert}
+                                                                showErrorAlert={this.props.showErrorAlert}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                        <div className="col-sm-8">
+                            <div className="form-group">
+                                <label>Steps to Reproduce:</label>
+                                <RichEditor field={this.state.stepsToReproduce || ''} updateWorkSpace={this.updateStepsToReproduce}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Tasks:</label>
+
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                            <div className="form-group">
+                                <label>Progress:</label>
+                                <ProgressList progresses={this.state.progresses}
+                                    saveTicket={this.saveTicket}
+                                    saveProgress={this.props.saveProgress}
+                                    updateTicket={this.props.updateTicket}
+                                    ticket={this.props.ticketForEdit}
+                                    showSuccessAlert={this.props.showSuccessAlert}
+                                    showErrorAlert={this.props.showErrorAlert}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-sm-12">
+                            <div className="form-group">
+                                <label>Workspace:</label>
+                                <RichEditor field={this.state.workspace} updateWorkSpace={this.updateWorkSpace}/>
+                                <div className="valid-feedback">Valid.</div>
+                                <div className="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
