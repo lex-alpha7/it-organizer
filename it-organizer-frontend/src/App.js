@@ -83,6 +83,7 @@ class App extends React.Component {
         }).then((result) => {
             if (result.status === 200) {
                 this.showSuccessAlert('Тикет успешно сохранен');
+                this.updateTicket(this.state.ticketForEdit);
             } else {
                 this.showErrorAlert('При сохранении тикеты произошла ошибка');
             }
@@ -122,12 +123,12 @@ class App extends React.Component {
         this.cleanMainPart();
         let ticketForEdit = undefined;
         if (ticket && ticket.id) {
-            const progressRest = await fetch('http://localhost:8080/it-organizer/rest/progress/list');
-            let progressList = await progressRest.json();
-            this.setState({progresses: progressList});
             const url = `http://localhost:8080/it-organizer/rest/ticket/edit/${ticket.id}`;
             const rest = await axios(url);
             ticketForEdit = await rest.data;
+            const progressRest = await fetch('http://localhost:8080/it-organizer/rest/progress/list');
+            let progressList = await progressRest.json();
+            this.setState({progresses: progressList});
         } else {
             ticketForEdit = {
                 id: undefined,
@@ -189,6 +190,10 @@ class App extends React.Component {
         this.getTicketList();
         this.getNoteList();
         this.getReferenceLinkList();
+    }
+
+    updateTicket = (ticket) => {
+        this.editTicket(ticket);
     }
 
     showSuccessAlert = (message) => {
@@ -268,7 +273,7 @@ class App extends React.Component {
                 {this.state.ticketForEdit && <TicketEditor ticketForEdit={this.state.ticketForEdit}
                                                       progresses={this.state.progresses}
                                                       saveProgress={this.saveProgress}
-                                                      getProgressList={this.getProgressList}
+                                                      updateTicket={this.updateTicket}
                                                       showSuccessAlert={this.showSuccessAlert}
                                                       showErrorAlert={this.showErrorAlert}/>
                 }

@@ -187,6 +187,8 @@ class TicketEditor extends React.Component {
                                 <label>Progress:</label>
                                 <ProgressList progresses={this.state.progresses}
                                     saveProgress={this.props.saveProgress}
+                                    updateTicket={this.props.updateTicket}
+                                    ticket={this.props.ticketForEdit}
                                     showSuccessAlert={this.props.showSuccessAlert}
                                     showErrorAlert={this.props.showErrorAlert}/>
                                 <div className="valid-feedback">Valid.</div>

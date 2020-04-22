@@ -10,6 +10,7 @@ class ProgressListItem extends React.Component {
             .then((result) => {
                 if (result.status === 200) {
                     this.props.showSuccessAlert('Прогресс успешно удален');
+                    this.props.updateTicket(this.props.ticket);
                 } else {
                     this.props.showErrorAlert('При удалении прогресса произошла ошибка');
                 }

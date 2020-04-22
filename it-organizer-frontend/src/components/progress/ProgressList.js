@@ -8,6 +8,8 @@ const ProgressList = (props) => {
             function(progress) {
                 let key = 'progressid' + progress.id;
                 return <ProgressListItem key={key} progress={progress}
+                    updateTicket={props.updateTicket}
+                    ticket={props.ticket}
                     showSuccessAlert={props.showSuccessAlert}
                     showErrorAlert={props.showErrorAlert}/>;
             }
