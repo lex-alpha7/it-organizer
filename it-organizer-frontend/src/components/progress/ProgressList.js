@@ -1,5 +1,7 @@
 import React from 'react';
 import ProgressListItem from './ProgressListItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileMedical } from '@fortawesome/free-solid-svg-icons'
 
 const ProgressList = (props) => {
     let element_html = "";
@@ -18,8 +20,8 @@ const ProgressList = (props) => {
     }
     return(
         <div>
-          <button type="button" className="btn btn-primary"  data-toggle="modal" data-target="#progressModal">
-            Добавить
+          <button type="button" className="btn btn-outline-success"  data-toggle="modal" data-target="#progressModal">
+            <FontAwesomeIcon icon={faFileMedical} />
           </button>
           { element_html &&
                           <ul className="list-group list-group-flush">

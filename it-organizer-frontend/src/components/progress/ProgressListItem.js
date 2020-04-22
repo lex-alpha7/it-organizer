@@ -21,7 +21,7 @@ class ProgressListItem extends React.Component {
         render() {
             return <li className="list-group-item">
                 {this.props.progress.progress}<br/>
-                <span className="small">{this.props.progress.date}</span><button type="button" className="btn btn-outline-danger" onClick={() => this.deleteProgress(this.props.progress.id)}><FontAwesomeIcon icon={faTrash} /></button>
+                <span className="small">{this.props.progress.date}</span><button type="button" className="btn btn-outline-danger btn-sm" onClick={() => this.deleteProgress(this.props.progress.id)}><FontAwesomeIcon icon={faTrash} /></button>
             </li>;
         }
 }
