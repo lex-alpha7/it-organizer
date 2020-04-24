@@ -2,4 +2,5 @@ rootProject.name = 'it-organizer'
 include 'it-organizer-db'
 include 'it-organizer-web'
 include 'it-organizer-business-logic'
+include 'it-organizer-client'
 

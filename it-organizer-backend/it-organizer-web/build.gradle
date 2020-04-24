@@ -6,8 +6,18 @@ apply plugin: 'io.spring.dependency-management'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+configurations {
+    jnlp
+}
+
 dependencies {
     compile project (':it-organizer-business-logic')
+    compile project (':it-organizer-client')
+
+    compile ('javax.samples.jnlp:jnlp-servlet:1.6.0') {
+        exclude group: 'javax.servlet', module: 'servlet-api'
+    }
+
     compile ('org.springframework.boot:spring-boot-starter-thymeleaf:2.0.2.RELEASE') {
         exclude group: 'org.jboss.logging', module: "jboss-logging"
     }
@@ -25,10 +35,12 @@ dependencies {
     compile ("org.aspectj:aspectjweaver:1.8.9")
     compile group: 'com.h2database', name: 'h2', version: '+'
     compile ("org.jboss.logging:jboss-logging:3.2.0.Final")
+    jnlp project (':it-organizer-client')
 }
 
 war {
     baseName = 'it-organizer'
     version = '1.2'
     enabled = true
+    from configurations.jnlp
 }

@@ -85,6 +85,10 @@ class TicketEditor extends React.Component {
         });
     }
 
+    createFolder = () => {
+        //http://localhost:8080/it-organizer/it-organizer-client.jnlp
+    }
+
     updateWorkSpace = (json) => {
         this.setState({workspace: json})
     }
@@ -154,9 +158,9 @@ class TicketEditor extends React.Component {
                             </button>
                         </li>
                         <li className='nav-item'>
-                            <button type="button" className="btn btn-outline-warning btn-sm"  data-toggle="modal" data-target="#ticketLinkModal">
+                            <a href='http://localhost:8080/it-organizer/it-organizer-client.jnlp'><button type="button" className="btn btn-outline-warning btn-sm">
                                 <FontAwesomeIcon icon={faFileMedical} /> Add Attachment
-                            </button>
+                            </button></a>
                         </li>
                     </ul>
                 </nav>
